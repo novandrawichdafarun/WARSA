@@ -17,7 +17,7 @@ Route::get('/', function () {
 Route::middleware(['auth'])->group(function () {
     Route::get('/setup-warung', [WarungSetupController::class, 'create'])
         ->name('warung.setup');
-    Route::post('/setup-warung', [WarungSetupController::class . 'store'])
+    Route::post('/setup-warung', [WarungSetupController::class, 'store'])
         ->name('warung.setup.store');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

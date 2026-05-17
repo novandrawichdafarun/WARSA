@@ -57,11 +57,16 @@ class ProdukController extends Controller
         $produk = Product::create($data);
 
         if ($produk->stok > 0) {
-            $this->stockService->tambahStok(
-                product: $produk,
-                jumlah: 0,
-                keterangan: 'Stok awal produk'
-            );
+            StockMovement::create([
+                'warung_id' => $produk->warung_id,
+                'product_id' => $produk->id,
+                'user_id' => auth()->id(),
+                'type' => 'in',
+                'quantity' => $produk->stok,
+                'stok_sebelum' => 0,
+                'stok_sesudah' => $produk->stok,
+                'keterangan' => 'Stok awal produk',
+            ]);
         }
 
         return redirect()->route('produk.index')

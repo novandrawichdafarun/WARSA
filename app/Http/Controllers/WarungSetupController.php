@@ -12,7 +12,7 @@ class WarungSetupController extends Controller
     public function create(): View|RedirectResponse
     {
         if (auth()->user()->hasWarung()) {
-            return redirect()->route('dasboard');
+            return redirect()->route('dashboard');
         }
         return view('warung.setup');
     }
@@ -33,7 +33,7 @@ class WarungSetupController extends Controller
 
         auth()->user()->update(['warung_id' => $warung->id]);
 
-        return redirect()->route('dasboard')
+        return redirect()->route('dashboard')
             ->with('success', 'Warung berhasil dibuat! Selamat datang di SIWARUNG.');
     }
 }
