@@ -12,7 +12,10 @@ class KaryawanController extends Controller
 {
     public function index(): View
     {
-        $karyawan = User::where('role', 'kasir')->get();
+        $karyawan = User::where('warung_id', \Illuminate\Support\Facades\Auth::user()->warung_id)
+            ->where('id', '!=', \Illuminate\Support\Facades\Auth::id())
+            ->orderBy('name')
+            ->paginate(10);
 
         return view('karyawan.index', compact('karyawan'));
     }
@@ -35,7 +38,7 @@ class KaryawanController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'role' => 'kasir',
-            'warung_id' => auth()->user()->warung_id,
+            'warung_id' => \Illuminate\Support\Facades\Auth::user()->warung_id,
         ]);
 
         return redirect()->route('karyawan.index')
@@ -44,7 +47,7 @@ class KaryawanController extends Controller
 
     public function destroy(User $user): RedirectResponse
     {
-        abort_if($user->warung_id !== auth()->user()->warung_id, 403);
+        abort_if($user->warung_id !== \Illuminate\Support\Facades\Auth::user()->warung_id, 403);
         abort_if($user->isOwner(), 403, 'Tidak bisa menghapus akun owner.');
 
         $user->delete();

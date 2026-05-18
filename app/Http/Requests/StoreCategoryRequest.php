@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 
 class StoreCategoryRequest extends FormRequest
@@ -13,7 +14,7 @@ class StoreCategoryRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return auth()->user()->isOwner();
+        return Auth::user()->isOwner();
     }
 
     /**
@@ -29,7 +30,7 @@ class StoreCategoryRequest extends FormRequest
                 'string',
                 'max:255',
                 Rule::unique('categories', 'nama_kategori')
-                    ->where('warung_id', auth()->user()->warung_id)
+                    ->where('warung_id', \Illuminate\Support\Facades\Auth::user()->warung_id)
                     ->whereNull('deleted_at'),
             ],
         ];

@@ -36,15 +36,12 @@ class ProductSeeder extends Seeder
                 ['nama_produk' => 'Oreo Original', 'harga_jual' => 5000, 'harga_beli' => 3500, 'stok' => 45],
                 ['nama_produk' => 'Indomie Goreng', 'harga_jual' => 4000, 'harga_beli' => 2800, 'stok' => 100],
             ],
-            'Rokok' => [
-                // Stok minimal rokok biasanya lebih tinggi
-                ['nama_produk' => 'Gudang Garam Merah', 'harga_jual' => 24000, 'harga_beli' => 22000, 'stok' => 3, 'stok_minimal' => 10],
-                ['nama_produk' => 'Sampoerna Mild', 'harga_jual' => 28000, 'harga_beli' => 25500, 'stok' => 5, 'stok_minimal' => 10],
-            ],
             'Sembako' => [
                 ['nama_produk' => 'Beras 5kg', 'harga_jual' => 75000, 'harga_beli' => 68000, 'stok' => 10],
                 ['nama_produk' => 'Minyak Goreng 1L', 'harga_jual' => 18000, 'harga_beli' => 15000, 'stok' => 20],
                 ['nama_produk' => 'Gula Pasir 1kg', 'harga_jual' => 16000, 'harga_beli' => 14000, 'stok' => 15],
+                ['nama_produk' => 'Gudang Garam Merah', 'harga_jual' => 24000, 'harga_beli' => 22000, 'stok' => 3, 'stok_minimal' => 10],
+                ['nama_produk' => 'Sampoerna Mild', 'harga_jual' => 28000, 'harga_beli' => 25500, 'stok' => 5, 'stok_minimal' => 10],
             ],
         ];
 

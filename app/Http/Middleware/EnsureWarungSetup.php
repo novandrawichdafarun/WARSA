@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Support\Facades\Auth;
 
 class EnsureWarungSetup
 {
@@ -19,11 +20,11 @@ class EnsureWarungSetup
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (!auth()->check()) {
+        if (!Auth::check()) {
             return redirect()->route('login');
         }
 
-        $user = auth()->user();
+        $user = Auth::user();
 
         // Super admin tidak perlu setup warung
         if ($user->isSuperAdmin()) {

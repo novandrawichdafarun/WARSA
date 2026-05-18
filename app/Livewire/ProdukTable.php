@@ -10,6 +10,7 @@ use Illuminate\View\View;
 
 class ProdukTable extends Component
 {
+  use WithPagination;
   public string $search = '';
   public string $filterKategori = '';
   public string $filterStatus = '';
@@ -17,7 +18,7 @@ class ProdukTable extends Component
   public function render(): View
   {
     $produk = Product::query()
-      ->with('category') // eager load hindari N+1
+      ->with('category')
       ->when($this->search, function ($query) {
         $query->where('nama_produk', 'like', '%' . $this->search . '%');
       })

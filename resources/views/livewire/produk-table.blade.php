@@ -1,92 +1,150 @@
+
+
 <div>
     {{-- Search & Filter Bar --}}
-    <div class="flex gap-3 mb-4">
-        <input type="text" wire:model.live.debounce.300ms="search" placeholder="Cari nama produk..."
-            class="border rounded px-2 py-1 w-full max-w-xs">
+    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+        <div class="flex flex-wrap items-center gap-3 w-full md:w-auto">
+            <div class="relative w-full sm:w-72">
+                <span class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-gray-400">
+                    🔍
+                </span>
+                <input type="text" wire:model.live.debounce.300ms="search" placeholder="Cari nama produk..."
+                    class="pl-9 pr-4 py-2 bg-gray-50 border border-gray-200 focus:border-green-500 focus:ring-2 focus:ring-green-100 rounded-xl text-sm w-full transition-all">
+            </div>
 
-        <select wire:model.live="filterKategori" class="border rounded px-2 py-1">
-            <option value="">Semua Kategori</option>
-            @foreach ($kategori as $kat)
-                <option value="{{ $kat->id }}">{{ $kat->nama_kategori }}</option>
-            @endforeach
-        </select>
+            <select wire:model.live="filterKategori"
+                class="px-7 py-2 bg-gray-50 border border-gray-200 focus:border-green-500 focus:ring-2 focus:ring-green-100 rounded-xl text-sm text-gray-600 transition-all cursor-pointer">
+                <option value="">Semua Kategori</option>
+                @foreach ($kategori as $kat)
+                    <option value="{{ $kat->id }}">{{ $kat->nama_kategori }}</option>
+                @endforeach
+            </select>
 
-        <select wire:model.live="filterStatus" class="border rounded px-2 py-1">
-            <option value="">Semua Status</option>
-            <option value="aktif">Aktif</option>
-            <option value="nonaktif">Nonaktif</option>
-        </select>
+            <select wire:model.live="filterStatus"
+                class="px-7 py-2 bg-gray-50 border border-gray-200 focus:border-green-500 focus:ring-2 focus:ring-green-100 rounded-xl text-sm text-gray-600 transition-all cursor-pointer">
+                <option value="">Semua Status</option>
+                <option value="aktif">Aktif</option>
+                <option value="nonaktif">Nonaktif</option>
+            </select>
+        </div>
 
-        {{-- Catatan: Sebelumnya ada typo di kodemu (resetFilter), sudah diubah jadi resetFilters sesuai fungsi di class --}}
-        <button wire:click="resetFilters" class="bg-gray-200 hover:bg-gray-300 px-3 py-1 rounded">Reset</button>
+        <button wire:click="resetFilters"
+            class="px-4 py-2 border border-gray-200 hover:border-gray-300 bg-white hover:bg-gray-50 text-gray-600 rounded-xl text-sm font-semibold transition-all w-full md:w-auto text-center shadow-sm">
+            🔄 Reset Filter
+        </button>
     </div>
 
-    {{-- Tabel Produk --}}
-    <table class="w-full text-left border-collapse">
-        <thead>
-            <tr class="border-b">
-                <th class="py-2">Foto</th>
-                <th class="py-2">Nama Produk</th>
-                <th class="py-2">Kategori</th>
-                <th class="py-2">Harga Jual</th>
-                <th class="py-2">Stok</th>
-                <th class="py-2">Status</th>
-                <th class="py-2">Aksi</th>
-            </tr>
-        </thead>
-        <tbody>
-            @forelse ($produk as $item)
-                <tr class="border-b hover:bg-gray-50">
-                    <td class="py-2">
-                        @if ($item->foto)
-                            <img src="{{ Storage::url($item->foto) }}" class="w-12 h-12 object-cover rounded">
-                        @else
-                            <div class="w-12 h-12 bg-gray-200 rounded flex items-center justify-center">
-                                <span class="text-xs text-gray-400">No foto</span>
-                            </div>
-                        @endif
-                    </td>
-                    <td class="py-2">{{ $item->nama_produk }}</td>
-                    <td class="py-2">{{ $item->category?->nama_kategori ?? '-' }}</td>
-                    <td class="py-2">{{ $item->formatted_harga_jual ?? $item->harga_jual }}</td>
-                    <td class="py-2">
-                        {{-- Alert merah jika stok rendah --}}
-                        <span
-                            class="{{ method_exists($item, 'isLowStock') && $item->isLowStock() ? 'text-red-600 font-bold' : '' }}">
-                            {{ $item->stok }}
-                        </span>
-                        @if (method_exists($item, 'isLowStock') && $item->isLowStock())
-                            <span class="text-xs text-red-500 block">(rendah!)</span>
-                        @endif
-                    </td>
-                    <td class="py-2">
-                        <span
-                            class="{{ $item->is_active ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-500' }} px-2 py-1 rounded text-xs">
-                            {{ $item->is_active ? 'Aktif' : 'Nonaktif' }}
-                        </span>
-                    </td>
-                    <td class="py-2 flex gap-2 items-center h-full pt-4">
-                        <a href="{{ route('produk.edit', $item) }}" class="text-blue-600 hover:underline">Edit</a>
-                        <form method="POST" action="{{ route('produk.destroy', $item) }}" class="inline">
-                            @method('DELETE')
-                            @csrf
-                            <button onclick="return confirm('Hapus produk ini?')"
-                                class="text-red-600 hover:underline">Hapus</button>
-                        </form>
-                    </td>
-                </tr>
-            @empty
-                <tr>
-                    <td colspan="7" class="text-center text-gray-400 py-8">
-                        Tidak ada produk ditemukan.
-                    </td>
-                </tr>
-            @endforelse
-        </tbody>
-    </table>
+    {{-- Tabel Produk Responsif --}}
+    <div class="overflow-x-auto -mx-6">
+        <div class="inline-block min-w-full align-middle px-6">
+            <table class="w-full text-left border-collapse">
+                <thead>
+                    <tr class="border-b border-gray-100 bg-gray-50/70">
+                        <th class="py-3.5 px-4 text-xs font-bold text-gray-400 uppercase tracking-wider w-20">Foto</th>
+                        <th class="py-3.5 px-4 text-xs font-bold text-gray-400 uppercase tracking-wider">Nama Produk
+                        </th>
+                        <th class="py-3.5 px-4 text-xs font-bold text-gray-400 uppercase tracking-wider">Kategori</th>
+                        <th class="py-3.5 px-4 text-xs font-bold text-gray-400 uppercase tracking-wider">Harga Jual</th>
+                        <th class="py-3.5 px-4 text-xs font-bold text-gray-400 uppercase tracking-wider">Stok</th>
+                        <th class="py-3.5 px-4 text-xs font-bold text-gray-400 uppercase tracking-wider">Status</th>
+                        <th
+                            class="py-3.5 px-4 text-xs font-bold text-gray-400 uppercase tracking-wider text-right w-40">
+                            Aksi</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-100">
+                    @forelse ($produk as $item)
+                        <tr class="hover:bg-gray-50/60 transition-colors group">
+                            <td class="py-4 px-4 whitespace-nowrap">
+                                @if ($item->foto)
+                                    <img src="{{ Storage::url($item->foto) }}"
+                                        class="w-12 h-12 object-cover rounded-xl shadow-sm border border-gray-100 group-hover:scale-105 transition-transform">
+                                @else
+                                    <div
+                                        class="w-12 h-12 bg-gray-100 border border-dashed border-gray-200 rounded-xl flex items-center justify-center">
+                                        <span class="text-[10px] font-bold text-gray-400 uppercase tracking-tight">No
+                                            Pic</span>
+                                    </div>
+                                @endif
+                            </td>
 
-    {{-- Pagination --}}
-    <div class="mt-4">
+                            <td class="py-4 px-4 font-semibold text-gray-800 text-sm sm:text-base">
+                                {{ $item->nama_produk }}</td>
+
+                            <td class="py-4 px-4 text-sm text-gray-500">
+                                <span class="bg-gray-100 text-gray-600 px-2.5 py-1 rounded-lg text-xs font-medium">
+                                    {{ $item->category?->nama_kategori ?? '-' }}
+                                </span>
+                            </td>
+
+                            <td class="py-4 px-4 font-medium text-gray-800 text-sm">
+                                {{ $item->formatted_harga_jual ?? 'Rp ' . number_format($item->harga_jual, 0, ',', '.') }}
+                            </td>
+
+                            <td class="py-4 px-4 text-sm">
+                                @if (method_exists($item, 'isLowStock') && $item->isLowStock())
+                                    <div class="inline-flex flex-col">
+                                        <span
+                                            class="px-2.5 py-0.5 rounded-full bg-red-50 text-red-600 font-bold text-xs inline-flex items-center gap-1">
+                                            ⚠️ {{ $item->stok }}
+                                        </span>
+                                        <span class="text-[10px] text-red-500 font-bold mt-0.5 pl-1">Menipis!</span>
+                                    </div>
+                                @else
+                                    <span
+                                        class="px-2.5 py-0.5 rounded-full bg-gray-100 text-gray-700 font-medium text-xs">
+                                        {{ $item->stok }}
+                                    </span>
+                                @endif
+                            </td>
+
+                            <td class="py-4 px-4 whitespace-nowrap">
+                                <span
+                                    class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold {{ $item->is_active ? 'bg-emerald-50 text-emerald-700' : 'bg-rose-50 text-rose-600' }}">
+                                    <span
+                                        class="w-1.5 h-1.5 rounded-full mr-1.5 {{ $item->is_active ? 'bg-emerald-500' : 'bg-rose-500' }}"></span>
+                                    {{ $item->is_active ? 'Aktif' : 'Nonaktif' }}
+                                </span>
+                            </td>
+
+                            <td class="py-4 px-4 whitespace-nowrap text-sm font-medium text-right">
+                                <div class="flex items-center justify-end gap-2">
+                                    <a href="{{ route('produk.edit', $item) }}"
+                                        class="inline-flex items-center px-3 py-1.5 bg-white border border-gray-200 hover:border-blue-300 text-blue-600 hover:bg-blue-50 text-xs font-semibold rounded-lg shadow-sm transition-all">
+                                        ✏️ Edit
+                                    </a>
+                                    <form method="POST" action="{{ route('produk.destroy', $item) }}" class="inline">
+                                        @method('DELETE')
+                                        @csrf
+                                        <button
+                                            onclick="return confirm('Apakah Anda yakin ingin menghapus produk {{ $item->nama_produk }}?')"
+                                            class="inline-flex items-center px-3 py-1.5 bg-white border border-gray-200 hover:border-red-300 text-red-600 hover:bg-red-50 text-xs font-semibold rounded-lg shadow-sm transition-all">
+                                            🗑️ Hapus
+                                        </button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    @empty
+                        {{-- Keadaan Kosong (Empty State) yang Cantik --}}
+                        <tr>
+                            <td colspan="7" class="text-center text-gray-400 py-12">
+                                <div class="max-w-xs mx-auto flex flex-col items-center">
+                                    <span class="text-4xl mb-2">📦</span>
+                                    <p class="text-sm font-bold text-gray-500">Tidak ada produk ditemukan</p>
+                                    <p class="text-xs text-gray-400 mt-1">Coba sesuaikan kata kunci pencarian atau
+                                        bersihkan filter Anda.</p>
+                                </div>
+                            </td>
+                        </tr>
+                    @endforelse
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    {{-- Navigasi Halaman (Pagination) --}}
+    <div class="mt-6 pt-4 border-t border-gray-100">
         {{ $produk->links() }}
     </div>
 </div>

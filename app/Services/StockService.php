@@ -16,7 +16,7 @@ class StockService
     StockMovement::create([
       'warung_id' => $product->warung_id,
       'product_id' => $product->id,
-      'user_id' => auth()->id(),
+      'user_id' => \Illuminate\Support\Facades\Auth::id(),
       'transaction_id' => null, // manual, bukan dari transaksi
       'type' => 'in',
       'quantity' => $jumlah,
@@ -38,7 +38,7 @@ class StockService
     StockMovement::create([
       'warung_id' => $product->warung_id,
       'product_id' => $product->id,
-      'user_id' => auth()->id(),
+      'user_id' => \Illuminate\Support\Facades\Auth::id(),
       'transaction_id' => $transactionId,
       'type' => 'out',
       'quantity' => $jumlah,

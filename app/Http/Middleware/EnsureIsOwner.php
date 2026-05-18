@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Support\Facades\Auth;
 
 class EnsureIsOwner
 {
@@ -15,13 +16,13 @@ class EnsureIsOwner
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (! auth()->check()) {
+        if (!Auth::check()) {
             return redirect()->route('login');
         }
 
-        $user = auth()->user();
+        $user = Auth::user();
 
-        if (! $user->isOwner()) {
+        if (!$user->isOwner()) {
             // Kasir diarahkan ke POS, bukan diblock total
             if ($user->isKasir()) {
                 return redirect()->route('pos.index')

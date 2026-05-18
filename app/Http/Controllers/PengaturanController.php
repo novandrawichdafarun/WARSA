@@ -6,18 +6,19 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
+use Illuminate\Support\Facades\Auth;
 
 class PengaturanController extends Controller
 {
     public function index(): View
     {
-        $warung = auth()->user()->warung;
+        $warung = Auth::user()->warung;
         return view('pengaturan.index', compact('warung'));
     }
 
     public function update(Request $request): RedirectResponse
     {
-        $warung = auth()->user()->warung;
+        $warung = Auth::user()->warung;
 
         $request->validate([
             'nama_warung' => [

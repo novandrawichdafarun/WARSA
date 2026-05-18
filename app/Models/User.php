@@ -85,7 +85,7 @@ class User extends Authenticatable
      */
     public function hasWarung(): bool
     {
-        return !is_null($this->warung_id);
+        return (bool) $this->warung_id;
     }
 
     /**

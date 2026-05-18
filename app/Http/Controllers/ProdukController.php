@@ -46,7 +46,7 @@ class ProdukController extends Controller
     public function store(StoreProdukRequest $request): RedirectResponse
     {
         $data = $request->validated();
-        $data['warung_id'] = auth()->user()->warung_id;
+        $data['warung_id'] = \Illuminate\Support\Facades\Auth::user()->warung_id;
         $data['is_active'] = $request->boolean('is_active', true);
 
         if ($request->hasFile('foto')) {
@@ -60,7 +60,7 @@ class ProdukController extends Controller
             StockMovement::create([
                 'warung_id' => $produk->warung_id,
                 'product_id' => $produk->id,
-                'user_id' => auth()->id(),
+                'user_id' => \Illuminate\Support\Facades\Auth::id(),
                 'type' => 'in',
                 'quantity' => $produk->stok,
                 'stok_sebelum' => 0,
@@ -86,7 +86,7 @@ class ProdukController extends Controller
      */
     public function edit(Product $produk): View
     {
-        abort_if($produk->warung_id !== auth()->user()->warung_id, 403);
+        abort_if($produk->warung_id !== \Illuminate\Support\Facades\Auth::user()->warung_id, 403);
 
         $kategori = Category::orderBy('nama_kategori')->get();
         $riwayatStok = StockMovement::where('product_id', $produk->id)
@@ -102,7 +102,7 @@ class ProdukController extends Controller
      */
     public function update(UpdateProdukRequest $request, Product $produk): RedirectResponse
     {
-        abort_if($produk->warung_id !== auth()->user()->warung_id, 403);
+        abort_if($produk->warung_id !== \Illuminate\Support\Facades\Auth::user()->warung_id, 403);
 
         $data = $request->validated();
         $data['is_active'] = $request->boolean('is_active');
@@ -125,7 +125,7 @@ class ProdukController extends Controller
      */
     public function destroy(Product $produk): RedirectResponse
     {
-        abort_if($produk->warung_id !== auth()->user()->warung_id, 403);
+        abort_if($produk->warung_id !== \Illuminate\Support\Facades\Auth::user()->warung_id, 403);
 
         if ($produk->foto) {
             Storage::disk('public')->delete($produk->foto);
@@ -139,7 +139,7 @@ class ProdukController extends Controller
 
     public function tambahStok(TambahStokRequest $request, Product $produk): RedirectResponse
     {
-        abort_if($produk->warung_id !== auth()->user()->warung_id, 403);
+        abort_if($produk->warung_id !== \Illuminate\Support\Facades\Auth::user()->warung_id, 403);
 
         $this->stockService->tambahStok(
             product: $produk,

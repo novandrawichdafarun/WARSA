@@ -6,12 +6,13 @@ use App\Models\Warung;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
+use Illuminate\Support\Facades\Auth;
 
 class WarungSetupController extends Controller
 {
     public function create(): View|RedirectResponse
     {
-        if (auth()->user()->hasWarung()) {
+        if (Auth::user()->hasWarung()) {
             return redirect()->route('dashboard');
         }
         return view('warung.setup');
@@ -31,7 +32,7 @@ class WarungSetupController extends Controller
             'telepon' => $request->telepon,
         ]);
 
-        auth()->user()->update(['warung_id' => $warung->id]);
+        Auth::user()->update(['warung_id' => $warung->id]);
 
         return redirect()->route('dashboard')
             ->with('success', 'Warung berhasil dibuat! Selamat datang di SIWARUNG.');

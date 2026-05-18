@@ -35,15 +35,16 @@
                             <h3 class="font-medium text-gray-800 mb-4">Logo Warung</h3>
 
                             <div class="w-full aspect-square bg-gray-50 border-2 border-dashed border-gray-200 rounded-xl flex items-center justify-center mb-3 overflow-hidden cursor-pointer"
-                                 onclick="document.getElementById('logo-input').click()">
+                                onclick="document.getElementById('logo-input').click()">
                                 @if ($warung->logo)
-                                    <img id="logo-preview"
-                                         src="{{ Storage::url($warung->logo) }}"
-                                         class="w-full h-full object-cover rounded-xl">
+                                    <img id="logo-preview" src="{{ Storage::url($warung->logo) }}"
+                                        class="w-full h-full object-cover rounded-xl">
                                 @else
-                                    <img id="logo-preview" src="" class="hidden w-full h-full object-cover rounded-xl">
+                                    <img id="logo-preview" src=""
+                                        class="hidden w-full h-full object-cover rounded-xl">
                                     <div id="logo-placeholder" class="text-center p-4">
-                                        <div class="w-16 h-16 bg-green-100 rounded-2xl flex items-center justify-center mx-auto mb-2">
+                                        <div
+                                            class="w-16 h-16 bg-green-100 rounded-2xl flex items-center justify-center mx-auto mb-2">
                                             <span class="text-green-700 font-bold text-2xl">
                                                 {{ strtoupper(substr($warung->nama_warung, 0, 2)) }}
                                             </span>
@@ -54,7 +55,7 @@
                             </div>
 
                             <input type="file" id="logo-input" name="logo" accept="image/*" class="hidden"
-                                   onchange="previewLogo(this)">
+                                onchange="previewLogo(this)">
                             <p class="text-xs text-gray-400 text-center">JPG, PNG — maks 2MB</p>
                             @error('logo')
                                 <p class="text-red-500 text-xs mt-1 text-center">{{ $message }}</p>
@@ -72,11 +73,9 @@
                                     <label class="block text-sm font-medium text-gray-700 mb-1">
                                         Nama Warung <span class="text-red-500">*</span>
                                     </label>
-                                    <input type="text"
-                                           name="nama_warung"
-                                           value="{{ old('nama_warung', $warung->nama_warung) }}"
-                                           required
-                                           class="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-500
+                                    <input type="text" name="nama_warung"
+                                        value="{{ old('nama_warung', $warung->nama_warung) }}" required
+                                        class="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-500
                                                   @error('nama_warung') border-red-400 @enderror">
                                     @error('nama_warung')
                                         <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
@@ -85,18 +84,15 @@
 
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700 mb-1">Alamat</label>
-                                    <textarea name="alamat" rows="3"
-                                              placeholder="Alamat lengkap warung"
-                                              class="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-500 resize-none">{{ old('alamat', $warung->alamat) }}</textarea>
+                                    <textarea name="alamat" rows="3" placeholder="Alamat lengkap warung"
+                                        class="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-500 resize-none">{{ old('alamat', $warung->alamat) }}</textarea>
                                 </div>
 
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700 mb-1">Nomor Telepon</label>
-                                    <input type="text"
-                                           name="telepon"
-                                           value="{{ old('telepon', $warung->telepon) }}"
-                                           placeholder="08123456789"
-                                           class="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-500">
+                                    <input type="text" name="telepon" value="{{ old('telepon', $warung->telepon) }}"
+                                        placeholder="08123456789"
+                                        class="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-500">
                                 </div>
 
                                 {{-- Info Slug --}}
@@ -110,7 +106,7 @@
 
                             <div class="flex justify-end mt-6">
                                 <button type="submit"
-                                        class="px-6 py-2.5 bg-green-600 hover:bg-green-700 text-white rounded-lg text-sm font-medium transition-colors shadow-sm">
+                                    class="px-6 py-2.5 bg-green-600 hover:bg-green-700 text-white rounded-lg text-sm font-medium transition-colors shadow-sm">
                                     Simpan Pengaturan
                                 </button>
                             </div>

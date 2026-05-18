@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Support\Facades\Auth;
 
 class EnsureIsKasir
 {
@@ -18,13 +19,13 @@ class EnsureIsKasir
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (! auth()->check()) {
+        if (!Auth::check()) {
             return redirect()->route('login');
         }
 
-        $user = auth()->user();
+        $user = Auth::user();
 
-        if (! $user->canAccessPOS()) {
+        if (!$user->canAccessPOS()) {
             abort(403, 'Akses ditolak.');
         }
 

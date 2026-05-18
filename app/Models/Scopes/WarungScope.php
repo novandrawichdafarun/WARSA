@@ -5,16 +5,17 @@ namespace App\Models\Scopes;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Scope;
+use Illuminate\Support\Facades\Auth;
 
 class WarungScope implements Scope
 {
     public function apply(Builder $builder, Model $model): void
     {
-        if (!auth()->check()) {
+        if (!Auth::check()) {
             return;
         }
 
-        $user = auth()->user();
+        $user = Auth::user();
 
         if ($user->role === 'super_admin') {
             return;

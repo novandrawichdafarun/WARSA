@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 use Override;
 
 class StoreProdukRequest extends FormRequest
@@ -13,7 +14,7 @@ class StoreProdukRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return auth()->user()->isOwner();
+        return Auth::user()->isOwner();
     }
 
     /**

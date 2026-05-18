@@ -36,7 +36,7 @@ class CategoryController extends Controller
     public function store(StoreCategoryRequest $request): RedirectResponse
     {
         Category::create([
-            'warung_id' => auth()->user()->warung_id,
+            'warung_id' => \Illuminate\Support\Facades\Auth::user()->warung_id,
             'nama_kategori' => $request->nama_kategori,
         ]);
 
@@ -73,7 +73,7 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category): RedirectResponse
     {
-        abort_if($category->warung_id !== auth()->user()->warung_id, 403);
+        abort_if($category->warung_id !== \Illuminate\Support\Facades\Auth::user()->warung_id, 403);
         $category->delete();
         return redirect()->route('kategori.index')
             ->with('success', 'Kategori berhasil dihapus.');

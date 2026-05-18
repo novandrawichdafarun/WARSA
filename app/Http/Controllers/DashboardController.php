@@ -5,12 +5,13 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
+use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
     public function index(): View
     {
-        $warung = auth()->user()->warung;
+        $warung = Auth::user()->warung;
 
         $data = [
             'warung' => $warung,
