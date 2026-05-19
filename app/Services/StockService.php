@@ -26,7 +26,7 @@ class StockService
     ]);
   }
 
-  public function kurangStok(Product $product, int $jumlah, int $transactionId, string $keterangan = null): void
+  public function kurangiStok(Product $product, int $jumlah, int $transactionId, string $keterangan = null): void
   {
     abort_if(!$product->hasEnoughStock($jumlah), 422, 'Stok tidak mencukupi');
 

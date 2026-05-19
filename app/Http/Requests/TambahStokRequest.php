@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class TambahStokRequest extends FormRequest
 {
@@ -12,7 +13,7 @@ class TambahStokRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return Auth::user()->isOwner();
     }
 
     /**
@@ -23,6 +24,7 @@ class TambahStokRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'product_id' => ['required_without:produk_id', 'nullable', 'exists:products,id'],
             'jumlah' => ['required', 'integer', 'min:1'],
             'keterangan' => ['nullable', 'string', 'max:255'],
         ];

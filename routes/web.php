@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\KaryawanController;
@@ -8,6 +7,7 @@ use App\Http\Controllers\PengaturanController;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\WarungSetupController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\StockController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -43,7 +43,14 @@ Route::middleware(['auth', 'warung.setup', 'owner'])->group(function () {
     Route::resource('kategori', CategoryController::class)
         ->only(['index', 'store', 'destroy']);
 
-    // Route::resource('stok', StokController::class);
+    Route::resource('stok', StockController::class);
+    Route::get('/stok', [StockController::class, 'index'])
+        ->name('stok.index');
+    Route::get('/stok/tambah', [StockController::class, 'create'])
+        ->name('stok.create');
+    Route::post('/stok/tambah', [StockController::class, 'store'])
+        ->name('stok.store');
+
     // Route::get('/laporan', [LaporanController::class, 'index']);
 });
 

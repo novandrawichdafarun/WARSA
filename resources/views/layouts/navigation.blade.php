@@ -19,7 +19,7 @@
                         {{-- Dashboard — semua role --}}
                         <a href="{{ route('dashboard') }}"
                             class="px-3 py-2 rounded-md text-sm font-medium transition-colors
-                                  {{ request()->routeIs('dashboard') ? 'bg-green-100 text-green-700' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100' }}">
+                            {{ request()->routeIs('dashboard') ? 'bg-green-100 text-green-700' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100' }}">
                             Dashboard
                         </a>
 
@@ -27,7 +27,7 @@
                         @if (auth()->user()->canAccessPOS())
                             <a href="{{ route('pos.index') }}"
                                 class="px-3 py-2 rounded-md text-sm font-medium transition-colors
-                                  {{ request()->routeIs('pos.*') ? 'bg-green-100 text-green-700' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100' }}">
+                                {{ request()->routeIs('pos.*') ? 'bg-green-100 text-green-700' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100' }}">
                                 Kasir / POS
                             </a>
                         @endif
@@ -36,17 +36,23 @@
                         @if (auth()->user()->isOwner())
                             <a href="{{ route('produk.index') }}"
                                 class="px-3 py-2 rounded-md text-sm font-medium transition-colors
-                                  {{ request()->routeIs('produk.*') ? 'bg-green-100 text-green-700' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100' }}">
+                                {{ request()->routeIs('produk.*') ? 'bg-green-100 text-green-700' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100' }}">
                                 Produk
+                            </a>
+
+                            <a href="{{ route('stok.index') }}"
+                                class="px-3 py-2 rounded-md text-sm font-medium transition-colors
+                                {{ request()->routeIs('stok.*') ? 'bg-green-100 text-green-700' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100' }}">
+                                Stok
                             </a>
                             <a href="{{ route('kategori.index') }}"
                                 class="px-3 py-2 rounded-md text-sm font-medium transition-colors
-                                  {{ request()->routeIs('kategori.*') ? 'bg-green-100 text-green-700' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100' }}">
+                                {{ request()->routeIs('kategori.*') ? 'bg-green-100 text-green-700' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100' }}">
                                 Kategori
                             </a>
                             <a href="{{ route('karyawan.index') }}"
                                 class="px-3 py-2 rounded-md text-sm font-medium transition-colors
-                                  {{ request()->routeIs('karyawan.*') ? 'bg-green-100 text-green-700' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100' }}">
+                                {{ request()->routeIs('karyawan.*') ? 'bg-green-100 text-green-700' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100' }}">
                                 Karyawan
                             </a>
                         @endif
@@ -108,8 +114,9 @@
                 <button @click="open = !open"
                     class="p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100">
                     <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path :class="{ 'hidden': open, 'inline-flex': !open }" class="inline-flex" stroke-linecap="round"
-                            stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        <path :class="{ 'hidden': open, 'inline-flex': !open }" class="inline-flex"
+                            stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 6h16M4 12h16M4 18h16" />
                         <path :class="{ 'hidden': !open, 'inline-flex': open }" class="hidden" stroke-linecap="round"
                             stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
                     </svg>

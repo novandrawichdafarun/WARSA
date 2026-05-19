@@ -43,4 +43,3 @@ class ProdukTable extends Component
     $this->filterStatus = '';
   }
 }
-;

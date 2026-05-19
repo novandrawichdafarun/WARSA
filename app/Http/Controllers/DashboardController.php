@@ -19,6 +19,7 @@ class DashboardController extends Controller
             'produk_low_stock' => Product::lowStock()->count(),
             'total_transaksi_hari_ini' => 0,
             'omset_hari_ini' => 0,
+            'produk_low_stock_list' => Product::lowStock()->active()->with('category')->take(5)->get(),
         ];
 
         return view('dashboard', $data);

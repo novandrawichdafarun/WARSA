@@ -18,7 +18,32 @@
                 </div>
             @endif
         </div>
+        {{-- Alert Stok Menipis — tampil hanya jika ada --}}
+        @if ($produk_low_stock_list->isNotEmpty())
+            <div class="bg-amber-50 border border-amber-200 rounded-2xl p-5 mt-3">
+                <div class="flex items-center justify-between mb-3">
+                    <p class="font-semibold text-amber-800 flex items-center gap-2">
+                        ⚠️ Stok Menipis ({{ $produk_low_stock }} produk)
+                    </p>
+                    <a href="{{ route('stok.index') }}" class="text-xs text-amber-600 hover:text-amber-800 underline">
+                        Lihat semua →
+                    </a>
+                </div>
+                <div class="flex flex-wrap gap-2">
+                    @foreach ($produk_low_stock_list as $produk)
+                        <a href="{{ route('produk.edit', $produk) }}"
+                            class="px-3 py-1.5 bg-white border border-amber-200 rounded-lg text-xs
+                          hover:border-amber-400 transition-colors flex items-center gap-2">
+                            <span class="font-medium">{{ $produk->nama_produk }}</span>
+                            <span class="text-red-600 font-bold">{{ $produk->stok }} sisa</span>
+                        </a>
+                    @endforeach
+                </div>
+            </div>
+        @endif
     </x-slot>
+
+
 
     <div class="py-8">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
