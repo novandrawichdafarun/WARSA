@@ -10,7 +10,7 @@
         </div>
     </x-slot>
 
-    <div class="py-16">
+    <div>
         <livewire:pos-kasir />
     </div>
 </x-app-layout>

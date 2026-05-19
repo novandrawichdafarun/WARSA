@@ -17,14 +17,14 @@
                 {{-- Card: Total Masuk Hari Ini --}}
                 <div class="bg-white rounded-xl p-5 border border-gray-100 shadow-sm">
                     <p class="text-xs text-gray-400 uppercase font-semibold mb-1">Stok Masuk Hari Ini</p>
-                    <p class="text-3xl font-bold text-green-600">+{{ $totalMasukHariIni }}</p>
+                    <p class="text-3xl font-bold text-green-600">{{ $totalMasukHariIni }}</p>
                     <p class="text-xs text-gray-400 mt-1">unit dari semua produk</p>
                 </div>
 
                 {{-- Card: Total Keluar Hari Ini --}}
                 <div class="bg-white rounded-xl p-5 border border-gray-100 shadow-sm">
                     <p class="text-xs text-gray-400 uppercase font-semibold mb-1">Stok Keluar Hari Ini</p>
-                    <p class="text-3xl font-bold text-red-500">-{{ $totalKeluarHariIni }}</p>
+                    <p class="text-3xl font-bold text-red-500">{{ $totalKeluarHariIni }}</p>
                     <p class="text-xs text-gray-400 mt-1">unit terjual/dikurangi</p>
                 </div>
 

@@ -40,9 +40,9 @@
 [x] navigation.blade.php — link Stok ditambah
 [x] DashboardController — tambah produk_low_stock_list
 [x] dashboard.blade.php — tampilkan alert low stock
-[ ] Test: filter kombinasi berjalan di halaman stok
-[ ] Test: tambah stok manual → tercatat di riwayat
-[ ] Test: alert low stock muncul di dashboard dan stok/index
+[x] Test: filter kombinasi berjalan di halaman stok
+[x] Test: tambah stok manual → tercatat di riwayat
+[x] Test: alert low stock muncul di dashboard dan stok/index
 
 ## Sprint 4 Checklist
 
@@ -64,3 +64,8 @@
 [ ] Test QRIS: QR muncul → polling aktif → after webhook paid → redirect struk
 [ ] Test webhook: signature valid → status update → stok berkurang
 [ ] Test: komisi tercatat di commission_ledger setiap transaksi paid
+
+## Menambahkan user dengan role pelanggan untuk membedakan akses UI antara pelanggan dan kasir/owner dimana:
+
+- Pelanggan hanya bisa melihat menu POS dengan fitur pembelian saja dengan metode pembayaran qris
+- Kasir/Owner bisa melihat menu POS dengan fitur pembelian dan stok produk dan metode pembayaran cash dan qris

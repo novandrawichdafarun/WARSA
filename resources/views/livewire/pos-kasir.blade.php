@@ -1,4 +1,4 @@
-<div class="flex h-[calc(100vh-4rem)]">
+<div class="flex h-[calc(100vh-4rem)] border-t border-gray-200 bg-gray-50">
 
     {{-- ===== SISI KIRI: Daftar Produk ===== --}}
     <div class="flex-1 flex flex-col overflow-hidden border-r border-gray-200">
@@ -21,7 +21,7 @@
                 {{-- Toggle Mode --}}
                 <button wire:click="toggleMode"
                     class="ml-3 px-3 py-2 border rounded-lg text-xs font-medium transition-colors
-                               {{ $mode === 'katalog' ? 'bg-green-600 text-white border-green-600' : 'bg-white text-gray-600 border-gray-200' }}">
+                    {{ $mode === 'katalog' ? 'bg-green-600 text-white border-green-600' : 'bg-white text-gray-600 border-gray-200' }}">
                     {{ $mode === 'klasik' ? '🏪 Mode Katalog' : '⌨️ Mode Kasir' }}
                 </button>
             </div>
@@ -44,9 +44,8 @@
 
                 @forelse ($produk as $item)
                     <button wire:click="tambahKeKeranjang({{ $item->id }})"
-                        class="bg-white border border-gray-100 rounded-xl overflow-hidden hover:border-green-400
-                                   hover:shadow-md transition-all text-left group
-                                   {{ $item->stok <= 0 ? 'opacity-50 cursor-not-allowed' : '' }}"
+                        class="bg-white border border-gray-100 rounded-xl overflow-hidden hover:border-green-400 shadow-md transition-all text-left group
+                        {{ $item->stok <= 0 ? 'opacity-50 cursor-not-allowed' : '' }}"
                         {{ $item->stok <= 0 ? 'disabled' : '' }}>
 
                         {{-- Foto --}}
@@ -66,9 +65,8 @@
                                 Rp {{ number_format($item->harga_jual, 0, ',', '.') }}
                             </p>
                             <p class="text-xs text-gray-400 mt-0.5">
-                                Stok: {{ $item->stok }}
                                 @if ($item->isLowStock())
-                                    <span class="text-red-500">⚠</span>
+                                    <span class="text-red-500">Stok Habis ⚠</span>
                                 @endif
                             </p>
                         </div>
@@ -90,8 +88,8 @@
     <div class="w-80 lg:w-96 flex flex-col bg-white">
 
         {{-- Header Keranjang --}}
-        <div class="px-4 py-3 border-b border-gray-100 flex items-center justify-between">
-            <h3 class="font-semibold text-gray-800">
+        <div class="px-4 py-9 border-b border-gray-100 flex items-center justify-between">
+            <h3 class="font-semibold text-lg text-gray-800">
                 Keranjang
                 @if ($totalItems > 0)
                     <span class="ml-1 bg-green-600 text-white text-xs rounded-full px-2 py-0.5">

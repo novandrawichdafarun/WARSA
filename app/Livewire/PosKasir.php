@@ -89,11 +89,9 @@ class PosKasir extends Component
 
   public function hapusDariKeranjang(int $productId): void
   {
-    unset($this->keranjang[$productId]);
-
-    $this->keranjang = array_values(
-      array_filter($this->keranjang)
-    );
+    if (isset($this->keranjang[$productId])) {
+      unset($this->keranjang[$productId]);
+    }
   }
 
   public function kosongkanKeranjang(): void
