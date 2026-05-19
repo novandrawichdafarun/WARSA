@@ -43,3 +43,24 @@
 [ ] Test: filter kombinasi berjalan di halaman stok
 [ ] Test: tambah stok manual → tercatat di riwayat
 [ ] Test: alert low stock muncul di dashboard dan stok/index
+
+## Sprint 4 Checklist
+
+[x] Routes transaksi & webhook ditambahkan ke web.php
+[x] Webhook dikecualikan dari CSRF di bootstrap/app.php
+[x] CommissionService dibuat
+[x] TransactionService dibuat (create, settle, cancel)
+[x] MidtransService dibuat (createQris, verifySignature)
+[x] config/services.php diisi konfigurasi Midtrans
+[ ] .env diisi MIDTRANS_SERVER_KEY & CLIENT_KEY
+[x] Livewire PosKasir dibuat
+[x] livewire/pos-kasir.blade.php selesai
+[x] WebhookController dibuat
+[x] TransaksiController dibuat
+[x] pos/index.blade.php diupdate pakai @livewire('pos-kasir')
+[x] transaksi/struk.blade.php selesai
+[x] transaksi/riwayat.blade.php selesai
+[x] Test cash: transaksi → stok berkurang → struk tampil
+[ ] Test QRIS: QR muncul → polling aktif → after webhook paid → redirect struk
+[ ] Test webhook: signature valid → status update → stok berkurang
+[ ] Test: komisi tercatat di commission_ledger setiap transaksi paid

@@ -20,6 +20,17 @@ return Application::configure(basePath: dirname(__DIR__))
             'warung.setup' => EnsureWarungSetup::class,
         ]);
     })
+    ->withMiddleware(function (Middleware $middleware) {
+        $middleware->preventRequestForgery(except: [
+            'webhook/midtrans',
+        ]);
+
+        $middleware->alias([
+            'owner' => EnsureIsOwner::class,
+            'kasir' => EnsureIsKasir::class,
+            'warung.setup' => EnsureWarungSetup::class,
+        ]);
+    })
     ->withExceptions(function (Exceptions $exceptions): void {
         //
     })->create();

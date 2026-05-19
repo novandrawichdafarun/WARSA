@@ -8,6 +8,8 @@ use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\WarungSetupController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StockController;
+use App\Http\Controllers\TransaksiController;
+use App\Http\Controllers\WebhookController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -25,6 +27,9 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+// ============================================================
+// OWNER WARUNG 
+// ============================================================
 Route::middleware(['auth', 'warung.setup', 'owner'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])
         ->name('dashboard');
@@ -54,14 +59,36 @@ Route::middleware(['auth', 'warung.setup', 'owner'])->group(function () {
     // Route::get('/laporan', [LaporanController::class, 'index']);
 });
 
+// ============================================================
+// KASIR WARUNG
+// ============================================================
 Route::middleware(['auth', 'warung.setup', 'kasir'])->group(function () {
-    Route::get('/pos', function () {
-        return view('pos.index');
-    })->name('pos.index');
+    Route::get('/pos', [TransaksiController::class, 'pos'])
+        ->name('pos.index');
 
-    Route::get('/transaksi/riwayat', function () {
-        return view('transaksi.riwayat');
-    })->name('transaksi.riwayat');
+    Route::post('/transaksi', [TransaksiController::class, 'store'])
+        ->name('transaksi.store');
+    Route::get('/transaksi/{transaksi}/status', [TransaksiController::class, 'checkStatus'])
+        ->name('transaksi.status');
+    Route::get('/transaksi/{transaksi}/struk', [TransaksiController::class, 'struk'])
+        ->name('transaksi.struk');
+    Route::get('/transaksi/riwayat', [TransaksiController::class, 'riwayat'])
+        ->name('transaksi.riwayat');
+    Route::patch('/transaksi/{transaksi}/batal', [TransaksiController::class, 'batal'])
+        ->name('transaksi.batal');
 });
+
+// Route::middleware(['auth', 'warung.setup', 'kasir'])->group(function () {
+//     Route::get('/pos', function () {
+//         return view('pos.index');
+//     })->name('pos.index');
+
+//     Route::get('/transaksi/riwayat', function () {
+//         return view('transaksi.riwayat');
+//     })->name('transaksi.riwayat');
+// });
+
+Route::post('/webhook/midtrans', [WebhookController::class, 'handle'])
+    ->name('webhook.midtrans');
 
 require __DIR__ . '/auth.php';
