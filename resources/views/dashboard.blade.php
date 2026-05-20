@@ -33,7 +33,7 @@
                     @foreach ($produk_low_stock_list as $produk)
                         <a href="{{ route('produk.edit', $produk) }}"
                             class="px-3 py-1.5 bg-white border border-amber-200 rounded-lg text-xs
-                          hover:border-amber-400 transition-colors flex items-center gap-2">
+                            hover:border-amber-400 transition-colors flex items-center gap-2">
                             <span class="font-medium">{{ $produk->nama_produk }}</span>
                             <span class="text-red-600 font-bold">{{ $produk->stok }} sisa</span>
                         </a>
@@ -154,4 +154,65 @@
 
         </div>
     </div>
+
+    {{-- Chart Omset 30 hari terakhir --}}
+    <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+        <div class="flex items-center justify-between mb-4">
+            <h3 class="font-bold text-gray-800">Omset Bulan Ini</h3>
+            <a href="{{ route('laporan.index') }}" class="text-xs text-green-600 hover:underline">
+                Lihat laporan lengkap →
+            </a>
+        </div>
+        <canvas id="dashboardChart" height="80"></canvas>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script>
+        const labels = @json($chart_harian->pluck('tanggal'));
+        const data = @json($chart_harian->pluck('omset'));
+
+        new Chart(document.getElementById('dashboardChart'), {
+            type: 'line',
+            data: {
+                labels: labels.map(d => new Date(d).toLocaleDateString('id-ID', {
+                    day: 'numeric',
+                    month: 'short'
+                })),
+                datasets: [{
+                    label: 'Omset',
+                    data: data,
+                    borderColor: '#16a34a',
+                    backgroundColor: 'rgba(22, 163, 74, 0.05)',
+                    borderWidth: 2,
+                    fill: true,
+                    tension: 0.4,
+                    pointRadius: 3,
+                }]
+            },
+            options: {
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    y: {
+                        ticks: {
+                            callback: val => 'Rp ' + val.toLocaleString('id-ID'),
+                            font: {
+                                size: 9
+                            }
+                        }
+                    },
+                    x: {
+                        ticks: {
+                            font: {
+                                size: 9
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    </script>
 </x-app-layout>

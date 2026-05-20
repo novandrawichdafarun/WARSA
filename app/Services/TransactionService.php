@@ -77,7 +77,7 @@ class TransactionService
         ]);
       }
 
-      return $transaction->fresh(['items', 'comminssionLedger']);
+      return $transaction->fresh(['items', 'commissionLedger']);
     });
   }
 

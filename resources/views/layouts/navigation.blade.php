@@ -55,6 +55,11 @@
                                 {{ request()->routeIs('karyawan.*') ? 'bg-green-100 text-green-700' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100' }}">
                                 Karyawan
                             </a>
+                            <a href="{{ route('laporan.index') }}"
+                                class="px-3 py-2 rounded-md text-sm font-medium transition-colors
+                                {{ request()->routeIs('laporan.*') ? 'bg-green-100 text-green-700' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100' }}">
+                                Laporan
+                            </a>
                         @endif
                     @endauth
                 </div>

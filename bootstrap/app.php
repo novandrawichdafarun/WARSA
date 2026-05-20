@@ -13,13 +13,6 @@ return Application::configure(basePath: dirname(__DIR__))
         commands: __DIR__ . '/../routes/console.php',
         health: '/up',
     )
-    ->withMiddleware(function (Middleware $middleware): void {
-        $middleware->alias([
-            'owner' => EnsureIsOwner::class,
-            'kasir' => EnsureIsKasir::class,
-            'warung.setup' => EnsureWarungSetup::class,
-        ]);
-    })
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->preventRequestForgery(except: [
             'webhook/midtrans',

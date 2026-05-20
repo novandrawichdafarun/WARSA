@@ -65,6 +65,29 @@
 [ ] Test webhook: signature valid → status update → stok berkurang
 [ ] Test: komisi tercatat di commission_ledger setiap transaksi paid
 
+## Sprint 5 Checklist
+
+[x] Routes laporan ditambahkan ke web.php (4 routes)
+[x] LaporanService dibuat (getSummary + parsePeriode)
+[x] LaporanController dibuat (index, exportPdf, exportExcel, komisi)
+[x] app/Exports/ folder dibuat
+[x] LaporanExport.php (WithMultipleSheets)
+[x] LaporanSummarySheet.php
+[x] LaporanTransaksiSheet.php
+[x] LaporanProdukSheet.php
+[x] resources/views/laporan/pdf.blade.php
+[x] resources/views/laporan/index.blade.php
+[x] resources/views/laporan/komisi.blade.php
+[x] navigation.blade.php — link Laporan ditambah
+[x] DashboardController diupdate pakai LaporanService
+[x] dashboard.blade.php — chart ditambah
+[ ] Test: filter preset berjalan (hari ini, minggu ini, dll)
+[ ] Test: filter tanggal custom berjalan
+[ ] Test: export PDF terunduh dan isinya benar
+[ ] Test: export Excel terunduh 3 sheet (Ringkasan, Transaksi, Produk)
+[ ] Test: chart di dashboard tampil dengan data yang benar
+[ ] Test: laporan komisi menampilkan breakdown per transaksi
+
 ## Menambahkan user dengan role pelanggan untuk membedakan akses UI antara pelanggan dan kasir/owner dimana:
 
 - Pelanggan hanya bisa melihat menu POS dengan fitur pembelian saja dengan metode pembayaran qris

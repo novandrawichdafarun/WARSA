@@ -3,6 +3,7 @@
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\KaryawanController;
+use App\Http\Controllers\LaporanController;
 use App\Http\Controllers\PengaturanController;
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\WarungSetupController;
@@ -48,7 +49,6 @@ Route::middleware(['auth', 'warung.setup', 'owner'])->group(function () {
     Route::resource('kategori', CategoryController::class)
         ->only(['index', 'store', 'destroy']);
 
-    Route::resource('stok', StockController::class);
     Route::get('/stok', [StockController::class, 'index'])
         ->name('stok.index');
     Route::get('/stok/tambah', [StockController::class, 'create'])
@@ -56,7 +56,14 @@ Route::middleware(['auth', 'warung.setup', 'owner'])->group(function () {
     Route::post('/stok/tambah', [StockController::class, 'store'])
         ->name('stok.store');
 
-    // Route::get('/laporan', [LaporanController::class, 'index']);
+    Route::get('/laporan', [LaporanController::class, 'index'])
+        ->name('laporan.index');
+    Route::get('/laporan/export/pdf', [LaporanController::class, 'exportPdf'])
+        ->name('laporan.export.pdf');
+    Route::get('/laporan/export/excel', [LaporanController::class, 'exportExcel'])
+        ->name('laporan.export.excel');
+    Route::get('/laporan/komisi', [LaporanController::class, 'komisi'])
+        ->name('laporan.komisi');
 });
 
 // ============================================================
