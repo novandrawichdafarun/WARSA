@@ -63,7 +63,7 @@
 [x] Test cash: transaksi → stok berkurang → struk tampil
 [ ] Test QRIS: QR muncul → polling aktif → after webhook paid → redirect struk
 [ ] Test webhook: signature valid → status update → stok berkurang
-[ ] Test: komisi tercatat di commission_ledger setiap transaksi paid
+[x] Test: komisi tercatat di commission_ledger setiap transaksi paid
 
 ## Sprint 5 Checklist
 
@@ -82,11 +82,11 @@
 [x] DashboardController diupdate pakai LaporanService
 [x] dashboard.blade.php — chart ditambah
 [ ] Test: filter preset berjalan (hari ini, minggu ini, dll)
-[ ] Test: filter tanggal custom berjalan
-[ ] Test: export PDF terunduh dan isinya benar
-[ ] Test: export Excel terunduh 3 sheet (Ringkasan, Transaksi, Produk)
-[ ] Test: chart di dashboard tampil dengan data yang benar
-[ ] Test: laporan komisi menampilkan breakdown per transaksi
+[x] Test: filter tanggal custom berjalan
+[x] Test: export PDF terunduh dan isinya benar
+[x] Test: export Excel terunduh 3 sheet (Ringkasan, Transaksi, Produk)
+[x] Test: chart di dashboard tampil dengan data yang benar
+[x] Test: laporan komisi menampilkan breakdown per transaksi
 
 ## Menambahkan user dengan role pelanggan untuk membedakan akses UI antara pelanggan dan kasir/owner dimana:
 

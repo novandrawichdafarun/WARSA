@@ -149,6 +149,8 @@
                         class="block px-3 py-2 rounded-md text-sm text-gray-700 hover:bg-gray-100">Karyawan</a>
                     <a href="{{ route('pengaturan.index') }}"
                         class="block px-3 py-2 rounded-md text-sm text-gray-700 hover:bg-gray-100">Pengaturan</a>
+                    <a href="{{ route('laporan.index') }}"
+                        class="block px-3 py-2 rounded-md text-sm text-gray-700 hover:bg-gray-100">Laporan</a>
                 @endif
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf

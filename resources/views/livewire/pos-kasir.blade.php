@@ -65,8 +65,10 @@
                                 Rp {{ number_format($item->harga_jual, 0, ',', '.') }}
                             </p>
                             <p class="text-xs text-gray-400 mt-0.5">
-                                @if ($item->isLowStock())
-                                    <span class="text-red-500">Stok Habis ⚠</span>
+                                @if ($item->stok <= 0)
+                                    <span class="text-red-600 font-bold">Stok Habis ⚠</span>
+                                @elseif ($item->isLowStock())
+                                    <span class="text-orange-500 font-medium">Stok Menipis ⚠</span>
                                 @endif
                             </p>
                         </div>
@@ -163,16 +165,16 @@
                         <div class="grid grid-cols-2 gap-2">
                             <button wire:click="$set('paymentMethod', 'cash')"
                                 class="py-2.5 rounded-xl text-sm font-semibold border-2 transition-all
-                                           {{ $paymentMethod === 'cash'
-                                               ? 'border-green-500 bg-green-50 text-green-700'
-                                               : 'border-gray-200 text-gray-500 hover:border-gray-300' }}">
+                                {{ $paymentMethod === 'cash'
+                                    ? 'border-green-500 bg-green-50 text-green-700'
+                                    : 'border-gray-200 text-gray-500 hover:border-gray-300' }}">
                                 💵 Cash
                             </button>
                             <button wire:click="$set('paymentMethod', 'qris')"
                                 class="py-2.5 rounded-xl text-sm font-semibold border-2 transition-all
-                                           {{ $paymentMethod === 'qris'
-                                               ? 'border-blue-500 bg-blue-50 text-blue-700'
-                                               : 'border-gray-200 text-gray-500 hover:border-gray-300' }}">
+                                {{ $paymentMethod === 'qris'
+                                    ? 'border-blue-500 bg-blue-50 text-blue-700'
+                                    : 'border-gray-200 text-gray-500 hover:border-gray-300' }}">
                                 📱 QRIS
                             </button>
                         </div>
@@ -181,7 +183,7 @@
                     {{-- Tombol Proses --}}
                     <button wire:click="prosesCheckout" wire:loading.attr="disabled"
                         class="w-full py-3 bg-green-600 hover:bg-green-700 disabled:bg-green-400
-                                   text-white font-bold rounded-xl transition-colors shadow-sm">
+                        text-white font-bold rounded-xl transition-colors shadow-sm">
                         <span wire:loading.remove>
                             {{ $paymentMethod === 'cash' ? '✓ Bayar Cash' : '📱 Generate QRIS' }}
                         </span>
@@ -202,7 +204,7 @@
                 </div>
 
                 {{-- Container QRIS — Midtrans Snap inject QR di sini --}}
-                <div id="snap-container" data-snap-token="{{ $snapToken }}"
+                <div id="snap-container" wire:ignore data-snap-token="{{ $snapToken }}"
                     class="w-full max-w-xs bg-white border-2 border-dashed border-gray-200 rounded-2xl
                             flex items-center justify-center min-h-64">
                     <div class="text-center text-gray-400">

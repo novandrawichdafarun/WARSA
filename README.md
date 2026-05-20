@@ -1,58 +1,288 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="SiWarung Logo"></a></p>
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## About SiWarung
 
-## About Laravel
+SiWarung adalah aplikasi manajemen warung berbasis Laravel. Dokumentasi ini menjelaskan instalasi, konfigurasi, arsitektur, perintah penting, deploy, testing, dan panduan kontribusi. Sesuaikan bagian "Fitur" dan variabel .env sesuai kebutuhan proyek Anda.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+---
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Fitur (contoh — sesuaikan)
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- Otentikasi pengguna (login/register, reset password)
+- Manajemen produk & kategori
+- Manajemen stok & supplier
+- Transaksi / Penjualan (kasir)
+- Laporan penjualan & stok
+- Role & permission
+- API dasar untuk integrasi
 
-## Learning Laravel
+---
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Prasyarat
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+- Windows (Laragon direkomendasikan) atau Linux
+- PHP 8.1+ (sesuaikan dengan versi Laravel)
+- Composer
+- Node.js 16+ / npm atau yarn
+- MySQL / MariaDB / PostgreSQL
+- (Opsional) Redis untuk cache/queue
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+---
 
-## Agentic Development
+## Instalasi (Lokal - Laragon / Windows)
 
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+1. Clone repository:
+    ```bash
+    git clone <repo-url> d:\laragon\www\siwarung
+    cd d:\laragon\www\siwarung
+    ```
+2. Install dependensi PHP:
+    ```bash
+    composer install
+    ```
+3. Salin file lingkungan dan buat app key:
+    - CMD: `copy .env.example .env`
+    - PowerShell/Git Bash: `cp .env.example .env`
+    ```bash
+    php artisan key:generate
+    ```
+4. Sesuaikan `.env` (DB, MAIL, APP_URL, dsb).
+5. Migrasi dan seeding:
+    ```bash
+    php artisan migrate --seed
+    ```
+6. Link storage:
+    ```bash
+    php artisan storage:link
+    ```
+7. Build aset frontend:
+    ```bash
+    npm install
+    npm run dev   # atau npm run build untuk produksi
+    ```
+8. Jalankan aplikasi:
+    - Laravel dev server:
+        ```bash
+        php artisan serve --host=127.0.0.1 --port=8000
+        ```
+    - Atau gunakan virtual host Laragon (rekomendasi untuk Windows).
 
-```bash
-composer require laravel/boost --dev
+---
 
-php artisan boost:install
+## Struktur Folder Proyek
+
+```
+d:\laragon\www\siwarung
+├── app/                     # Core app: Models, Controllers, Business logic
+│   ├── Console              # Artisan custom commands
+│   ├── Exceptions           # Exception handlers
+│   ├── Http
+│   │   ├── Controllers      # HTTP & API controllers
+│   │   ├── Middleware       # Request middleware
+│   │   ├── Requests         # Form Request validation classes
+│   │   └── Resources        # API Resources / Transformers
+│   ├── Models               # Eloquent models
+│   ├── Policies             # Authorization policies
+│   ├── Providers            # Service providers (bootstrapping)
+│   └── Services             # Business/service classes (domain logic)
+├── bootstrap/               # Framework bootstrap files & cache
+│   └── cache
+├── config/                  # Configuration files (app, database, mail, queue, dll.)
+├── database/
+│   ├── factories            # Model factories (testing/seeding)
+│   ├── migrations           # Database schema migrations
+│   └── seeders              # Seeders untuk data awal / dummy
+├── public/                  # Web root: index.php, compiled assets, symlink uploads
+│   ├── index.php
+│   └── storage -> ../storage/app/public
+├── resources/               # Views, translations, frontend source (js/css)
+│   ├── views
+│   ├── lang
+│   ├── js
+│   └── css
+├── routes/                  # Route definitions (web.php, api.php, channels.php, console.php)
+│   ├── web.php
+│   ├── api.php
+│   ├── channels.php
+│   └── console.php
+├── storage/                 # Runtime files: logs, cache, sessions, uploads (jangan commit)
+│   ├── app
+│   ├── framework
+│   │   ├── cache
+│   │   ├── sessions
+│   │   └── views
+│   └── logs
+├── tests/                   # Automated tests (Feature, Unit)
+│   ├── Feature
+│   └── Unit
+├── vendor/                  # Composer dependencies (auto-generated)
+├── .env                     # Environment variables (lokal; jangan commit)
+├── .env.example             # Contoh file environment
+├── artisan                  # Laravel Artisan CLI entrypoint
+├── composer.json            # PHP dependencies & scripts
+├── package.json             # Node dependencies & scripts
+├── vite.config.js (atau webpack.mix.js) # Frontend build config
+├── phpunit.xml              # PHPUnit configuration
+└── README.md                # Dokumentasi proyek
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+## Contoh .env (sesuaikan)
 
-## Contributing
+```env
+APP_NAME=SiWarung
+APP_ENV=local
+APP_KEY=
+APP_URL=http://localhost:8000
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=siwarung
+DB_USERNAME=root
+DB_PASSWORD=
 
-## Code of Conduct
+MAIL_MAILER=smtp
+MAIL_HOST=smtp.mailtrap.io
+MAIL_PORT=2525
+MAIL_USERNAME=
+MAIL_PASSWORD=
+MAIL_FROM_ADDRESS=no-reply@siwarung.test
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+---
 
-## Security Vulnerabilities
+## Database & Seeder
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+- Jalankan migrasi: `php artisan migrate`
+- Jika butuh reset: `php artisan migrate:fresh --seed`
+- Buat seeder & factory untuk data uji di `database/seeders` dan `database/factories`.
 
-## License
+---
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## Perintah Penting
+
+- Jalankan test: `php artisan test`
+- Daftar rute: `php artisan route:list`
+- Cache & optimasi:
+    ```bash
+    php artisan config:cache
+    php artisan route:cache
+    php artisan view:cache
+    ```
+- Clear cache:
+    ```bash
+    php artisan config:clear
+    php artisan cache:clear
+    php artisan route:clear
+    ```
+- Storage link: `php artisan storage:link`
+- Queue worker: `php artisan queue:work`
+- Schedule (prod): jalankan `* * * * * php /path/to/artisan schedule:run >> /dev/null 2>&1` (Linux) atau gunakan Task Scheduler pada Windows.
+
+---
+
+## Testing & Quality
+
+- Unit/Feature tests: `php artisan test`
+- Linting / static analysis: integrasikan tools seperti PHP-CS-Fixer, PHPCS, PHPStan, Pest (opsional).
+- Jalankan CI untuk menjalankan test otomatis sebelum merge.
+
+---
+
+## Arsitektur & Struktur Folder (ringkas)
+
+- app/ — inti aplikasi (Models, Http/Controllers, Policies, Services)
+- config/ — konfigurasi
+- database/migrations, seeders, factories
+- resources/views — blade templates
+- resources/js / resources/css — aset frontend
+- routes/ — web.php, api.php
+- storage/ — logs, cache, uploads
+- tests/ — unit dan feature tests
+
+---
+
+## API & Dokumentasi Rute
+
+- Gunakan `php artisan route:list` untuk melihat endpoint.
+- Untuk dokumentasi API otomatis, gunakan paket seperti Scribe atau knuckleswtf/laravel-api-docs.
+- Pastikan menambahkan middleware auth dan versi API jika perlu.
+
+---
+
+## Deployment (Produksi — ringkas)
+
+1. Taruh kode di server (Git CI/CD / rsync).
+2. Install dependensi tanpa dev:
+    ```bash
+    composer install --no-dev --optimize-autoloader
+    npm ci && npm run build
+    ```
+3. Set `.env` production, generate key jika perlu.
+4. Jalankan migrasi paksa:
+    ```bash
+    php artisan migrate --force
+    ```
+5. Cache konfigurasi & rute:
+    ```bash
+    php artisan config:cache
+    php artisan route:cache
+    php artisan view:cache
+    ```
+6. Setup supervisor (Linux) untuk queue workers, dan cron untuk scheduler.
+7. Pastikan permission folder `storage/` dan `bootstrap/cache` benar.
+
+---
+
+## Troubleshooting Umum
+
+- Error koneksi DB: periksa `DB_HOST`, `DB_PORT`, kredensial.
+- Permission storage: `chown -R www-data:www-data storage bootstrap/cache` (Linux).
+- Composer out of memory: `COMPOSER_MEMORY_LIMIT=-1 composer install`
+- Route 404 setelah deploy: jalankan `php artisan route:cache` ulang jika rute berubah.
+
+---
+
+## Kontribusi
+
+- Fork → branch fitur → PR ke main/master.
+- Ikuti standar kode (PSR-12), sertakan test untuk fitur baru.
+- Tulis deskripsi PR jelas dan langkah testing.
+
+---
+
+## Tempat Menyimpan Dokumentasi Lebih Lanjut
+
+- Buat folder `docs/` untuk dokumentasi modul (contoh: API, ERD, alur transaksi).
+- Pertimbangkan menggunakan MkDocs / GitHub Pages untuk dokumentasi publik.
+
+---
+
+## Kontak & Maintainer
+
+- Isi detail maintainer atau tim di sini: (nama, email, slack/discord).
+
+---
+
+## Lisensi
+
+Proyek ini memakai lisensi [MIT license](https://opensource.org/licenses/MIT). — sesuaikan jika perlu.
+
+---
+
+## Perintah ringkas (cheatsheet)
+
+```bash
+composer install
+copy .env.example .env   # Windows
+php artisan key:generate
+php artisan migrate --seed
+php artisan storage:link
+npm install && npm run dev
+php artisan serve
+php artisan test
+```
+
+---
+
+Dokumentasi ini adalah template lengkap untuk proyek Laravel "SiWarung". Lengkapi bagian fitur, endpoint, dan kontak sesuai kondisi nyata proyek. Jika ingin, saya bisa menghasilkan dokumentasi API otomatis (Scribe) atau berkas .env.example terperinci setelah Anda kirimkan struktur model/rute utama.
