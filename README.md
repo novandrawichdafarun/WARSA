@@ -1,8 +1,8 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="SiWarung Logo"></a></p>
+<p align="center"><img src="./docs/logo.png" width="400" alt="SiWarung Logo"></p>
 
-## About SiWarung
+## About WARSA (Warung Smart Aplication)
 
-SiWarung adalah aplikasi manajemen warung berbasis Laravel. Dokumentasi ini menjelaskan instalasi, konfigurasi, arsitektur, perintah penting, deploy, testing, dan panduan kontribusi. Sesuaikan bagian "Fitur" dan variabel .env sesuai kebutuhan proyek Anda.
+WARSA adalah aplikasi manajemen warung berbasis Laravel. Dokumentasi ini menjelaskan instalasi, konfigurasi, arsitektur, perintah penting, deploy, testing, dan panduan kontribusi. Sesuaikan bagian "Fitur" dan variabel .env sesuai kebutuhan proyek Anda.
 
 ---
 

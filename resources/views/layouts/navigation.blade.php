@@ -5,10 +5,7 @@
                 {{-- Logo --}}
                 <div class="shrink-0 flex items-center">
                     <a href="{{ route('dashboard') }}" class="flex items-center gap-2">
-                        <div class="w-8 h-8 bg-green-600 rounded-lg flex items-center justify-center">
-                            <span class="text-white font-bold text-sm">SW</span>
-                        </div>
-                        <span class="font-bold text-gray-800 text-lg hidden sm:block">SIWARUNG</span>
+                        <x-application-logo class="h-20 w-auto" />
                     </a>
                 </div>
 

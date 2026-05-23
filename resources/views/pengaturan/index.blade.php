@@ -76,7 +76,7 @@
                                     <input type="text" name="nama_warung"
                                         value="{{ old('nama_warung', $warung->nama_warung) }}" required
                                         class="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-500
-                                                  @error('nama_warung') border-red-400 @enderror">
+                                        @error('nama_warung') border-red-400 @enderror">
                                     @error('nama_warung')
                                         <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                                     @enderror
