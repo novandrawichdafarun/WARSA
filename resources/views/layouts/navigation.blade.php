@@ -13,12 +13,26 @@
                 <div class="hidden sm:flex sm:items-center sm:ms-8 sm:space-x-1">
 
                     @auth
-                        {{-- Dashboard — semua role --}}
+                        {{-- Dashboard semua role --}}
                         <a href="{{ route('dashboard') }}"
                             class="px-3 py-2 rounded-md text-sm font-medium transition-colors
                             {{ request()->routeIs('dashboard') ? 'bg-green-100 text-green-700' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100' }}">
                             Dashboard
                         </a>
+
+                        {{-- Menu Khusus Super Admin --}}
+                        @if (auth()->user()->isSuperAdmin())
+                            <a href="{{ route('super_admin.users.index') }}"
+                                class="px-3 py-2 rounded-md text-sm font-medium transition-colors
+                                {{ request()->routeIs('super_admin.users.*') ? 'bg-green-100 text-green-700' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100' }}">
+                                Manajemen User
+                            </a>
+                            <a href="{{ route('super_admin.warungs.index') }}"
+                                class="px-3 py-2 rounded-md text-sm font-medium transition-colors
+                                {{ request()->routeIs('super_admin.warungs.*') ? 'bg-green-100 text-green-700' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100' }}">
+                                Manajemen Warung
+                            </a>
+                        @endif
 
                         {{-- POS — owner + kasir --}}
                         @if (auth()->user()->canAccessPOS())
@@ -131,12 +145,25 @@
     <div :class="{ 'block': open, 'hidden': !open }" class="hidden sm:hidden border-t border-gray-100">
         <div class="px-4 py-2 space-y-1">
             @auth
+                {{-- Dashboard semua role --}}
                 <a href="{{ route('dashboard') }}"
                     class="block px-3 py-2 rounded-md text-sm text-gray-700 hover:bg-gray-100">Dashboard</a>
+
+                {{-- Menu Khusus Super Admin --}}
+                @if (auth()->user()->isSuperAdmin())
+                    <a href="{{ route('super_admin.users.index') }}"
+                        class="block px-3 py-2 rounded-md text-sm text-gray-700 hover:bg-gray-100">Manajemen User</a>
+                    <a href="{{ route('super_admin.warungs.index') }}"
+                        class="block px-3 py-2 rounded-md text-sm text-gray-700 hover:bg-gray-100">Manajemen Warung</a>
+                @endif
+
+                {{-- POS — owner + kasir --}}
                 @if (auth()->user()->canAccessPOS())
                     <a href="{{ route('pos.index') }}"
                         class="block px-3 py-2 rounded-md text-sm text-gray-700 hover:bg-gray-100">Kasir / POS</a>
                 @endif
+
+                {{-- Menu Khusus Owner --}}
                 @if (auth()->user()->isOwner())
                     <a href="{{ route('produk.index') }}"
                         class="block px-3 py-2 rounded-md text-sm text-gray-700 hover:bg-gray-100">Produk</a>

@@ -9,6 +9,8 @@ use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\WarungSetupController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StockController;
+use App\Http\Controllers\SuperAdmin\UserController;
+use App\Http\Controllers\SuperAdmin\WarungController;
 use App\Http\Controllers\TransaksiController;
 use App\Http\Controllers\WebhookController;
 use Illuminate\Support\Facades\Route;
@@ -85,15 +87,25 @@ Route::middleware(['auth', 'warung.setup', 'kasir'])->group(function () {
         ->name('transaksi.batal');
 });
 
-// Route::middleware(['auth', 'warung.setup', 'kasir'])->group(function () {
-//     Route::get('/pos', function () {
-//         return view('pos.index');
-//     })->name('pos.index');
+// ============================================================
+// SUPER ADMIN
+// ============================================================
+Route::middleware(['auth', 'super_admin'])->prefix('super-admin')->name('super_admin.')->group(function () {
+    Route::get('/users', [UserController::class, 'index'])
+        ->name('users.index');
+    Route::put('/users/{user}', [UserController::class, 'update'])
+        ->name('users.update');
+    Route::delete('/users/{user}', [UserController::class, 'destroy'])
+        ->name('users.destroy');
 
-//     Route::get('/transaksi/riwayat', function () {
-//         return view('transaksi.riwayat');
-//     })->name('transaksi.riwayat');
-// });
+    Route::get('/warungs', [WarungController::class, 'index'])
+        ->name('warungs.index');
+    Route::put('/warungs/{warung}', [WarungController::class, 'update'])
+        ->name('warungs.update');
+    Route::delete('/warungs/{warung}', [WarungController::class, 'destroy'])
+        ->name('warungs.destroy');
+});
+
 
 Route::post('/webhook/midtrans', [WebhookController::class, 'handle'])
     ->name('webhook.midtrans');
