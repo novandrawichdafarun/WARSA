@@ -6,6 +6,7 @@ use App\Models\Product;
 use App\Models\Transaction;
 use App\Models\TransactionItem;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 
 class TransactionService
@@ -105,6 +106,8 @@ class TransactionService
       'payment_status' => 'paid',
       'paid_at' => now(),
     ]);
+
+    Cache::forget("dashboard_laporan_{$transaction->warung_id}");
 
     $this->commissionService->record($transaction);
   }

@@ -152,18 +152,17 @@
                 </div>
             </div>
 
+            {{-- Chart Omset 30 hari terakhir --}}
+            <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="font-bold text-gray-800">Omset Bulan Ini</h3>
+                    <a href="{{ route('laporan.index') }}" class="text-xs text-green-600 hover:underline">
+                        Lihat laporan lengkap →
+                    </a>
+                </div>
+                <canvas id="dashboardChart" height="80"></canvas>
+            </div>
         </div>
-    </div>
-
-    {{-- Chart Omset 30 hari terakhir --}}
-    <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
-        <div class="flex items-center justify-between mb-4">
-            <h3 class="font-bold text-gray-800">Omset Bulan Ini</h3>
-            <a href="{{ route('laporan.index') }}" class="text-xs text-green-600 hover:underline">
-                Lihat laporan lengkap →
-            </a>
-        </div>
-        <canvas id="dashboardChart" height="80"></canvas>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>

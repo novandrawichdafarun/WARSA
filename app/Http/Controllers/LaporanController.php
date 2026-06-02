@@ -20,6 +20,12 @@ class LaporanController extends Controller
 
     public function index(Request $request): View
     {
+        $request->validate([
+            'dari' => ['nullable', 'date', 'before_or_equal:sampai'],
+            'sampai' => ['nullable', 'date', 'after_or_equal:dari'],
+            'preset' => ['nullable', 'in:hari_ini,minggu_ini,bulan_ini,bulan_lalu,tahun_ini'],
+        ]);
+
         [$dari, $sampai] = $this->laporanService->parsePeriode(
             dari: $request->dari,
             sampai: $request->sampai,
@@ -40,6 +46,12 @@ class LaporanController extends Controller
 
     public function exportPdf(Request $request)
     {
+        $request->validate([
+            'dari' => ['nullable', 'date', 'before_or_equal:sampai'],
+            'sampai' => ['nullable', 'date', 'after_or_equal:dari'],
+            'preset' => ['nullable', 'in:hari_ini,minggu_ini,bulan_ini,bulan_lalu,tahun_ini'],
+        ]);
+
         [$dari, $sampai] = $this->laporanService->parsePeriode(
             dari: $request->dari,
             sampai: $request->sampai,
@@ -64,6 +76,12 @@ class LaporanController extends Controller
 
     public function exportExcel(Request $request)
     {
+        $request->validate([
+            'dari' => ['nullable', 'date', 'before_or_equal:sampai'],
+            'sampai' => ['nullable', 'date', 'after_or_equal:dari'],
+            'preset' => ['nullable', 'in:hari_ini,minggu_ini,bulan_ini,bulan_lalu,tahun_ini'],
+        ]);
+
         [$dari, $sampai] = $this->laporanService->parsePeriode(
             dari: $request->dari,
             sampai: $request->sampai,
@@ -80,6 +98,12 @@ class LaporanController extends Controller
 
     public function komisi(Request $request): View
     {
+        $request->validate([
+            'dari' => ['nullable', 'date', 'before_or_equal:sampai'],
+            'sampai' => ['nullable', 'date', 'after_or_equal:dari'],
+            'preset' => ['nullable', 'in:hari_ini,minggu_ini,bulan_ini,bulan_lalu,tahun_ini'],
+        ]);
+
         [$dari, $sampai] = $this->laporanService->parsePeriode(
             dari: $request->dari,
             sampai: $request->sampai,

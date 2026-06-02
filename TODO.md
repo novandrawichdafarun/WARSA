@@ -88,6 +88,83 @@
 [x] Test: chart di dashboard tampil dengan data yang benar
 [x] Test: laporan komisi menampilkan breakdown per transaksi
 
+## Sprint 6 Checklist
+
+### Testing Manual
+ALUR REGISTER & SETUP:
+[ ] Register akun owner baru → redirect ke /setup-warung
+[ ] Isi form setup warung → redirect ke /dashboard
+[ ] Login sebagai kasir → redirect ke /pos (bukan /dashboard)
+[ ] Kasir coba akses /dashboard → redirect ke /pos
+[ ] Owner coba akses /pos → berhasil masuk
+
+MANAJEMEN PRODUK:
+[ ] Tambah kategori baru → muncul di list
+[ ] Hapus kategori yang masih punya produk → produk tetap ada (category_id null)
+[ ] Tambah produk dengan foto → foto tampil di tabel
+[ ] Edit produk → perubahan tersimpan
+[ ] Toggle is_active produk → tidak muncul di POS
+[ ] Tambah stok manual dari halaman edit → stok bertambah + riwayat tercatat
+[ ] Produk dengan stok ≤ minimal → muncul alert merah di tabel dan dashboard
+
+POS — CASH:
+[ ] Buka POS → produk tampil dengan benar
+[ ] Search produk → filter real-time bekerja
+[ ] Toggle mode katalog → tampilan grid berubah
+[ ] Tambah produk ke keranjang → qty dan subtotal benar
+[ ] Tambah produk yang stoknya 0 → muncul error, tidak masuk keranjang
+[ ] Kurangi qty di keranjang → benar
+[ ] Hapus item dari keranjang → hilang dari list
+[ ] Kosongkan keranjang → konfirmasi dan reset
+[ ] Pilih Cash → klik Bayar Cash → redirect ke struk
+[ ] Struk muncul dengan data benar (nama produk, harga, kasir, waktu)
+[ ] Tombol cetak struk bekerja (CSS print)
+[ ] Setelah transaksi: stok produk berkurang di database
+[ ] Setelah transaksi: commission_ledger tercatat dengan amount 0.5%
+[ ] Klik Transaksi Baru → kembali ke POS bersih
+
+POS — QRIS:
+[ ] Pilih QRIS → klik Generate QRIS → QR tampil
+[ ] Polling setiap 3 detik aktif (cek di network tab browser)
+[ ] Batalkan pembayaran → kembali ke mode keranjang
+[ ] Simulasi webhook paid → polling deteksi → redirect ke struk
+
+LAPORAN:
+[ ] Buka laporan → default bulan ini → data benar
+[ ] Ganti preset hari ini → data berubah sesuai
+[ ] Custom tanggal range → filter benar
+[ ] Export PDF → file terunduh, isi benar (3 section)
+[ ] Export Excel → file terunduh, 3 sheet ada
+[ ] Laporan komisi → total komisi sesuai dengan 0.5% × omset
+
+STOK:
+[ ] Halaman stok → summary card benar (masuk/keluar hari ini)
+[ ] Alert low stock muncul jika ada produk kritis
+[ ] Filter tipe IN/OUT bekerja
+[ ] Filter produk bekerja
+[ ] Filter rentang tanggal bekerja
+[ ] Tambah stok dari /stok/tambah → stok bertambah + riwayat tercatat
+
+KARYAWAN:
+[ ] Tambah kasir → login dengan akun kasir berhasil
+[ ] Hapus kasir → tidak bisa login, data transaksi lama tetap ada
+[ ] Kasir tidak bisa lihat menu Produk, Stok, Laporan, Karyawan
+
+ISOLASI DATA (KRITIS):
+[ ] Register dua owner berbeda (warung A dan warung B)
+[ ] Login sebagai owner warung A → tambah produk
+[ ] Login sebagai owner warung B → produk warung A tidak terlihat
+[ ] Pastikan laporan warung B tidak tampil data warung A
+
+### Browser & Device Testing
+[ ] Chrome desktop → semua halaman normal
+[ ] Firefox desktop → semua halaman normal
+[ ] Safari desktop → semua halaman normal
+[ ] Chrome mobile → layout responsif
+[ ] POS di tablet (landscape) → katalog mode nyaman dipakai
+[ ] Struk di mobile → layout benar untuk cetak thermal
+
+
 ## Menambahkan user dengan role pelanggan untuk membedakan akses UI antara pelanggan dan kasir/owner dimana:
 
 - Pelanggan hanya bisa melihat menu POS dengan fitur pembelian saja dengan metode pembayaran qris

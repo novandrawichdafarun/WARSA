@@ -112,7 +112,7 @@
 
             {{-- List Item Keranjang --}}
             <div class="flex-1 overflow-y-auto">
-                @forelse ($keranjang as $productId => $item)
+                @forelse ($keranjang as $key => $item)
                     <div class="flex items-center gap-3 px-4 py-3 border-b border-gray-50 hover:bg-gray-50">
                         <div class="flex-1 min-w-0">
                             <p class="text-sm font-medium text-gray-800 truncate">{{ $item['nama'] }}</p>
@@ -123,12 +123,12 @@
 
                         {{-- Qty Controls --}}
                         <div class="flex items-center gap-2">
-                            <button wire:click="kurangiDariKeranjang({{ $productId }})"
+                            <button wire:click="kurangiDariKeranjang({{ $key }})"
                                 class="w-7 h-7 bg-gray-100 hover:bg-red-100 rounded-lg text-gray-600 hover:text-red-600 text-lg leading-none transition-colors">
                                 −
                             </button>
                             <span class="text-sm font-bold w-6 text-center">{{ $item['qty'] }}</span>
-                            <button wire:click="tambahKeKeranjang({{ $productId }})"
+                            <button wire:click="tambahKeKeranjang({{ $key }})"
                                 class="w-7 h-7 bg-gray-100 hover:bg-green-100 rounded-lg text-gray-600 hover:text-green-600 text-lg leading-none transition-colors">
                                 +
                             </button>

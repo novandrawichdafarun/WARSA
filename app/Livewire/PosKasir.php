@@ -6,8 +6,11 @@ use App\Models\Category;
 use App\Models\Product;
 use App\Models\Transaction;
 use App\Services\TransactionService;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Throwable;
 
 class PosKasir extends Component
 {
@@ -43,24 +46,26 @@ class PosKasir extends Component
   // =========================================================
   public function tambahKeKeranjang(int $productId): void
   {
+    $key = (string) $productId;
+
     $produk = Product::find($productId);
     if (!$produk || !$produk->is_active) {
       $this->errorMessage = 'Produk tidak tersedia.';
       return;
     }
 
-    $qtyDiKeranjang = $this->keranjang[$productId]['qty'] ?? 0;
+    $qtyDiKeranjang = $this->keranjang[$key]['qty'] ?? 0;
     if (!$produk->hasEnoughStock($qtyDiKeranjang + 1)) {
       $this->errorMessage = "Stok {$produk->nama_produk} tidak mencukupi!";
       return;
     }
 
-    if (isset($this->keranjang[$productId])) {
-      $this->keranjang[$productId]['qty']++;
-      $this->keranjang[$productId]['subtotal'] =
-        $this->keranjang[$productId]['qty'] * $this->keranjang[$productId]['harga'];
+    if (isset($this->keranjang[$key])) {
+      $this->keranjang[$key]['qty']++;
+      $this->keranjang[$key]['subtotal'] =
+        $this->keranjang[$key]['qty'] * $this->keranjang[$key]['harga'];
     } else {
-      $this->keranjang[$productId] = [
+      $this->keranjang[$key] = [
         'nama' => $produk->nama_produk,
         'harga' => $produk->harga_jual,
         'qty' => 1,
@@ -74,23 +79,29 @@ class PosKasir extends Component
 
   public function kurangiDariKeranjang(int $productId): void
   {
-    if (!isset($this->keranjang[$productId]))
-      return;
+    $key = (string) $productId;
 
-    if ($this->keranjang[$productId]['qty'] <= 1) {
-      $this->hapusDariKeranjang($productId);
+    if (!isset($this->keranjang[$key])) {
+      $this->errorMessage = 'Produk tidak ada di keranjang.';
       return;
     }
 
-    $this->keranjang[$productId]['qty']--;
-    $this->keranjang[$productId]['subtotal'] =
-      $this->keranjang[$productId]['qty'] * $this->keranjang[$productId]['harga'];
+    if ($this->keranjang[$key]['qty'] <= 1) {
+      $this->hapusDariKeranjang($key);
+      return;
+    }
+
+    $this->keranjang[$key]['qty']--;
+    $this->keranjang[$key]['subtotal'] =
+      $this->keranjang[$key]['qty'] * $this->keranjang[$key]['harga'];
   }
 
   public function hapusDariKeranjang(int $productId): void
   {
-    if (isset($this->keranjang[$productId])) {
-      unset($this->keranjang[$productId]);
+    $key = (string) $productId;
+
+    if (isset($this->keranjang[$key])) {
+      unset($this->keranjang[$key]);
     }
   }
 
@@ -117,8 +128,8 @@ class PosKasir extends Component
 
     try {
       $items = collect($this->keranjang)
-        ->map(fn($item, $productId) => [
-          'product_id' => $productId,
+        ->map(fn($item, $key) => [
+          'product_id' => (int) $key,
           'qty' => $item['qty'],
         ])
         ->values()
@@ -185,5 +196,15 @@ class PosKasir extends Component
     $totalItems = $this->getTotalItemsAttribute();
 
     return view('livewire.pos-kasir', compact('produk', 'kategori', 'total', 'totalItems'));
+  }
+
+  public function handleLivewireException(Throwable $e): void
+  {
+    $this->errorMessage = 'Terjadi Kesalahan: ' . $e->getMessage() . '. Hubungi administrator jika masalah berlanjut.';
+    Log::error('POS Error: ' . $e->getMessage(), [
+      'user_id' => Auth::id(),
+      'keranjang' => $this->keranjang,
+      'trace' => $e->getTraceAsString(),
+    ]);
   }
 }

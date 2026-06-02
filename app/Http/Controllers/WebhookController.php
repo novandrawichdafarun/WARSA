@@ -13,6 +13,13 @@ class WebhookController extends Controller
     {
         $payload = $request->all();
 
+        $required = ['order_id', 'status_code', 'gross_amount', 'signature_key', 'transaction_status'];
+        foreach ($required as $field) {
+            if (empty($payload[$field])) {
+                return response()->json(['message' => 'Invalid payload'], 400);
+            }
+        }
+
         $isValid = $midtransService->verifySignature(
             orderId: $payload['order_id'],
             statusCode: $payload['status_code'],

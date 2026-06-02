@@ -1,5 +1,3 @@
-
-
 <div>
     {{-- Search & Filter Bar --}}
     <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
@@ -113,15 +111,10 @@
                                         class="inline-flex items-center px-3 py-1.5 bg-white border border-gray-200 hover:border-blue-300 text-blue-600 hover:bg-blue-50 text-xs font-semibold rounded-lg shadow-sm transition-all">
                                         ✏️ Edit
                                     </a>
-                                    <form method="POST" action="{{ route('produk.destroy', $item) }}" class="inline">
-                                        @method('DELETE')
-                                        @csrf
-                                        <button
-                                            onclick="return confirm('Apakah Anda yakin ingin menghapus produk {{ $item->nama_produk }}?')"
-                                            class="inline-flex items-center px-3 py-1.5 bg-white border border-gray-200 hover:border-red-300 text-red-600 hover:bg-red-50 text-xs font-semibold rounded-lg shadow-sm transition-all">
-                                            🗑️ Hapus
-                                        </button>
-                                    </form>
+                                    <x-confirm-delete action="{{ route('produk.destroy', $item) }}"
+                                        message="Hapus produk {{ $item->nama_produk }}? Data tidak bisa dikembalikan."
+                                        label="🗑️ Hapus"
+                                        class="inline-flex items-center px-3 py-1.5 bg-white border border-gray-200 hover:border-red-300 text-red-600 hover:bg-red-50 text-xs font-semibold rounded-lg shadow-sm transition-all" />
                                 </div>
                             </td>
                         </tr>

@@ -12,7 +12,7 @@ class LaporanService
   {
     $baseQuery = Transaction::paid()
       ->whereBetween('paid_at', [
-        $dari->startOfDay(),
+        $dari->copy()->startOfDay(),
         $sampai->copy()->endOfDay(),
       ]);
 
@@ -74,7 +74,7 @@ class LaporanService
     ];
   }
 
-  public function parsePeriode(?string $dari, ?string $sampai, string $preset = 'bulan ini'): array
+  public function parsePeriode(?string $dari, ?string $sampai, string $preset = 'bulan_ini'): array
   {
     if ($dari && $sampai) {
       return [
