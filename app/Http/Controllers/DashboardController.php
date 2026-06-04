@@ -30,7 +30,7 @@ class DashboardController extends Controller
             'omset_hari_ini' => Transaction::paid()->today()->sum('total_gross'),
             'total_transaksi_hari_ini' => Transaction::paid()->today()->count(),
             'omset_bulan_ini' => $laporan['summary']['total_omset'],
-            'chart_harian' => $laporan['transaksi_harian'],
+            'chart_harian' => collect($laporan['transaksi_harian']),
         ];
 
         return view('dashboard', $data);

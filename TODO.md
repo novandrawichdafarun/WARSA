@@ -91,6 +91,7 @@
 ## Sprint 6 Checklist
 
 ### Testing Manual
+
 ALUR REGISTER & SETUP:
 [ ] Register akun owner baru → redirect ke /setup-warung
 [ ] Isi form setup warung → redirect ke /dashboard
@@ -157,6 +158,7 @@ ISOLASI DATA (KRITIS):
 [ ] Pastikan laporan warung B tidak tampil data warung A
 
 ### Browser & Device Testing
+
 [ ] Chrome desktop → semua halaman normal
 [ ] Firefox desktop → semua halaman normal
 [ ] Safari desktop → semua halaman normal
@@ -164,6 +166,20 @@ ISOLASI DATA (KRITIS):
 [ ] POS di tablet (landscape) → katalog mode nyaman dipakai
 [ ] Struk di mobile → layout benar untuk cetak thermal
 
+### Pre-Deployment Checklist
+
+[ ] APP_DEBUG=false di .env production
+[ ] APP_KEY sudah di-generate
+[ ] Midtrans sudah switch ke production key
+[ ] Database production sudah dibuat
+[ ] php artisan migrate --force (jalankan di server)
+[ ] php artisan storage:link (jalankan di server)
+[ ] php artisan config:cache
+[ ] php artisan route:cache
+[ ] php artisan view:cache
+[ ] npm run build (hasil dist/ di-commit atau di-build di server)
+[ ] Folder storage/app/public writable (chmod 775)
+[ ] .env tidak ikut di-commit ke git (.gitignore cek)
 
 ## Menambahkan user dengan role pelanggan untuk membedakan akses UI antara pelanggan dan kasir/owner dimana:
 

@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\Transaction;
 use App\Models\TransactionItem;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class LaporanService
 {
@@ -23,19 +24,16 @@ class LaporanService
     $rataRataPerTrx = $totalTransaksi > 0 ? (int) round($totalOmset / $totalTransaksi) : 0;
 
     $labaKotor = (clone $baseQuery)
-      ->with('items.product')
-      ->get()
-      ->flatMap->items
-      ->sum(function ($item) {
-        $hargaBeli = $item->product?->harga_beli ?? 0;
-        return ($item->harga_snapshot - $hargaBeli) * $item->quantity;
-      });
+      ->join('transaction_items', 'transactions.id', '=', 'transaction_items.transaction_id')
+      ->leftJoin('products', 'transaction_items.product_id', '=', 'products.id')
+      ->sum(DB::raw('(transaction_items.harga_snapshot - COALESCE(products.harga_beli, 0)) * transaction_items.quantity'));
 
     $transaksiHarian = (clone $baseQuery)
       ->selectRaw('DATE(paid_at) as tanggal, SUM(total_gross) as omset, COUNT(*) as jumlah')
       ->groupBy('tanggal')
       ->orderBy('tanggal')
-      ->get();
+      ->get()
+      ->toArray();
 
     $produkTerlaris = TransactionItem::query()
       ->whereHas('transaction', function ($q) use ($dari, $sampai) {
@@ -48,7 +46,8 @@ class LaporanService
       ->groupBy('nama_snapshot')
       ->orderByDesc('total_qty')
       ->take(10)
-      ->get();
+      ->get()
+      ->toArray();
 
     $metodeBayar = [
       'cash' => (clone $baseQuery)->where('payment_method', 'cash')->count(),

@@ -167,8 +167,8 @@
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <script>
-        const labels = @json($chart_harian->pluck('tanggal'));
-        const data = @json($chart_harian->pluck('omset'));
+        const labels = @json(collect($chart_harian)->pluck('tanggal'));
+        const data = @json(collect($chart_harian)->pluck('omset'));
 
         new Chart(document.getElementById('dashboardChart'), {
             type: 'line',
