@@ -16,7 +16,11 @@
 
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
-                    <livewire:super-admin.user-table :warungs="$warungs" />
+                    @if (auth()->user()->isSuperAdmin())
+                        <livewire:super-admin.user-table :warungs="$warungs" />
+                    @else
+                        <p class="text-center text-gray-500">Anda tidak memiliki akses untuk melihat halaman ini.</p>
+                    @endif
                 </div>
             </div>
         </div>

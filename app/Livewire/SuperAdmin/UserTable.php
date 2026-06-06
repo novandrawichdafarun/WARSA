@@ -11,12 +11,6 @@ class UserTable extends Component
   use WithPagination;
 
   public $search = '';
-  public $warungs;
-
-  public function mount($warungs)
-  {
-    $this->warungs = $warungs;
-  }
 
   public function updatingSearch()
   {

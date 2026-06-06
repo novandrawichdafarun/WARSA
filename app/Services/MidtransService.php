@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Transaction;
+use Illuminate\Support\Facades\Log;
 use Midtrans\Config;
 use Midtrans\Snap;
 
@@ -18,7 +19,7 @@ class MidtransService
 
   public function createQris(Transaction $transaction): array
   {
-    $orderId = 'SIWARUNG-' . $transaction->id . '-' . time();
+    $orderId = 'WARSA-' . $transaction->id . '-' . time();
 
     $params = [
       'transaction_details' => [
@@ -33,7 +34,12 @@ class MidtransService
       'custom_field1' => $transaction->warung_id,
     ];
 
-    $snapToken = Snap::getSnapToken($params);
+    try {
+      $snapToken = Snap::getSnapToken($params);
+    } catch (\Exception $e) {
+      Log::error('Midtrans QRIS error: ' . $e->getMessage());
+      throw new \Exception('Gagal membuat QRIS. Pastikan konfigurasi Midtrans benar.');
+    }
 
     return [
       'order_id' => $orderId,

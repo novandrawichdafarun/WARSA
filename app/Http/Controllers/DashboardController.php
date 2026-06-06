@@ -15,22 +15,32 @@ class DashboardController extends Controller
     public function index(LaporanService $laporanService): View
     {
         $warung = Auth::user()->warung;
-        $warungId = Auth::user()->warung_id;
-        $laporan = Cache::remember(
-            "dashboard_laporan_{$warungId}",
-            now()->addMinutes(5),
-            fn() => $laporanService->getSummary(now()->startOfMonth(), now()->endOfMonth())
-        );
+        // $warungId = Auth::user()->warung_id;
+
+        $omsetHariIni = Transaction::paid()->today()->sum('total_gross');
+        $totalTransaksiHariIni = Transaction::paid()->today()->count();
+        $omsetBulanIni = Transaction::paid()->thisMonth()->sum('total_gross');
+
+        // $chartHarian = Cache::remember(
+        //     "dashboard_chart_{$warungId}",
+        //     now()->addMinutes(5),
+        //     fn() => Transaction::paid()
+        //         ->thisMonth()
+        //         ->selectRaw('DATE(paid_at) as tanggal, SUM(total_gross) as omset')
+        //         ->groupBy('tanggal')
+        //         ->orderBy('tanggal')
+        //         ->get()
+        // );
 
         $data = [
             'warung' => $warung,
             'total_produk' => Product::count(),
             'produk_low_stock' => Product::lowStock()->count(),
             'produk_low_stock_list' => Product::lowStock()->active()->with('category')->take(5)->get(),
-            'omset_hari_ini' => Transaction::paid()->today()->sum('total_gross'),
-            'total_transaksi_hari_ini' => Transaction::paid()->today()->count(),
-            'omset_bulan_ini' => $laporan['summary']['total_omset'],
-            'chart_harian' => collect($laporan['transaksi_harian']),
+            'omset_hari_ini' => $omsetHariIni,
+            'total_transaksi_hari_ini' => $totalTransaksiHariIni,
+            'omset_bulan_ini' => $omsetBulanIni,
+            // 'chart_harian' => $chartHarian,
         ];
 
         return view('dashboard', $data);

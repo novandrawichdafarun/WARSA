@@ -6,6 +6,7 @@ use App\Http\Middleware\EnsureIsSuperAdmin;
 use App\Http\Middleware\EnsureWarungSetup;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
+// use Exception;
 use Illuminate\Foundation\Configuration\Middleware;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -29,14 +30,10 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
-        $exceptions->render(function (Exception $e, Request $request) {
+        $exceptions->render(function (\Exception $e, Request $request) {
             if ($request->expectsJson()) {
                 return response()->json(['message' => $e->getMessage()], 422);
             }
-        });
-
-        $exceptions->render(function (\Midtrans\Exception\ApiException $e, Request $request) {
-            Log::error('Midtrans API error: ' . $e->getMessage());
-            return back()->with('error', 'Layanan pembayaran sedang bermasalah. Coba beberapa saat lagi.');
+            return null;
         });
     })->create();

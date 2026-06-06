@@ -77,12 +77,12 @@ Route::middleware(['auth', 'warung.setup', 'kasir'])->group(function () {
 
     Route::post('/transaksi', [TransaksiController::class, 'store'])
         ->name('transaksi.store');
+    Route::get('/transaksi/riwayat', [TransaksiController::class, 'riwayat'])
+        ->name('transaksi.riwayat');
     Route::get('/transaksi/{transaksi}/status', [TransaksiController::class, 'checkStatus'])
         ->name('transaksi.status');
     Route::get('/transaksi/{transaksi}/struk', [TransaksiController::class, 'struk'])
         ->name('transaksi.struk');
-    Route::get('/transaksi/riwayat', [TransaksiController::class, 'riwayat'])
-        ->name('transaksi.riwayat');
     Route::patch('/transaksi/{transaksi}/batal', [TransaksiController::class, 'batal'])
         ->name('transaksi.batal');
 });
