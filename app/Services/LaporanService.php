@@ -32,8 +32,7 @@ class LaporanService
       ->selectRaw('DATE(paid_at) as tanggal, SUM(total_gross) as omset, COUNT(*) as jumlah')
       ->groupBy('tanggal')
       ->orderBy('tanggal')
-      ->get()
-      ->toArray();
+      ->get();
 
     $produkTerlaris = TransactionItem::query()
       ->whereHas('transaction', function ($q) use ($dari, $sampai) {
@@ -46,8 +45,7 @@ class LaporanService
       ->groupBy('nama_snapshot')
       ->orderByDesc('total_qty')
       ->take(10)
-      ->get()
-      ->toArray();
+      ->get();
 
     $metodeBayar = [
       'cash' => (clone $baseQuery)->where('payment_method', 'cash')->count(),

@@ -52,7 +52,7 @@
                 </thead>
                 <tbody class="divide-y divide-gray-100">
                     @forelse ($produk as $item)
-                        <tr class="hover:bg-gray-50/60 transition-colors group">
+                        <tr class="hover:bg-gray-50/60 transition-colors group" wire:key="produk-{{ $item->id }}">
                             <td class="py-4 px-4 whitespace-nowrap">
                                 @if ($item->foto)
                                     <img src="{{ Storage::url($item->foto) }}"

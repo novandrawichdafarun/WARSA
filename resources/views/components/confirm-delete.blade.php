@@ -16,7 +16,7 @@
     </button>
 
     {{-- Modal Konfirmasi --}}
-    <div x-show="open" x-transition:enter="ease-out duration-200" x-transition:enter-start="opacity-0"
+    <div x-show="open" x-cloak x-transition:enter="ease-out duration-200" x-transition:enter-start="opacity-0"
         x-transition:enter-end="opacity-100" class="fixed inset-0 bg-black/30 z-50 flex items-center justify-center p-4"
         @click.self="open = false">
         <div class="bg-white rounded-2xl shadow-xl w-full max-w-sm p-6" x-transition:enter="ease-out duration-200"
