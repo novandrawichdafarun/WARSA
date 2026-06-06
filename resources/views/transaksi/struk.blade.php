@@ -87,7 +87,7 @@
         {{-- Footer --}}
         <div class="bg-gray-50 text-center py-4 px-5">
             <p class="text-xs text-gray-400">Terima kasih telah berbelanja! 🙏</p>
-            <p class="text-xs text-gray-300 mt-1">Powered by SIWARUNG</p>
+            <p class="text-xs text-gray-300 mt-1">Powered by WARSA</p>
         </div>
     </div>
 

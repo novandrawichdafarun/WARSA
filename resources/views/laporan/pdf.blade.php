@@ -149,7 +149,7 @@
                 </p>
             </div>
             <div class="card">
-                <p class="card-label">Komisi SIWARUNG (0.5%)</p>
+                <p class="card-label">Komisi WARSA (0.5%)</p>
                 <p class="card-value" style="color: #dc2626">
                     Rp {{ number_format($laporan['summary']['total_komisi'], 0, ',', '.') }}
                 </p>
@@ -214,7 +214,7 @@
     @endif
 
     <div class="footer">
-        Dokumen ini digenerate otomatis oleh SIWARUNG — Sistem Informasi Manajemen Warung Digital
+        Dokumen ini digenerate otomatis oleh WARSA — Sistem Informasi Manajemen Warung Digital
     </div>
 
 </body>

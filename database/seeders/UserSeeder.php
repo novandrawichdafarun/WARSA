@@ -19,7 +19,7 @@ class UserSeeder extends Seeder
 
         User::create([
             'name' => 'Sari Pemilik',
-            'email' => 'owner@siwarung.test',
+            'email' => 'owner@WARSA.test',
             'password' => Hash::make('password'),
             'role' => 'owner',
             'warung_id' => $warung->id,
@@ -27,7 +27,7 @@ class UserSeeder extends Seeder
 
         User::create([
             'name' => 'Budi Kasir',
-            'email' => 'kasir@siwarung.test',
+            'email' => 'kasir@WARSA.test',
             'password' => Hash::make('password'),
             'role' => 'kasir',
             'warung_id' => $warung->id,

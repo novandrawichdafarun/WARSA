@@ -1,4 +1,4 @@
-<p align="center"><img src="./docs/logo.png" width="400" alt="SiWarung Logo"></p>
+<p align="center"><img src="./docs/logo.png" width="400" alt="WARSA Logo"></p>
 
 ## About WARSA (Warung Smart Aplication)
 
@@ -6,22 +6,24 @@ WARSA adalah aplikasi manajemen warung berbasis Laravel. Dokumentasi ini menjela
 
 ---
 
-## Fitur (contoh — sesuaikan)
+## Fitur
 
 - Otentikasi pengguna (login/register, reset password)
 - Manajemen produk & kategori
 - Manajemen stok & supplier
-- Transaksi / Penjualan (kasir)
+- Manajemen Karyawan Kasir (Owner)
+- Transaksi / Penjualan (Cash, Qris)
 - Laporan penjualan & stok
 - Role & permission
 - API dasar untuk integrasi
+- Manajemen User & Warung (Super Admin)
 
 ---
 
 ## Prasyarat
 
 - Windows (Laragon direkomendasikan) atau Linux
-- PHP 8.1+ (sesuaikan dengan versi Laravel)
+- PHP 8.2+ (sesuaikan dengan versi Laravel)
 - Composer
 - Node.js 16+ / npm atau yarn
 - MySQL / MariaDB / PostgreSQL
@@ -33,8 +35,8 @@ WARSA adalah aplikasi manajemen warung berbasis Laravel. Dokumentasi ini menjela
 
 1. Clone repository:
     ```bash
-    git clone <repo-url> d:\laragon\www\siwarung
-    cd d:\laragon\www\siwarung
+    git clone <repo-url> d:\laragon\www\WARSA
+    cd d:\laragon\www\WARSA
     ```
 2. Install dependensi PHP:
     ```bash
@@ -63,7 +65,7 @@ WARSA adalah aplikasi manajemen warung berbasis Laravel. Dokumentasi ini menjela
 8. Jalankan aplikasi:
     - Laravel dev server:
         ```bash
-        php artisan serve --host=127.0.0.1 --port=8000
+        composer run dev
         ```
     - Atau gunakan virtual host Laragon (rekomendasi untuk Windows).
 
@@ -72,7 +74,7 @@ WARSA adalah aplikasi manajemen warung berbasis Laravel. Dokumentasi ini menjela
 ## Struktur Folder Proyek
 
 ```
-d:\laragon\www\siwarung
+d:\laragon\www\WARSA
 ├── app/                     # Core app: Models, Controllers, Business logic
 │   ├── Console              # Artisan custom commands
 │   ├── Exceptions           # Exception handlers
@@ -129,7 +131,7 @@ d:\laragon\www\siwarung
 ## Contoh .env (sesuaikan)
 
 ```env
-APP_NAME=SiWarung
+APP_NAME=WARSA
 APP_ENV=local
 APP_KEY=
 APP_URL=http://localhost:8000
@@ -137,7 +139,7 @@ APP_URL=http://localhost:8000
 DB_CONNECTION=mysql
 DB_HOST=127.0.0.1
 DB_PORT=3306
-DB_DATABASE=siwarung
+DB_DATABASE=WARSA
 DB_USERNAME=root
 DB_PASSWORD=
 
@@ -146,7 +148,7 @@ MAIL_HOST=smtp.mailtrap.io
 MAIL_PORT=2525
 MAIL_USERNAME=
 MAIL_PASSWORD=
-MAIL_FROM_ADDRESS=no-reply@siwarung.test
+MAIL_FROM_ADDRESS=no-reply@WARSA.test
 ```
 
 ---
@@ -210,30 +212,6 @@ MAIL_FROM_ADDRESS=no-reply@siwarung.test
 
 ---
 
-## Deployment (Produksi — ringkas)
-
-1. Taruh kode di server (Git CI/CD / rsync).
-2. Install dependensi tanpa dev:
-    ```bash
-    composer install --no-dev --optimize-autoloader
-    npm ci && npm run build
-    ```
-3. Set `.env` production, generate key jika perlu.
-4. Jalankan migrasi paksa:
-    ```bash
-    php artisan migrate --force
-    ```
-5. Cache konfigurasi & rute:
-    ```bash
-    php artisan config:cache
-    php artisan route:cache
-    php artisan view:cache
-    ```
-6. Setup supervisor (Linux) untuk queue workers, dan cron untuk scheduler.
-7. Pastikan permission folder `storage/` dan `bootstrap/cache` benar.
-
----
-
 ## Troubleshooting Umum
 
 - Error koneksi DB: periksa `DB_HOST`, `DB_PORT`, kredensial.
@@ -285,4 +263,4 @@ php artisan test
 
 ---
 
-Dokumentasi ini adalah template lengkap untuk proyek Laravel "SiWarung". Lengkapi bagian fitur, endpoint, dan kontak sesuai kondisi nyata proyek. Jika ingin, saya bisa menghasilkan dokumentasi API otomatis (Scribe) atau berkas .env.example terperinci setelah Anda kirimkan struktur model/rute utama.
+Dokumentasi ini adalah template lengkap untuk proyek Laravel "WARSA". Lengkapi bagian fitur, endpoint, dan kontak sesuai kondisi nyata proyek. Jika ingin, saya bisa menghasilkan dokumentasi API otomatis (Scribe) atau berkas .env.example terperinci setelah Anda kirimkan struktur model/rute utama.

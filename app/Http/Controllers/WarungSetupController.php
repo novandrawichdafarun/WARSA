@@ -35,6 +35,6 @@ class WarungSetupController extends Controller
         Auth::user()->update(['warung_id' => $warung->id]);
 
         return redirect()->route('dashboard')
-            ->with('success', 'Warung berhasil dibuat! Selamat datang di SIWARUNG.');
+            ->with('success', 'Warung berhasil dibuat! Selamat datang di WARSA.');
     }
 }

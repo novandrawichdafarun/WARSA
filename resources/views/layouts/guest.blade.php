@@ -44,7 +44,7 @@
                 </h1>
                 <p class="text-emerald-100 text-base md:text-lg max-w-md">
                     Kelola stok, penjualan, dan laporan keuangan dalam satu aplikasi mudah. Tingkatkan efisiensi dan
-                    keuntungan usaha Anda bersama Siwarung POS.
+                    keuntungan usaha Anda bersama WARSA POS.
                 </p>
             </div>
 

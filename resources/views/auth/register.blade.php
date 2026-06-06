@@ -99,7 +99,7 @@
                 Saya menyetujui <a href="#"
                     class="text-emerald-600 hover:text-emerald-700 font-semibold underline">Syarat Ketentuan</a> dan <a
                     href="#" class="text-emerald-600 hover:text-emerald-700 font-semibold underline">Kebijakan
-                    Privasi</a> penggunaan layanan sistem kelola Siwarung POS.
+                    Privasi</a> penggunaan layanan sistem kelola WARSA POS.
             </div>
         </div>
 

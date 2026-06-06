@@ -89,7 +89,7 @@
                             'icon' => '📈',
                         ],
                         [
-                            'label' => 'Komisi SIWARUNG',
+                            'label' => 'Komisi WARSA',
                             'value' => 'Rp ' . number_format($laporan['summary']['total_komisi'], 0, ',', '.'),
                             'color' => 'red',
                             'icon' => '💸',

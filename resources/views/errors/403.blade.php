@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Akses Ditolak — SIWARUNG</title>
+    <title>Akses Ditolak — WARSA</title>
     @vite(['resources/css/app.css'])
 </head>
 

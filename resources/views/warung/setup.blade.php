@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Setup Warung - SIWARUNG</title>
+    <title>Setup Warung - WARSA</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
@@ -16,7 +16,7 @@
             <div class="w-16 h-16 bg-green-600 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg">
                 <span class="text-white font-bold text-2xl">SW</span>
             </div>
-            <h1 class="text-2xl font-bold text-gray-800">Selamat Datang di SIWARUNG!</h1>
+            <h1 class="text-2xl font-bold text-gray-800">Selamat Datang di WARSA!</h1>
             <p class="text-gray-500 mt-1 text-sm">
                 Halo, <strong>{{ auth()->user()->name }}</strong>! Lengkapi data warung Anda untuk mulai.
             </p>

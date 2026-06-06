@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Halaman Tidak Ditemukan — SIWARUNG</title>
+    <title>Halaman Tidak Ditemukan — WARSA</title>
     @vite(['resources/css/app.css'])
 </head>
 

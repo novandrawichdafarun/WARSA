@@ -2,7 +2,7 @@
     <x-slot name="header">
         <div class="flex items-center gap-3">
             <a href="{{ route('laporan.index', request()->query()) }}" class="text-gray-400 hover:text-gray-600">←</a>
-            <h2 class="font-semibold text-xl text-gray-800">Laporan Komisi SIWARUNG</h2>
+            <h2 class="font-semibold text-xl text-gray-800">Laporan Komisi WARSA</h2>
         </div>
     </x-slot>
 
@@ -12,7 +12,7 @@
             {{-- Total Komisi --}}
             <div class="bg-white rounded-xl p-6 border border-red-100 shadow-sm">
                 <p class="text-xs text-gray-400 uppercase font-semibold mb-1">
-                    Total Komisi Dibayar ke SIWARUNG
+                    Total Komisi Dibayar ke WARSA
                 </p>
                 <p class="text-3xl font-bold text-red-600">
                     Rp {{ number_format($totalKomisi, 0, ',', '.') }}
