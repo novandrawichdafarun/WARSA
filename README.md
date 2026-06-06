@@ -155,7 +155,7 @@ MAIL_FROM_ADDRESS=no-reply@WARSA.test
 
 ## Database & Seeder
 
-- Jalankan migrasi: `php artisan migrate`
+- Jalankan migrasi: `php artisan migrate --seed`
 - Jika butuh reset: `php artisan migrate:fresh --seed`
 - Buat seeder & factory untuk data uji di `database/seeders` dan `database/factories`.
 
