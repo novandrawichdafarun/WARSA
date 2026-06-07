@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use App\Models\Category;
 use App\Models\Warung;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class CategorySeeder extends Seeder
@@ -14,19 +13,45 @@ class CategorySeeder extends Seeder
      */
     public function run(): void
     {
-        $warung = Warung::first();
+        $this->seedKategori(
+            Warung::where('slug', 'warung-makan-otong')->first(),
+            [
+                'Makanan Berat',
+                'Minuman',
+                'Cemilan & Snack',
+                'Sembako',
+                'Peralatan Rumah Tangga',
+            ]
+        );
 
-        $kategori = [
-            'Makanan Berat',
-            'Minuman',
-            'Cemilan & Snack',
-            'Sembako',
-            'Peralatan Rumah Tangga',
-        ];
+        $this->seedKategori(
+            Warung::where('slug', 'warung-sembako-pak-bejo')->first(),
+            [
+                'Makanan Berat',
+                'Minuman',
+                'Sembako',
+                'Bumbu Dapur',
+                'Rokok & Tembakau',
+            ]
+        );
 
-        foreach ($kategori as $nama) {
+        $this->seedKategori(
+            Warung::where('slug', 'kedai-kopi-mbak-yuni')->first(),
+            [
+                'Kopi & Teh',
+                'Minuman Dingin',
+                'Makanan Ringan',
+                'Minuman Panas',
+                'Paket Hemat',
+            ]
+        );
+    }
+
+    private function seedKategori(Warung $warung, array $daftarKategori): void
+    {
+        foreach ($daftarKategori as $nama) {
             Category::create([
-                'warung_id' => $warung->id,
+                'warung_id'     => $warung->id,
                 'nama_kategori' => $nama,
             ]);
         }

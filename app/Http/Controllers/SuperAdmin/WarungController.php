@@ -23,7 +23,7 @@ class WarungController extends Controller
         $validatedData = $request->validate([
             'nama_warung' => 'required|string|max:255',
             'alamat' => 'nullable|string',
-            'no_telp' => 'nullable|string|max:20',
+            'telepon' => 'nullable|string|max:20',
             'tambah_user_id' => 'nullable|exists:users,id',
             'tambah_user_role' => 'nullable|in:owner,kasir',
         ]);

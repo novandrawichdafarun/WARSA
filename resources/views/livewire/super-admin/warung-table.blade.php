@@ -21,7 +21,7 @@
                     <tr class="bg-white border-b hover:bg-gray-50">
                         <td class="px-6 py-4 font-medium text-gray-900">{{ $warung->nama_warung }}</td>
                         <td class="px-6 py-4">{{ $warung->alamat ?? '-' }}</td>
-                        <td class="px-6 py-4">{{ $warung->no_telp ?? '-' }}</td>
+                        <td class="px-6 py-4">{{ $warung->telepon ?? '-' }}</td>
                         <td class="px-6 py-4 text-right flex justify-end gap-2">
                             <button x-data=""
                                 x-on:click.prevent="$dispatch('open-modal', 'edit-warung-{{ $warung->id }}')"
@@ -57,9 +57,9 @@
                             </div>
 
                             <div class="mb-4">
-                                <x-input-label for="no_telp" value="No. Telepon" />
-                                <x-text-input id="no_telp" name="no_telp" type="text" class="mt-1 block w-full"
-                                    :value="$warung->no_telp" />
+                                <x-input-label for="telepon" value="No. Telepon" />
+                                <x-text-input id="telepon" name="telepon" type="text" class="mt-1 block w-full"
+                                    :value="$warung->telepon" />
                             </div>
 
                             <hr class="my-6 border-gray-200">
@@ -91,7 +91,8 @@
                                         <option value="">-- Jangan Tambahkan --</option>
                                         @foreach ($availableUsers as $au)
                                             <option value="{{ $au->id }}">{{ $au->name }}
-                                                ({{ $au->email }})</option>
+                                                ({{ $au->email }})
+                                            </option>
                                         @endforeach
                                     </select>
                                 </div>

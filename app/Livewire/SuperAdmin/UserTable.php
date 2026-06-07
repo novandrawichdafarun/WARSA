@@ -3,6 +3,7 @@
 namespace App\Livewire\SuperAdmin;
 
 use App\Models\User;
+use App\Models\Warung;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -24,6 +25,8 @@ class UserTable extends Component
       ->orWhere('email', 'like', '%' . $this->search . '%')
       ->paginate(10);
 
-    return view('livewire.super-admin.user-table', compact('users'));
+    $warungs = Warung::orderBy('nama_warung')->get();
+
+    return view('livewire.super-admin.user-table', compact('users', 'warungs'));
   }
 }

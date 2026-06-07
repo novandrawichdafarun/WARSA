@@ -68,7 +68,7 @@ class ProductFactory extends Factory
             'harga_jual' => $hargaBeli + fake()->randomElement([1000, 2000, 3000, 5000]),
             'harga_beli' => $hargaBeli,
             'stok' => fake()->numberBetween(5, 100),
-            'stok_minimum' => 5,
+            'stok_minimal' => 5,
             'is_active' => true,
         ];
     }

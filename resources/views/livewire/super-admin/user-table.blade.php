@@ -14,34 +14,52 @@
                     <th scope="col" class="px-6 py-3 border-b">Email</th>
                     <th scope="col" class="px-6 py-3 border-b">Role</th>
                     <th scope="col" class="px-6 py-3 border-b">Warung</th>
-                    <th scope="col" class="px-6 py-3 border-b text-right">Aksi</th>
+                    <th scope="col" class="px-6 py-3 border-b">Status Verifikasi</th>
+                    <th scope="col" class="px-6 py-3 border-b">Aksi</th>
                 </tr>
             </thead>
             <tbody>
                 @forelse ($users as $user)
-                    <tr class="bg-white border-b hover:bg-gray-50">
-                        <td class="px-6 py-4 font-medium text-gray-900">{{ $user->name }}</td>
-                        <td class="px-6 py-4">{{ $user->email }}</td>
-                        <td class="px-6 py-4">
-                            <span class="px-2 py-1 bg-blue-100 text-blue-800 rounded-full text-xs font-semibold">
-                                {{ ucfirst($user->role) }}
-                            </span>
-                        </td>
-                        <td class="px-6 py-4">{{ $user->warung ? $user->warung->nama_warung : '-' }}</td>
-                        <td class="px-6 py-4 text-right flex justify-end gap-2">
-                            <button x-data=""
-                                x-on:click.prevent="$dispatch('open-modal', 'edit-user-{{ $user->id }}')"
-                                class="text-indigo-600 hover:text-indigo-900 font-semibold">
-                                Edit
-                            </button>
+                    @if ($user->role !== 'super_admin')
+                        <tr class="bg-white border-b hover:bg-gray-50">
+                            <td class="px-6 py-4 font-medium text-gray-900">{{ $user->name }}</td>
+                            <td class="px-6 py-4">{{ $user->email }}</td>
+                            <td class="px-6 py-4">
+                                <span class="px-2 py-1 bg-blue-100 text-blue-800 rounded-full text-xs font-semibold">
+                                    {{ ucfirst($user->role) }}
+                                </span>
+                            </td>
+                            <td class="px-6 py-4">
+                                {{ $user->warung ? $user->warung->nama_warung : 'User tidak terhubung dengan warung' }}
+                            </td>
+                            <td class="px-6 py-4">
+                                @if ($user->email_verified_at)
+                                    <span
+                                        class="px-2 py-1 bg-green-100 text-green-800 rounded-full text-xs font-semibold">
+                                        Terverifikasi
+                                    </span>
+                                @else
+                                    <span
+                                        class="px-2 py-1 bg-yellow-100 text-yellow-800 rounded-full text-xs font-semibold">
+                                        Belum Terverifikasi
+                                    </span>
+                                @endif
+                            </td>
+                            <td class="px-6 py-4 text-right flex justify-start gap-2">
+                                <button x-data=""
+                                    x-on:click.prevent="$dispatch('open-modal', 'edit-user-{{ $user->id }}')"
+                                    class="text-indigo-600 hover:text-indigo-900 font-semibold">
+                                    Edit
+                                </button>
 
-                            <button x-data=""
-                                x-on:click.prevent="$dispatch('open-modal', 'delete-user-{{ $user->id }}')"
-                                class="text-red-600 hover:text-red-900 font-semibold">
-                                Hapus
-                            </button>
-                        </td>
-                    </tr>
+                                <button x-data=""
+                                    x-on:click.prevent="$dispatch('open-modal', 'delete-user-{{ $user->id }}')"
+                                    class="text-red-600 hover:text-red-900 font-semibold">
+                                    Hapus
+                                </button>
+                            </td>
+                        </tr>
+                    @endif
 
                     <x-modal name="edit-user-{{ $user->id }}" focusable>
                         <form method="POST" action="{{ route('super_admin.users.update', $user->id) }}"

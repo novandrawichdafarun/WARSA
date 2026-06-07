@@ -27,7 +27,7 @@ class UserController extends Controller
             'email' => 'required|email|unique:users,email,' . $user->id,
             'password' => 'nullable|string|min:8',
             'role' => 'required|in:owner,kasir,super_admin',
-            'warung_id' => 'nullable|exists:warungs,id',
+            'warung_id' => 'nullable|exists:warung,id',
             'is_verified' => 'boolean',
         ]);
 
