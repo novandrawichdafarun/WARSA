@@ -43,7 +43,7 @@ class PengaturanController extends Controller
 
         $warung->update($data);
 
-        return redirect()->route('pengaturan.index')
+        return redirect()->route('dashboard')
             ->with('success', 'Pengaturan warung berhasil disimpan.');
     }
 }

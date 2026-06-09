@@ -50,7 +50,7 @@ class Warung extends Model
         });
 
         static::updating(function (Warung $warung) {
-            if ($warung->isDirty('nama_warung') && empty($warung->getOriginal('slug'))) {
+            if ($warung->isDirty('nama_warung')) {
                 $warung->slug = static::generateUniqueSlug($warung->nama_warung);
             }
         });

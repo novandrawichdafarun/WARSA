@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\CommissionLedger;
 use App\Models\Product;
 use App\Models\Transaction;
 use App\Models\User;
@@ -17,6 +18,29 @@ class DashboardController extends Controller
     public function index(): View
     {
         $user = Auth::user();
+
+        if ($user->role === 'super_admin') {
+            $commisi_harian = Cache::remember(
+                "dashboard_chart_super_admin",
+                now()->addMinutes(5),
+                fn() => CommissionLedger::selectRaw('DATE(created_at) as tanggal, SUM(commission_amount) as omset')
+                    ->whereMonth('created_at', now()->month)
+                    ->whereYear('created_at', now()->year)
+                    ->groupBy('tanggal')
+                    ->orderBy('tanggal')
+                    ->get()
+                    ->toArray()
+            );
+            $data = [
+                'totalWarung' => Warung::count(),
+                'totalUser' => User::where('role', '!=', 'super_admin')->count(),
+                'total_transaksi_hari_ini' => Transaction::paid()->today()->count(),
+                'omset_hari_ini' => CommissionLedger::whereDate('created_at', today())->sum('commission_amount'),
+                'chart_harian' => $commisi_harian,
+            ];
+
+            return view('dashboard', $data);
+        }
 
         $warung = Auth::user()->warung;
 
@@ -46,13 +70,6 @@ class DashboardController extends Controller
             'omset_bulan_ini' => $omsetBulanIni,
             'chart_harian' => $chartHarian,
         ];
-
-        if ($user->role === 'super_admin') {
-            $data['totalWarung'] = Warung::count();
-            $data['totalUser'] = User::where('role', '!=', 'super_admin')->count();
-            $data['totalKategori'] = Category::count();
-
-        }
 
         return view('dashboard', $data);
     }

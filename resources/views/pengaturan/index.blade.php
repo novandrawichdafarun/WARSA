@@ -105,6 +105,10 @@
                             </div>
 
                             <div class="flex justify-end mt-6">
+                                <a class="px-6 py-2.5 bg-gray-300 hover:bg-gray-400 text-gray-700 rounded-lg text-sm font-medium transition-colors shadow-sm mr-3"
+                                    href="{{ route('dashboard') }}">
+                                    Batal
+                                </a>
                                 <button type="submit"
                                     class="px-6 py-2.5 bg-green-600 hover:bg-green-700 text-white rounded-lg text-sm font-medium transition-colors shadow-sm">
                                     Simpan Pengaturan

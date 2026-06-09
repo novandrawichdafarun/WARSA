@@ -7,19 +7,24 @@
                 </h2>
                 <p class="text-sm text-gray-500 mt-1">Pantau perkembangan dan performa tokomu hari ini.</p>
             </div>
-            @if (isset($warung))
+            @if (auth()->user()->warung)
                 <div
                     class="bg-green-50 border border-green-200 rounded-xl px-4 py-2 flex items-center gap-2 self-start md:self-auto">
-                    <span class="text-xl">🏪</span>
+                    @if (auth()->user()->warung->logo)
+                        <img src="{{ asset('storage/' . auth()->user()->warung->logo) }}" alt="Logo Warung"
+                            class="w-10 h-10 rounded-full object-cover">
+                    @else
+                        <span class="text-xl">🏪</span>
+                    @endif
                     <div>
                         <p class="text-xs text-green-600 font-medium">Nama Warung</p>
-                        <p class="text-sm font-bold text-gray-800">{{ $warung->nama_warung }}</p>
+                        <p class="text-sm font-bold text-gray-800">{{ auth()->user()->warung->nama_warung }}</p>
                     </div>
                 </div>
             @endif
         </div>
         {{-- Alert Stok Menipis — tampil hanya jika ada --}}
-        @if ($produk_low_stock_list->isNotEmpty())
+        @if (isset($produk_low_stock) && $produk_low_stock_list->isNotEmpty() && !auth()->user()->isSuperAdmin())
             <div class="bg-amber-50 border border-amber-200 rounded-2xl p-5 mt-3">
                 <div class="flex items-center justify-between mb-3">
                     <p class="font-semibold text-amber-800 flex items-center gap-2">
@@ -43,114 +48,61 @@
         @endif
     </x-slot>
 
-    @if (auth()->user()->isSuperAdmin())
+    @if (auth()->user()->isOwner())
         <div class="py-8">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-
-                <div class="mb-6 bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-                    <h3 class="text-lg font-bold text-gray-800 mb-2">Selamat Datang, {{ auth()->user()->name }}</h3>
-                    <p class="text-sm text-gray-500">Berikut adalah ringkasan data aplikasi kamu hari ini.</p>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-
-                    <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6 flex items-center gap-4">
-                        <div
-                            class="w-14 h-14 bg-green-50 rounded-full flex items-center justify-center border border-green-100">
-                            <span class="text-2xl">🏪</span>
-                        </div>
-                        <div>
-                            <p class="text-xs font-bold text-gray-500 uppercase tracking-wider">Total Warung</p>
-                            <p class="text-2xl font-bold text-gray-800">{{ $totalWarung ?? 0 }}</p>
-                        </div>
-                    </div>
-
-                    <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6 flex items-center gap-4">
-                        <div
-                            class="w-14 h-14 bg-blue-50 rounded-full flex items-center justify-center border border-blue-100">
-                            <span class="text-2xl">👥</span>
-                        </div>
-                        <div>
-                            <p class="text-xs font-bold text-gray-500 uppercase tracking-wider">Total User</p>
-                            <p class="text-2xl font-bold text-gray-800">{{ $totalUser ?? 0 }}</p>
-                        </div>
-                    </div>
-
-                    <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6 flex items-center gap-4">
-                        <div
-                            class="w-14 h-14 bg-purple-50 rounded-full flex items-center justify-center border border-purple-100">
-                            <span class="text-2xl">📑</span>
-                        </div>
-                        <div>
-                            <p class="text-xs font-bold text-gray-500 uppercase tracking-wider">Total Kategori</p>
-                            <p class="text-2xl font-bold text-gray-800">{{ $totalKategori ?? 0 }}</p>
-                        </div>
-                    </div>
-
-                </div>
-
-            </div>
-        </div>
-    @endif
-
-    <div class="py-8">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
-
-            @if (auth()->user()->isOwner())
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
                 {{-- Bagian 1: Kartu Statistik Ringkasan --}}
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
 
                     <div
-                        class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 flex items-center justify-between transition-all hover:shadow-md">
-                        <div class="space-y-2">
-                            <p class="text-sm font-medium text-gray-400 uppercase tracking-wider">Omset Hari Ini</p>
-                            <h3 class="text-2xl font-bold text-gray-800">Rp
-                                {{ number_format($omset_hari_ini, 0, ',', '.') }}</h3>
-                        </div>
+                        class="bg-white rounded-xl shadow-sm border border-gray-100 p-6 flex items-center gap-4 hover:shadow-md transition-all">
                         <div
-                            class="w-12 h-12 bg-green-100 text-green-600 rounded-xl flex items-center justify-center text-xl font-bold">
-                            💰
+                            class="w-14 h-14 bg-green-100 rounded-full flex items-center justify-center border border-green-100">
+                            <span class="text-2xl">💰</span>
+                        </div>
+                        <div>
+                            <p class="text-xs font-bold text-gray-500 uppercase tracking-wider">Omset Hari Ini</p>
+                            <p class="text-2xl font-bold text-gray-800">Rp
+                                {{ number_format($omset_hari_ini, 0, ',', '.') }}</p>
                         </div>
                     </div>
 
                     <div
-                        class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 flex items-center justify-between transition-all hover:shadow-md">
-                        <div class="space-y-2">
-                            <p class="text-sm font-medium text-gray-400 uppercase tracking-wider">Transaksi Hari Ini</p>
-                            <h3 class="text-2xl font-bold text-gray-800">{{ $total_transaksi_hari_ini }} <span
-                                    class="text-sm font-normal text-gray-500">Nota</span></h3>
-                        </div>
+                        class="bg-white rounded-xl shadow-sm border border-gray-100 p-6 flex items-center gap-4 hover:shadow-md transition-all">
                         <div
-                            class="w-12 h-12 bg-blue-100 text-blue-600 rounded-xl flex items-center justify-center text-xl font-bold">
-                            🛒
+                            class="w-14 h-14 bg-blue-100 rounded-full flex items-center justify-center border border-blue-100">
+                            <span class="text-2xl">🛒</span>
+                        </div>
+                        <div>
+                            <p class="text-xs font-bold text-gray-500 uppercase tracking-wider">Transaksi Hari
+                                Ini</p>
+                            <p class="text-2xl font-bold text-gray-800">{{ $total_transaksi_hari_ini ?? 0 }}</p>
                         </div>
                     </div>
 
                     <div
-                        class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 flex items-center justify-between transition-all hover:shadow-md">
-                        <div class="space-y-2">
-                            <p class="text-sm font-medium text-gray-400 uppercase tracking-wider">Total Produk</p>
-                            <h3 class="text-2xl font-bold text-gray-800">{{ $total_produk }} <span
-                                    class="text-sm font-normal text-gray-500">Item</span></h3>
-                        </div>
+                        class="bg-white rounded-xl shadow-sm border border-gray-100 p-6 flex items-center gap-4 hover:shadow-md transition-all">
                         <div
-                            class="w-12 h-12 bg-purple-100 text-purple-600 rounded-xl flex items-center justify-center text-xl font-bold">
-                            📦
+                            class="w-14 h-14 bg-purple-100 rounded-full flex items-center justify-center border border-purple-100">
+                            <span class="text-2xl">📦</span>
+                        </div>
+                        <div>
+                            <p class="text-xs font-bold text-gray-500 uppercase tracking-wider">Total Produk</p>
+                            <p class="text-2xl font-bold text-gray-800">{{ $total_produk ?? 0 }} <span
+                                    class="text-sm font-normal text-gray-500">Item</span></p>
                         </div>
                     </div>
 
                     <div
-                        class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 flex items-center justify-between transition-all hover:shadow-md">
-                        <div class="space-y-2">
-                            <p class="text-sm font-medium text-gray-400 uppercase tracking-wider">Stok Menipis</p>
-                            <h3
-                                class="text-2xl font-bold {{ $produk_low_stock > 0 ? 'text-red-600' : 'text-gray-800' }}">
-                                {{ $produk_low_stock }} <span class="text-sm font-normal text-gray-500">Item</span>
-                            </h3>
-                        </div>
+                        class="bg-white rounded-xl shadow-sm border border-gray-100 p-6 flex items-center gap-4 hover:shadow-md transition-all">
                         <div
-                            class="w-12 h-12 {{ $produk_low_stock > 0 ? 'bg-red-100 text-red-600 animate-pulse' : 'bg-gray-100 text-gray-400' }} rounded-xl flex items-center justify-center text-xl font-bold">
-                            ⚠️
+                            class="w-14 h-14{{ $produk_low_stock > 0 ? ' bg-red-100 border-red-100 animate-pulse' : 'bg-gray-100 border-gray-100' }} rounded-full flex items-center justify-center border ">
+                            <span class="text-2xl">⚠️</span>
+                        </div>
+                        <div>
+                            <p class="text-xs font-bold text-gray-500 uppercase tracking-wider">Stok Menipis</p>
+                            <p class="text-2xl font-bold text-gray-800">{{ $produk_low_stock ?? 0 }} <span
+                                    class="text-sm font-normal text-gray-500">Item</span></p>
                         </div>
                     </div>
 
@@ -212,34 +164,72 @@
                     </div>
                     <canvas id="dashboardChart" height="80"></canvas>
                 </div>
-            @elseif (auth()->user()->isSuperAdmin())
-                {{-- Bagian 1: Kartu Statistik Ringkasan --}}
-                <div class="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 gap-6">
+            </div>
+        </div>
+    @elseif (auth()->user()->isSuperAdmin())
+        <div class="py-8">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+                <div
+                    class="mb-6 bg-white rounded-xl shadow-sm border border-gray-100 p-6 hover:shadow-md transition-all">
+                    <h3 class="text-lg font-bold text-gray-800 mb-2">Selamat Datang,
+                        {{ auth()->user()->name }}</h3>
+                    <p class="text-sm text-gray-500">Berikut adalah ringkasan data aplikasi kamu hari
+                        ini.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
 
                     <div
-                        class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 flex items-center justify-between transition-all hover:shadow-md">
-                        <div class="space-y-2">
-                            <p class="text-sm font-medium text-gray-400 uppercase tracking-wider">Omset Hari Ini</p>
-                            <h3 class="text-2xl font-bold text-gray-800">Rp
-                                {{ number_format($omset_hari_ini, 0, ',', '.') }}</h3>
-                        </div>
+                        class="bg-white rounded-xl shadow-sm border border-gray-100 p-6 flex items-center gap-4 hover:shadow-md transition-all">
                         <div
-                            class="w-12 h-12 bg-green-100 text-green-600 rounded-xl flex items-center justify-center text-xl font-bold">
-                            💰
+                            class="w-14 h-14 bg-green-50 rounded-full flex items-center justify-center border border-green-100">
+                            <span class="text-2xl">🏪</span>
+                        </div>
+                        <div>
+                            <p class="text-xs font-bold text-gray-500 uppercase tracking-wider">Total
+                                Warung</p>
+                            <p class="text-2xl font-bold text-gray-800">{{ $totalWarung ?? 0 }}</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6 flex items-center gap-4">
+                        <div
+                            class="w-14 h-14 bg-blue-50 rounded-full flex items-center justify-center border border-blue-100">
+                            <span class="text-2xl">👥</span>
+                        </div>
+                        <div>
+                            <p class="text-xs font-bold text-gray-500 uppercase tracking-wider">Total
+                                User</p>
+                            <p class="text-2xl font-bold text-gray-800">{{ $totalUser ?? 0 }}</p>
                         </div>
                     </div>
 
                     <div
-                        class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 flex items-center justify-between transition-all hover:shadow-md">
-                        <div class="space-y-2">
-                            <p class="text-sm font-medium text-gray-400 uppercase tracking-wider">Transaksi Hari Ini
-                            </p>
-                            <h3 class="text-2xl font-bold text-gray-800">{{ $total_transaksi_hari_ini }} <span
-                                    class="text-sm font-normal text-gray-500">Nota</span></h3>
-                        </div>
+                        class="bg-white rounded-xl shadow-sm border border-gray-100 p-6 flex items-center gap-4 hover:shadow-md transition-all">
                         <div
-                            class="w-12 h-12 bg-blue-100 text-blue-600 rounded-xl flex items-center justify-center text-xl font-bold">
-                            🛒
+                            class="w-14 h-14 bg-green-100 rounded-full flex items-center justify-center border border-green-100">
+                            <span class="text-2xl">💰</span>
+                        </div>
+                        <div>
+                            <p class="text-xs font-bold text-gray-500 uppercase tracking-wider">Omset Hari Ini
+                            </p>
+                            <p class="text-2xl font-bold text-gray-800">Rp
+                                {{ number_format($omset_hari_ini, 0, ',', '.') }}</p>
+                        </div>
+                    </div>
+
+                    <div
+                        class="bg-white rounded-xl shadow-sm border border-gray-100 p-6 flex items-center gap-4 hover:shadow-md transition-all">
+                        <div
+                            class="w-14 h-14 bg-blue-100 rounded-full flex items-center justify-center border border-blue-100">
+                            <span class="text-2xl">🛒</span>
+                        </div>
+                        <div>
+                            <p class="text-xs font-bold text-gray-500 uppercase tracking-wider">Total Transaksi
+                                Hari
+                                Ini</p>
+                            <p class="text-2xl font-bold text-gray-800">{{ $total_transaksi_hari_ini ?? 0 }}
+                            </p>
                         </div>
                     </div>
 
@@ -255,9 +245,9 @@
                     </div>
                     <canvas id="dashboardChart" height="80"></canvas>
                 </div>
-            @endif
+            </div>
         </div>
-    </div>
+    @endif
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <script>

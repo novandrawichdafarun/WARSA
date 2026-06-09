@@ -32,6 +32,11 @@
                                 {{ request()->routeIs('super_admin.warungs.*') ? 'bg-green-100 text-green-700' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100' }}">
                                 Manajemen Warung
                             </a>
+                            <a href="{{ route('super_admin.commission.index') }}"
+                                class="px-3 py-2 rounded-md text-sm font-medium transition-colors
+                                {{ request()->routeIs('super_admin.commission.*') ? 'bg-green-100 text-green-700' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100' }}">
+                                Komisi
+                            </a>
                         @endif
 
                         {{-- POS — owner + kasir --}}
@@ -107,7 +112,7 @@
                                 <p class="text-xs text-gray-500">{{ ucfirst(auth()->user()->role) }}</p>
                                 <p class="text-sm font-medium text-gray-800 truncate">{{ auth()->user()->email }}</p>
                             </div>
-                            @if (auth()->user()->isOwner())
+                            @if (auth()->user()->isOwner() || auth()->user()->isSuperAdmin())
                                 <a href="{{ route('pengaturan.index') }}"
                                     class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">
                                     ⚙️ Pengaturan Warung

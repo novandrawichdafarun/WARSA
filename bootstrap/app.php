@@ -2,6 +2,7 @@
 
 use App\Http\Middleware\EnsureIsKasir;
 use App\Http\Middleware\EnsureIsOwner;
+use App\Http\Middleware\EnsureIsOwnerOrSuperAdmin;
 use App\Http\Middleware\EnsureIsSuperAdmin;
 use App\Http\Middleware\EnsureWarungSetup;
 use Illuminate\Foundation\Application;
@@ -27,6 +28,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'kasir' => EnsureIsKasir::class,
             'warung.setup' => EnsureWarungSetup::class,
             'super_admin' => EnsureIsSuperAdmin::class,
+            'owner_or_superadmin' => EnsureIsOwnerOrSuperAdmin::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {

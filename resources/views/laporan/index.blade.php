@@ -123,18 +123,18 @@
             </div>
 
             {{-- Metode Pembayaran --}}
-            <div class="grid grid-cols-2 gap-4">
+            <div class="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-4">
                 <div class="bg-white rounded-xl p-5 border border-gray-100 shadow-sm">
                     <p class="text-xs text-gray-400 font-semibold uppercase mb-3">Breakdown Pembayaran</p>
-                    <div class="flex items-center justify-between">
+                    <div class="flex items-center justify-center gap-10 mt-14">
                         <div class="text-center">
-                            <p class="text-2xl font-bold text-green-600">{{ $laporan['metode_bayar']['cash'] }}</p>
-                            <p class="text-xs text-gray-400 mt-1">💵 Cash</p>
+                            <p class="text-4xl font-bold text-green-600">{{ $laporan['metode_bayar']['cash'] }}</p>
+                            <p class="text-xl text-gray-400 mt-1">💵 Cash</p>
                         </div>
                         <div class="h-12 w-px bg-gray-100"></div>
                         <div class="text-center">
-                            <p class="text-2xl font-bold text-blue-600">{{ $laporan['metode_bayar']['qris'] }}</p>
-                            <p class="text-xs text-gray-400 mt-1">📱 QRIS</p>
+                            <p class="text-4xl font-bold text-blue-600">{{ $laporan['metode_bayar']['qris'] }}</p>
+                            <p class="text-xl text-gray-400 mt-1">📱 QRIS</p>
                         </div>
                     </div>
                 </div>

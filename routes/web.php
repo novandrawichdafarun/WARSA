@@ -9,6 +9,7 @@ use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\WarungSetupController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StockController;
+use App\Http\Controllers\SuperAdmin\CommissionController;
 use App\Http\Controllers\SuperAdmin\UserController;
 use App\Http\Controllers\SuperAdmin\WarungController;
 use App\Http\Controllers\TransaksiController;
@@ -20,10 +21,6 @@ Route::get('/', function () {
 });
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('/dashboard', [DashboardController::class, 'index'])
-        ->name('dashboard');
-
-
     Route::get('/setup-warung', [WarungSetupController::class, 'create'])
         ->name('warung.setup');
     Route::post('/setup-warung', [WarungSetupController::class, 'store'])
@@ -35,16 +32,24 @@ Route::middleware(['auth'])->group(function () {
 });
 
 // ============================================================
-// OWNER WARUNG 
+// OWNER WARUNG & SUPER ADMIN
 // ============================================================
-Route::middleware(['auth', 'warung.setup', 'owner'])->group(function () {
-    Route::resource('karyawan', KaryawanController::class)
-        ->only(['index', 'create', 'store', 'destroy']);
+Route::middleware(['auth', 'owner_or_superadmin'])->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'index'])
+        ->name('dashboard');
 
     Route::get('/pengaturan', [PengaturanController::class, 'index'])
         ->name('pengaturan.index');
     Route::put('/pengaturan', [PengaturanController::class, 'update'])
         ->name('pengaturan.update');
+});
+
+// ============================================================
+// OWNER WARUNG 
+// ============================================================
+Route::middleware(['auth', 'warung.setup', 'owner'])->group(function () {
+    Route::resource('karyawan', KaryawanController::class)
+        ->only(['index', 'create', 'store', 'destroy']);
 
     Route::resource('produk', ProdukController::class);
     Route::post('produk/{produk}/stok', [ProdukController::class, 'tambahStok'])
@@ -105,6 +110,9 @@ Route::middleware(['auth', 'super_admin'])->prefix('super-admin')->name('super_a
         ->name('warungs.update');
     Route::delete('/warungs/{warung}', [WarungController::class, 'destroy'])
         ->name('warungs.destroy');
+
+    Route::get('/commission', [CommissionController::class, 'index'])
+        ->name('commission.index');
 });
 
 
