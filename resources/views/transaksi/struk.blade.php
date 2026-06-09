@@ -46,7 +46,7 @@
                 <span>{{ $transaksi->paid_at->format('d M Y, H:i') }}</span>
             </div>
             <div class="flex justify-between text-xs text-gray-500">
-                <span>Kasir</span>
+                <span>Petugas</span>
                 <span>{{ $transaksi->kasir->name }}</span>
             </div>
         </div>
@@ -99,7 +99,7 @@
         </button>
         <a href="{{ route('pos.index') }}"
             class="px-5 py-2 bg-gray-100 text-gray-700 rounded-xl text-sm font-semibold hover:bg-gray-200">
-            + Transaksi Baru
+            Kembali
         </a>
     </div>
 

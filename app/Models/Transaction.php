@@ -60,7 +60,7 @@ class Transaction extends Model
      */
     public function kasir(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(User::class, 'user_id')->withTrashed();
     }
 
     public function items(): HasMany

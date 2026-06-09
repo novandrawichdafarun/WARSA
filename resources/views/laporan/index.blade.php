@@ -196,7 +196,7 @@
                             <tr class="bg-gray-50 border-b border-gray-100">
                                 <th class="text-left py-3 px-4 text-xs font-semibold text-gray-400 uppercase">No</th>
                                 <th class="text-left py-3 px-4 text-xs font-semibold text-gray-400 uppercase">Waktu</th>
-                                <th class="text-left py-3 px-4 text-xs font-semibold text-gray-400 uppercase">Kasir</th>
+                                <th class="text-left py-3 px-4 text-xs font-semibold text-gray-400 uppercase">Petugas</th>
                                 <th class="text-right py-3 px-4 text-xs font-semibold text-gray-400 uppercase">Omset
                                 </th>
                                 <th class="text-right py-3 px-4 text-xs font-semibold text-gray-400 uppercase">Komisi
@@ -214,7 +214,18 @@
                                     <td class="py-3 px-4 text-xs text-gray-500">
                                         {{ $trx->paid_at->format('d M, H:i') }}
                                     </td>
-                                    <td class="py-3 px-4 text-gray-700">{{ $trx->kasir->name }}</td>
+                                    <td class="py-3 px-4 text-gray-700">
+                                        @if($trx->kasir)
+                                            <div class="flex flex-col">
+                                                <span class="text-gray-800 font-medium">{{ $trx->kasir->name }}</span>
+                                                <span class="text-[10px] font-bold uppercase tracking-wider {{ $trx->kasir->role === 'owner' ? 'text-purple-600' : 'text-blue-600' }}">
+                                                    {{ $trx->kasir->role }}
+                                                </span>
+                                            </div>
+                                        @else
+                                            <span class="text-gray-400">-</span>
+                                        @endif
+                                    </td>
                                     <td class="py-3 px-4 text-right font-semibold text-gray-800">
                                         Rp {{ number_format($trx->total_gross, 0, ',', '.') }}
                                     </td>
