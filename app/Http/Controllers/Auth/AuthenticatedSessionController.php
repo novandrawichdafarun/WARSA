@@ -29,7 +29,7 @@ class AuthenticatedSessionController extends Controller
         $user = Auth::user();
 
         if ($user->isSuperAdmin()) {
-            return redirect()->route('super_admin.users.index');
+            return redirect()->intended(route('dashboard', absolute: false));
         }
 
         if (!$user->hasWarung()) {

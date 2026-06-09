@@ -5,23 +5,28 @@
         </h2>
     </x-slot>
 
-    <div class="py-12">
+    <div class="py-8">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             @if (session('success'))
-                <div class="mb-4 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative">
-                    <span class="block sm:inline">{{ session('success') }}</span>
+                <div class="mb-5 p-4 bg-green-50 border border-green-200 rounded-xl flex items-center gap-2 shadow-sm">
+                    <span class="text-green-600 font-bold">✓</span>
+                    <p class="text-sm font-medium text-green-700">{{ session('success') }}</p>
                 </div>
             @endif
 
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900">
-                    @if (auth()->user()->isSuperAdmin())
-                        <livewire:super-admin.warung-table />
-                    @else
-                        <p class="text-center text-gray-500">Anda tidak memiliki akses untuk melihat halaman ini.</p>
-                    @endif
-                </div>
+            <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+                @if (auth()->user()->isSuperAdmin())
+                    <livewire:super-admin.warung-table />
+                @else
+                    <div class="text-center py-10">
+                        <div class="w-14 h-14 bg-red-50 rounded-full flex items-center justify-center mx-auto mb-3">
+                            <span class="text-2xl">🚫</span>
+                        </div>
+                        <p class="text-gray-500 font-medium">Anda tidak memiliki akses untuk melihat halaman ini.</p>
+                    </div>
+                @endif
             </div>
+            
         </div>
     </div>
 </x-app-layout>

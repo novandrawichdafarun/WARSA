@@ -1,166 +1,233 @@
 <div>
-    <div class="mb-4 flex justify-between items-center">
-        <div class="w-1/3">
-            <x-text-input wire:model.live.debounce.300ms="search" type="text" class="w-full"
+    <div class="mb-6 flex flex-col md:flex-row justify-between items-center gap-4">
+        <div class="relative w-full md:w-80">
+            <span class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-gray-400">
+                🔍
+            </span>
+            <input wire:model.live.debounce.300ms="search" type="text"
+                class="pl-9 pr-4 py-2.5 bg-gray-50 border border-gray-200 focus:border-green-500 focus:ring-2 focus:ring-green-100 rounded-xl text-sm w-full transition-all"
                 placeholder="Cari nama atau email user..." />
         </div>
     </div>
 
-    <div class="overflow-x-auto">
-        <table class="w-full text-sm text-left text-gray-500 border">
-            <thead class="text-xs text-gray-700 uppercase bg-gray-50">
-                <tr>
-                    <th scope="col" class="px-6 py-3 border-b">Nama</th>
-                    <th scope="col" class="px-6 py-3 border-b">Email</th>
-                    <th scope="col" class="px-6 py-3 border-b">Role</th>
-                    <th scope="col" class="px-6 py-3 border-b">Warung</th>
-                    <th scope="col" class="px-6 py-3 border-b">Status Verifikasi</th>
-                    <th scope="col" class="px-6 py-3 border-b">Aksi</th>
-                </tr>
-            </thead>
-            <tbody>
-                @forelse ($users as $user)
-                    @if ($user->role !== 'super_admin')
-                        <tr class="bg-white border-b hover:bg-gray-50">
-                            <td class="px-6 py-4 font-medium text-gray-900">{{ $user->name }}</td>
-                            <td class="px-6 py-4">{{ $user->email }}</td>
-                            <td class="px-6 py-4">
-                                <span class="px-2 py-1 bg-blue-100 text-blue-800 rounded-full text-xs font-semibold">
-                                    {{ ucfirst($user->role) }}
-                                </span>
-                            </td>
-                            <td class="px-6 py-4">
-                                {{ $user->warung ? $user->warung->nama_warung : 'User tidak terhubung dengan warung' }}
-                            </td>
-                            <td class="px-6 py-4">
-                                @if ($user->email_verified_at)
+    {{-- Tabel User Responsif --}}
+    <div class="overflow-x-auto -mx-6 md:mx-0">
+        <div class="inline-block min-w-full align-middle md:px-0 px-6">
+            <table class="w-full text-left border-collapse">
+                <thead>
+                    <tr class="border-b border-gray-100 bg-gray-50/70">
+                        <th class="py-3.5 px-4 text-xs font-bold text-gray-400 uppercase tracking-wider">Nama</th>
+                        <th class="py-3.5 px-4 text-xs font-bold text-gray-400 uppercase tracking-wider">Email</th>
+                        <th class="py-3.5 px-4 text-xs font-bold text-gray-400 uppercase tracking-wider">Role</th>
+                        <th class="py-3.5 px-4 text-xs font-bold text-gray-400 uppercase tracking-wider">Warung</th>
+                        <th class="py-3.5 px-4 text-xs font-bold text-gray-400 uppercase tracking-wider">Status</th>
+                        <th
+                            class="py-3.5 px-4 text-xs font-bold text-gray-400 uppercase tracking-wider text-right w-40">
+                            Aksi</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-100">
+                    @forelse ($users as $user)
+                        @if ($user->role !== 'super_admin')
+                            <tr class="hover:bg-gray-50/60 transition-colors group">
+                                <td class="py-4 px-4 font-semibold text-gray-800 text-sm">{{ $user->name }}</td>
+                                <td class="py-4 px-4 text-sm text-gray-600">{{ $user->email }}</td>
+                                <td class="py-4 px-4 text-sm">
                                     <span
-                                        class="px-2 py-1 bg-green-100 text-green-800 rounded-full text-xs font-semibold">
-                                        Terverifikasi
+                                        class="px-2.5 py-1 {{ $user->role == 'owner' ? 'bg-purple-50 text-purple-700' : 'bg-blue-50 text-blue-700' }} rounded-lg text-xs font-semibold">
+                                        {{ ucfirst($user->role) }}
                                     </span>
-                                @else
-                                    <span
-                                        class="px-2 py-1 bg-yellow-100 text-yellow-800 rounded-full text-xs font-semibold">
-                                        Belum Terverifikasi
-                                    </span>
-                                @endif
-                            </td>
-                            <td class="px-6 py-4 text-right flex justify-start gap-2">
-                                <button x-data=""
-                                    x-on:click.prevent="$dispatch('open-modal', 'edit-user-{{ $user->id }}')"
-                                    class="text-indigo-600 hover:text-indigo-900 font-semibold">
-                                    Edit
-                                </button>
+                                </td>
+                                <td class="py-4 px-4 text-sm text-gray-600 font-medium">
+                                    {{ $user->warung ? $user->warung->nama_warung : '-' }}
+                                </td>
+                                <td class="py-4 px-4 whitespace-nowrap">
+                                    @if ($user->email_verified_at)
+                                        <span
+                                            class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700">
+                                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-1.5"></span>
+                                            Terverifikasi
+                                        </span>
+                                    @else
+                                        <span
+                                            class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold bg-amber-50 text-amber-700">
+                                            <span class="w-1.5 h-1.5 rounded-full bg-amber-500 mr-1.5"></span>
+                                            Belum
+                                        </span>
+                                    @endif
+                                </td>
+                                <td class="py-4 px-4 whitespace-nowrap text-sm font-medium text-right">
+                                    <div class="flex items-center justify-end gap-2">
+                                        <button x-data=""
+                                            x-on:click.prevent="$dispatch('open-modal', 'edit-user-{{ $user->id }}')"
+                                            class="inline-flex items-center px-3 py-1.5 bg-white border border-gray-200 hover:border-blue-300 text-blue-600 hover:bg-blue-50 text-xs font-semibold rounded-lg shadow-sm transition-all">
+                                            ✏️ Edit
+                                        </button>
+                                        <button x-data=""
+                                            x-on:click.prevent="$dispatch('open-modal', 'delete-user-{{ $user->id }}')"
+                                            class="inline-flex items-center px-3 py-1.5 bg-white border border-gray-200 hover:border-red-300 text-red-600 hover:bg-red-50 text-xs font-semibold rounded-lg shadow-sm transition-all">
+                                            🗑️ Hapus
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        @endif
 
-                                <button x-data=""
-                                    x-on:click.prevent="$dispatch('open-modal', 'delete-user-{{ $user->id }}')"
-                                    class="text-red-600 hover:text-red-900 font-semibold">
-                                    Hapus
-                                </button>
+                        {{-- Modal Edit User --}}
+                        <x-modal name="edit-user-{{ $user->id }}" focusable>
+                            <form method="POST" action="{{ route('super_admin.users.update', $user->id) }}"
+                                class="p-6 text-left">
+                                @csrf
+                                @method('PUT')
+
+                                <!-- Bagian Header Modal -->
+                                <div class="mb-6">
+                                    <h2 class="text-xl font-bold text-gray-800">Edit Data User</h2>
+                                    <p class="text-sm text-gray-500 mt-1">Perbarui informasi dan hak akses untuk
+                                        pengguna ini.</p>
+                                </div>
+
+                                <!-- Bagian Input Form -->
+                                <div class="space-y-5">
+                                    <!-- Nama Lengkap -->
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Nama Lengkap</label>
+                                        <input type="text" name="name" value="{{ $user->name }}" required
+                                            class="block w-full border-gray-300 rounded-lg shadow-sm text-sm focus:border-green-500 focus:ring focus:ring-green-200 focus:ring-opacity-50 transition-colors">
+                                    </div>
+
+                                    <!-- Email -->
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                                        <input type="email" name="email" value="{{ $user->email }}" required
+                                            class="block w-full border-gray-300 bg-gray-50 rounded-lg shadow-sm text-sm focus:border-green-500 focus:ring focus:ring-green-200 focus:ring-opacity-50 transition-colors">
+                                    </div>
+
+                                    <!-- Password -->
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-1">Password Baru <span
+                                                class="text-gray-400 font-normal">(Opsional)</span></label>
+                                        <input type="password" name="password" autocomplete="new-password"
+                                            placeholder="Kosongkan jika tidak diubah"
+                                            class="block w-full border-gray-300 rounded-lg shadow-sm text-sm focus:border-green-500 focus:ring focus:ring-green-200 focus:ring-opacity-50 transition-colors">
+                                    </div>
+
+                                    <!-- Role & Warung (2 Kolom) -->
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 mb-1">Role</label>
+                                            <select name="role" required
+                                                class="block w-full border-gray-300 rounded-lg shadow-sm text-sm focus:border-green-500 focus:ring focus:ring-green-200 focus:ring-opacity-50 bg-white transition-colors">
+                                                <option value="kasir" {{ $user->role == 'kasir' ? 'selected' : '' }}>
+                                                    Kasir</option>
+                                                <option value="owner" {{ $user->role == 'owner' ? 'selected' : '' }}>
+                                                    Owner</option>
+                                                <option value="super_admin"
+                                                    {{ $user->role == 'super_admin' ? 'selected' : '' }}>Super Admin
+                                                </option>
+                                            </select>
+                                        </div>
+
+                                        <div>
+                                            <label class="block text-sm font-medium text-gray-700 mb-1">Pilih
+                                                Warung</label>
+                                            <select name="warung_id"
+                                                class="block w-full border-gray-300 rounded-lg shadow-sm text-sm focus:border-green-500 focus:ring focus:ring-green-200 focus:ring-opacity-50 bg-white transition-colors">
+                                                <option value="">-- Tidak Ada --</option>
+                                                @foreach ($warungs as $w)
+                                                    <option value="{{ $w->id }}"
+                                                        {{ $user->warung_id == $w->id ? 'selected' : '' }}>
+                                                        {{ $w->nama_warung }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <!-- Checkbox Verifikasi Manual -->
+                                    <div class="pt-2">
+                                        <label
+                                            class="flex items-start p-4 bg-gray-50/70 rounded-xl border border-gray-200 cursor-pointer hover:bg-gray-100 transition-colors shadow-sm">
+                                            <div class="flex items-center h-5 mt-0.5">
+                                                <input type="checkbox" name="is_verified" value="1"
+                                                    class="w-5 h-5 rounded border-gray-300 text-green-600 focus:ring-green-500 focus:ring-2 shadow-sm"
+                                                    {{ $user->email_verified_at ? 'checked' : '' }}>
+                                            </div>
+                                            <div class="ml-3 flex-1">
+                                                <span class="block text-sm font-bold text-gray-800">Verifikasi Email
+                                                    Manual</span>
+                                                <span class="block text-xs text-gray-500 mt-0.5">Centang untuk menandai
+                                                    email pengguna ini sudah aktif dan sah.</span>
+                                            </div>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <!-- Bagian Footer (Tombol) -->
+                                <div class="mt-8 pt-5 border-t border-gray-100 flex justify-end gap-3">
+                                    <button type="button" x-on:click="$dispatch('close')"
+                                        class="px-5 py-2.5 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 transition-colors shadow-sm">
+                                        Batal
+                                    </button>
+                                    <button type="submit"
+                                        class="px-5 py-2.5 bg-green-600 hover:bg-green-700 text-white rounded-lg text-sm font-medium transition-colors shadow-sm">
+                                        Simpan Perubahan
+                                    </button>
+                                </div>
+                            </form>
+                        </x-modal>
+
+                        {{-- Modal Delete User --}}
+                        <x-modal name="delete-user-{{ $user->id }}" focusable>
+                            <form method="POST" action="{{ route('super_admin.users.destroy', $user->id) }}"
+                                class="p-6 text-center">
+                                @csrf
+                                @method('DELETE')
+                                <div
+                                    class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                                    <span class="text-3xl">⚠️</span>
+                                </div>
+                                <h2 class="text-xl font-bold text-gray-900 mb-2">Hapus User Ini?</h2>
+                                <p class="text-sm text-gray-500 mb-6">
+                                    Anda akan menghapus akses untuk <strong>{{ $user->name }}</strong>
+                                    ({{ $user->email }})
+                                    . Tindakan ini tidak dapat dibatalkan.
+                                </p>
+
+                                <div class="flex justify-center gap-3">
+                                    <button type="button" x-on:click="$dispatch('close')"
+                                        class="px-4 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 transition-colors">
+                                        Batal
+                                    </button>
+                                    <button type="submit"
+                                        class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg text-sm font-medium transition-colors shadow-sm">
+                                        Ya, Hapus User
+                                    </button>
+                                </div>
+                            </form>
+                        </x-modal>
+
+                    @empty
+                        <tr>
+                            <td colspan="6" class="text-center py-12">
+                                <div class="max-w-xs mx-auto flex flex-col items-center">
+                                    <div
+                                        class="w-16 h-16 bg-gray-50 rounded-full flex items-center justify-center mb-3 border border-gray-100">
+                                        <span class="text-3xl text-gray-400">👥</span>
+                                    </div>
+                                    <p class="text-sm font-bold text-gray-600">Tidak ada user ditemukan</p>
+                                    <p class="text-xs text-gray-400 mt-1">Belum ada user yang terdaftar atau pencarian
+                                        tidak cocok.</p>
+                                </div>
                             </td>
                         </tr>
-                    @endif
-
-                    <x-modal name="edit-user-{{ $user->id }}" focusable>
-                        <form method="POST" action="{{ route('super_admin.users.update', $user->id) }}"
-                            class="p-6 text-left">
-                            @csrf
-                            @method('PUT')
-                            <h2 class="text-lg font-medium text-gray-900 mb-4">Edit Data User</h2>
-
-                            <div class="mb-4">
-                                <x-input-label for="name" value="Nama" />
-                                <x-text-input id="name" name="name" type="text" class="mt-1 block w-full"
-                                    :value="$user->name" required />
-                            </div>
-
-                            <div class="mb-4">
-                                <x-input-label for="email" value="Email" />
-                                <x-text-input id="email" name="email" type="email" class="mt-1 block w-full"
-                                    :value="$user->email" required />
-                            </div>
-
-                            <div class="mb-4">
-                                <x-input-label for="password" value="Password Baru" />
-                                <x-text-input id="password" name="password" type="password" class="mt-1 block w-full"
-                                    placeholder="Kosongkan jika tidak ingin mengubah password"
-                                    autocomplete="new-password" />
-                                <p class="text-xs text-gray-500 mt-1">Super Admin tidak dapat melihat password, tetapi
-                                    dapat menggantinya.</p>
-                            </div>
-
-                            <div class="mb-4">
-                                <x-input-label for="role" value="Role" />
-                                <select id="role" name="role"
-                                    class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full"
-                                    required>
-                                    <option value="kasir" {{ $user->role == 'kasir' ? 'selected' : '' }}>Kasir</option>
-                                    <option value="owner" {{ $user->role == 'owner' ? 'selected' : '' }}>Owner</option>
-                                    <option value="super_admin" {{ $user->role == 'super_admin' ? 'selected' : '' }}>
-                                        Super Admin</option>
-                                </select>
-                            </div>
-
-                            <div class="mb-4 mt-6">
-                                <label for="is_verified_{{ $user->id }}" class="inline-flex items-center">
-                                    <input id="is_verified_{{ $user->id }}" type="checkbox" name="is_verified"
-                                        value="1"
-                                        class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500"
-                                        {{ $user->email_verified_at ? 'checked' : '' }}>
-                                    <span class="ms-2 text-sm text-gray-600">Email telah terverifikasi</span>
-                                </label>
-                            </div>
-
-                            <div class="mb-4">
-                                <x-input-label for="warung_id" value="Pilih Warung (Opsional)" />
-                                <select id="warung_id" name="warung_id"
-                                    class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full">
-                                    <option value="">-- Tidak Ada / Super Admin --</option>
-                                    @foreach ($warungs as $w)
-                                        <option value="{{ $w->id }}"
-                                            {{ $user->warung_id == $w->id ? 'selected' : '' }}>
-                                            {{ $w->nama_warung }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </div>
-
-                            <div class="mt-6 flex justify-end">
-                                <x-secondary-button x-on:click="$dispatch('close')">Batal</x-secondary-button>
-                                <x-primary-button class="ms-3">Simpan Perubahan</x-primary-button>
-                            </div>
-                        </form>
-                    </x-modal>
-
-                    <x-modal name="delete-user-{{ $user->id }}" focusable>
-                        <form method="POST" action="{{ route('super_admin.users.destroy', $user->id) }}"
-                            class="p-6 text-left">
-                            @csrf
-                            @method('DELETE')
-                            <h2 class="text-lg font-medium text-gray-900">Apakah Anda yakin ingin menghapus user ini?
-                            </h2>
-                            <p class="mt-1 text-sm text-gray-600">User: <strong>{{ $user->name }}</strong>
-                                ({{ $user->email }})
-                                . Data yang dihapus tidak akan bisa mengakses sistem lagi.</p>
-
-                            <div class="mt-6 flex justify-end">
-                                <x-secondary-button x-on:click="$dispatch('close')">Batal</x-secondary-button>
-                                <x-danger-button class="ms-3">Ya, Hapus</x-danger-button>
-                            </div>
-                        </form>
-                    </x-modal>
-
-                @empty
-                    <tr>
-                        <td colspan="5" class="px-6 py-4 text-center text-gray-500">Tidak ada data user ditemukan.
-                        </td>
-                    </tr>
-                @endforelse
-            </tbody>
-        </table>
+                    @endforelse
+                </tbody>
+            </table>
+        </div>
     </div>
 
-    <div class="mt-4">
+    <div class="mt-6 pt-4 border-t border-gray-100">
         {{ $users->links() }}
     </div>
 </div>

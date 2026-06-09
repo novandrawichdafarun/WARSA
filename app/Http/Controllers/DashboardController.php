@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Product;
 use App\Models\Transaction;
+use App\Models\User;
+use App\Models\Warung;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\Auth;
@@ -13,6 +16,8 @@ class DashboardController extends Controller
 {
     public function index(): View
     {
+        $user = Auth::user();
+
         $warung = Auth::user()->warung;
 
         $omsetHariIni = Transaction::paid()->today()->sum('total_gross');
@@ -41,6 +46,13 @@ class DashboardController extends Controller
             'omset_bulan_ini' => $omsetBulanIni,
             'chart_harian' => $chartHarian,
         ];
+
+        if ($user->role === 'super_admin') {
+            $data['totalWarung'] = Warung::count();
+            $data['totalUser'] = User::where('role', '!=', 'super_admin')->count();
+            $data['totalKategori'] = Category::count();
+
+        }
 
         return view('dashboard', $data);
     }

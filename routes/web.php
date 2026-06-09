@@ -20,6 +20,10 @@ Route::get('/', function () {
 });
 
 Route::middleware(['auth'])->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'index'])
+        ->name('dashboard');
+
+
     Route::get('/setup-warung', [WarungSetupController::class, 'create'])
         ->name('warung.setup');
     Route::post('/setup-warung', [WarungSetupController::class, 'store'])
@@ -34,9 +38,6 @@ Route::middleware(['auth'])->group(function () {
 // OWNER WARUNG 
 // ============================================================
 Route::middleware(['auth', 'warung.setup', 'owner'])->group(function () {
-    Route::get('/dashboard', [DashboardController::class, 'index'])
-        ->name('dashboard');
-
     Route::resource('karyawan', KaryawanController::class)
         ->only(['index', 'create', 'store', 'destroy']);
 
