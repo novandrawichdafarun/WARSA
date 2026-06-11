@@ -48,6 +48,8 @@ class CommissionController extends Controller
       ->paginate(20)
       ->withQueryString();
 
+    $persentaseKomisi = $totalOmset > 0 ? ($totalKomisi / $totalOmset) * 100 : 0; 
+
     return view('super-admin.commission.index', compact(
       'dari',
       'sampai',
@@ -56,7 +58,8 @@ class CommissionController extends Controller
       'totalTransaksi',
       'rataRata',
       'transaksiHarian',
-      'transaksi'
+      'transaksi',
+      'persentaseKomisi',
     ));
   }
 }

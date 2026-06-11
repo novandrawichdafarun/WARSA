@@ -11,7 +11,7 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->enum('role', ['owner', 'kasir', 'super_admin'])->default('owner')->after('password');
+            $table->enum('role', ['owner', 'kasir', 'pelanggan', 'super_admin'])->default('owner')->after('password');
             $table->foreignId('warung_id')->nullable()->constrained('warung')->after('role')->onDelete('set null');
         });
     }

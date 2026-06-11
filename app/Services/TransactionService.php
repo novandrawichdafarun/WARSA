@@ -14,7 +14,6 @@ class TransactionService
   public function __construct(
     protected StockService $stockService,
     protected CommissionService $commissionService,
-    protected MidtransService $midtransService,
   ) {
   }
 
@@ -40,7 +39,7 @@ class TransactionService
         ];
       }
 
-      $commissionRate = 0.0050; // 0.5%
+      $commissionRate = env('WARSA_KOMISI',  0.005);
       $commissionAmount = (int) round($totalGross * $commissionRate);
       $totalNet = $totalGross - $commissionAmount;
 
@@ -71,10 +70,8 @@ class TransactionService
       }
 
       if ($paymentMethod === 'qris') {
-        $snapData = $this->midtransService->createQris($transaction);
         $transaction->update([
-          'midtrans_order_id' => $snapData['order_id'],
-          'midtrans_snap_token' => $snapData['snap_token'],
+          'payment_status' => 'pending',
         ]);
       }
 

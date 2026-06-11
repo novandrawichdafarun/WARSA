@@ -6,7 +6,7 @@
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
                 </svg>
             </a>
-            <h2 class="font-semibold text-xl text-gray-800">Tambah Akun Karyawan</h2>
+            <h2 class="font-semibold text-xl text-gray-800">Edit Akun Karyawan {{ $user->name }}</h2>
         </div>
     </x-slot>
 
@@ -23,8 +23,9 @@
                         </svg>
                     </div>
                     <div>
-                        <p class="font-medium text-gray-800">Akun Karyawan Baru</p>
-                        <p class="text-xs text-gray-400">Karyawan hanya bisa akses halaman POS</p>
+                        <p class="font-medium text-gray-800">Akun {{ $user->name }}</p>
+                        <p class="text-xs text-gray-400">{{ $user->role === 'kasir' ? 'Kasir' : 'Pelanggan' }} hanya
+                            bisa akses halaman POS</p>
                     </div>
                 </div>
 
@@ -38,15 +39,16 @@
                     </div>
                 @endif
 
-                <form method="POST" action="{{ route('karyawan.store') }}" class="space-y-5">
+                <form method="POST" action="{{ route('karyawan.update', $user) }}" class="space-y-5">
                     @csrf
+                    @method('PUT')
 
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">
                             Nama Lengkap <span class="text-red-500">*</span>
                         </label>
-                        <input type="text" name="name" value="{{ old('name') }}" placeholder="Nama karyawan"
-                            required
+                        <input type="text" name="name" value="{{ old('name', $user->name) }}"
+                            placeholder="Nama karyawan" required
                             class="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-500
                                       @error('name') border-red-400 @enderror">
                         @error('name')
@@ -58,7 +60,7 @@
                         <label class="block text-sm font-medium text-gray-700 mb-1">
                             Email <span class="text-red-500">*</span>
                         </label>
-                        <input type="email" name="email" value="{{ old('email') }}"
+                        <input type="email" name="email" value="{{ old('email', $user->email) }}"
                             placeholder="karyawan@email.com" required
                             class="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-500
                                       @error('email') border-red-400 @enderror">
@@ -71,36 +73,31 @@
                         <label class="block text-sm font-medium text-gray-700 mb-1">
                             Role <span class="text-red-500">*</span>
                         </label>
-                        <select name="role" required
+                        <select name="accepted_role" required
                             class="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-500
-                                        @error('role') border-red-400 @enderror">
-                            <option value="">Pilih role</option>
-                            <option value="kasir">Kasir</option>
-                            <option value="pelanggan">Pelanggan</option>
+                                      @error('accepted_role') border-red-400 @enderror">
+                            <option value="kasir"
+                                {{ old('accepted_role', $user->role) === 'kasir' ? 'selected' : '' }}>Kasir
+                            </option>
+                            <option value="pelanggan"
+                                {{ old('accepted_role', $user->role) === 'pelanggan' ? 'selected' : '' }}>
+                                Pelanggan</option>
                         </select>
-                        @error('role')
+                        @error('accepted_role')
                             <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                         @enderror
                     </div>
 
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">
-                            Password <span class="text-red-500">*</span>
+                            Password <span class="text-gray-400 text-xs">(kosongkan jika tidak ingin mengganti)</span>
                         </label>
-                        <input type="password" name="password" placeholder="Minimal 8 karakter" required
+                        <input type="password" name="password" placeholder="Minimal 8 karakter"
                             class="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-500
                                       @error('password') border-red-400 @enderror">
                         @error('password')
                             <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                         @enderror
-                    </div>
-
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1">
-                            Konfirmasi Password <span class="text-red-500">*</span>
-                        </label>
-                        <input type="password" name="password_confirmation" placeholder="Ulangi password" required
-                            class="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-500">
                     </div>
 
                     <div class="flex justify-end gap-3 pt-2">
@@ -110,7 +107,7 @@
                         </a>
                         <button type="submit"
                             class="px-5 py-2.5 bg-green-600 hover:bg-green-700 text-white rounded-lg text-sm font-medium transition-colors shadow-sm">
-                            Buat Akun Karyawan
+                            Edit Akun Karyawan
                         </button>
                     </div>
                 </form>

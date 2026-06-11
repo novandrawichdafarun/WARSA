@@ -8,6 +8,7 @@ use App\Models\Transaction;
 use App\Services\TransactionService;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Throwable;
@@ -26,7 +27,8 @@ class PosKasir extends Component
   public bool $showCheckout = false;
 
   public ?int $transaksiId = null;
-  public ?string $snapToken = null;
+  public string $qrisImageUrl = '';
+  public string $qrisMerchantName = '-';
   public bool $qrisDisplayed = false;
 
   public ?string $errorMessage = null;
@@ -110,7 +112,6 @@ class PosKasir extends Component
     $this->keranjang = [];
     $this->showCheckout = false;
     $this->transaksiId = null;
-    $this->snapToken = null;
     $this->qrisDisplayed = false;
     $this->errorMessage = null;
   }
@@ -135,11 +136,23 @@ class PosKasir extends Component
         ->values()
         ->toArray();
 
+      if (Auth::user()->isPelanggan()) {
+        $this->paymentMethod = 'qris';
+      }
+
       $transaksi = $transactionService->create($items, $this->paymentMethod);
       $this->transaksiId = $transaksi->id;
 
       if ($this->paymentMethod == 'qris') {
-        $this->snapToken = $transaksi->midtrans_snap_token;
+        $warung = Auth::user()->warung;
+
+        if (!$warung || !$warung->qris_active || !$warung->qris_image) {
+          $this->addError('qris', 'QRIS belum diaktifkan. Hubungi pemilik warung.');
+          return;
+        }
+
+        $this->qrisImageUrl = Storage::url($warung->qri_image);
+        $this->qrisMerchantName = $warung->nama_warung;
         $this->qrisDisplayed = true;
       } else {
         $this->redirect(route('transaksi.struk', $transaksi->id));
@@ -163,14 +176,14 @@ class PosKasir extends Component
     if ($transaksi && $transaksi->isCancelled()) {
       $this->errorMessage = "Pembayaran dibatalkan atau expired.";
       $this->qrisDisplayed = false;
-      $this->snapToken = null;
     }
   }
 
-  public function toggleMode(): void
+  public function mount()
   {
-    $this->mode = $this->mode === 'klasik' ? 'katalog' : 'klasik';
-    $this->resetPage();
+    if (Auth::user()->isPelanggan()) {
+      $this->paymentMethod = 'qris';
+    }
   }
 
   public function render()

@@ -44,6 +44,14 @@ class UserSeeder extends Seeder
         ]);
 
         User::create([
+            'name' => 'Pelanggan Warung Otong',
+            'email' => 'pelangganwarungotong@gmail.com',
+            'password' => Hash::make('password'),
+            'role' => 'pelanggan',
+            'warung_id' => $WarungOtong->id,
+        ]);
+
+        User::create([
             'name' => 'Bejo Prasetyo',
             'email' => 'bejo@gmail.com',
             'password' => Hash::make('password'),
@@ -60,6 +68,14 @@ class UserSeeder extends Seeder
         ]);
 
         User::create([
+            'name' => 'Pelanggan Warung Pak Bejo',
+            'email' => 'pelangganwarungpakbejo@gmail.com',
+            'password' => Hash::make('password'),
+            'role' => 'pelanggan',
+            'warung_id' => $warungPakBejo->id,
+        ]);
+
+        User::create([
             'name' => 'Yuni Rahayu',
             'email' => 'yuni@gmail.com',
             'password' => Hash::make('password'),
@@ -72,6 +88,14 @@ class UserSeeder extends Seeder
             'email' => 'tono@gmail.com',
             'password' => Hash::make('password'),
             'role' => 'kasir',
+            'warung_id' => $warungMbakYuni->id,
+        ]);
+
+        User::create([
+            'name' => 'Pelanggan Warung Mbak Yuni',
+            'email' => 'pelangganwarungmbakyuni@gmail.com',
+            'password' => Hash::make('password'),
+            'role' => 'pelanggan',
             'warung_id' => $warungMbakYuni->id,
         ]);
     }

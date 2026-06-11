@@ -194,8 +194,6 @@ class TransactionSeeder extends Seeder
             'total_net' => $totalNet,
             'payment_method' => $paymentMethod,
             'payment_status' => $paymentStatus,
-            'midtrans_order_id' => $midtransOrderId,
-            'midtrans_snap_token' => null,
             'paid_at' => $paymentStatus === 'paid' ? $txTime : null,
             'cancelled_at' => $paymentStatus === 'cancelled' ? $txTime : null,
             'created_at' => $txTime,

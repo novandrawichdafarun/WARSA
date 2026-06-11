@@ -19,11 +19,11 @@
                 </div>
 
                 {{-- Toggle Mode --}}
-                <button wire:click="toggleMode"
+                <div
                     class="ml-3 px-3 py-2 border rounded-lg text-xs font-medium transition-colors
                     {{ $mode === 'katalog' ? 'bg-green-600 text-white border-green-600' : 'bg-white text-gray-600 border-gray-200' }}">
                     {{ $mode === 'klasik' ? '🏪 Mode Katalog' : '⌨️ Mode Kasir' }}
-                </button>
+                </div>
             </div>
         </div>
 
@@ -162,14 +162,16 @@
                     {{-- Pilih Metode Bayar --}}
                     <div>
                         <p class="text-xs text-gray-500 mb-2 font-medium">Metode Pembayaran</p>
-                        <div class="grid grid-cols-2 gap-2">
-                            <button wire:click="$set('paymentMethod', 'cash')"
-                                class="py-2.5 rounded-xl text-sm font-semibold border-2 transition-all
+                        <div class="grid {{ !auth()->user()->isPelanggan() ? 'grid-cols-2' : 'grid-cols-1' }} gap-2">
+                            @if (!auth()->user()->isPelanggan())
+                                <button wire:click="$set('paymentMethod', 'cash')"
+                                    class="py-2.5 rounded-xl text-sm font-semibold border-2 transition-all
                                 {{ $paymentMethod === 'cash'
                                     ? 'border-green-500 bg-green-50 text-green-700'
                                     : 'border-gray-200 text-gray-500 hover:border-gray-300' }}">
-                                💵 Cash
-                            </button>
+                                    💵 Cash
+                                </button>
+                            @endif
                             <button wire:click="$set('paymentMethod', 'qris')"
                                 class="py-2.5 rounded-xl text-sm font-semibold border-2 transition-all
                                 {{ $paymentMethod === 'qris'
@@ -194,72 +196,98 @@
 
             {{-- ===== MODE QRIS: Tampilkan QR Code ===== --}}
         @else
-            <div class="flex-1 flex flex-col items-center justify-center p-6 gap-4" wire:poll.3000ms="cekStatusQris">
+            @if ($qrisDisplayed)
+                <div wire:poll.3000ms="cekStatusQris" class="hidden"></div>
 
-                <div class="text-center mb-2">
-                    <p class="font-semibold text-gray-800">Scan QR untuk Bayar</p>
-                    <p class="text-2xl font-bold text-green-600 mt-1">
-                        Rp {{ number_format($total, 0, ',', '.') }}
-                    </p>
-                </div>
+                <div wire:ignore class="flex-1 flex flex-col items-center justify-center p-6 gap-4">
 
-                {{-- Container QRIS — Midtrans Snap inject QR di sini --}}
-                <div id="snap-container" wire:ignore data-snap-token="{{ $snapToken }}"
-                    class="w-full max-w-xs bg-white border-2 border-dashed border-gray-200 rounded-2xl
-                            flex items-center justify-center min-h-64">
-                    <div class="text-center text-gray-400">
-                        <div
-                            class="animate-spin w-8 h-8 border-4 border-green-500 border-t-transparent rounded-full mx-auto mb-3">
-                        </div>
-                        <p class="text-xs">Memuat QRIS...</p>
+                    <div class="text-center mb-2">
+                        <p class="font-semibold text-gray-800">Scan QR untuk Bayar</p>
+                        <p class="text-2xl font-bold text-green-600 mt-1">
+                            Rp {{ number_format($total, 0, ',', '.') }}
+                        </p>
                     </div>
+
+                    {{-- Container QRIS — Midtrans Snap inject QR di sini --}}
+                    <div id="snap-container"
+                        class="w-full max-w-xs bg-white border-2 border-dashed border-gray-200 rounded-2xl
+                            flex items-center justify-center min-h-64">
+                        <div class="text-center text-gray-400">
+                            <div
+                                class="animate-spin w-8 h-8 border-4 border-green-500 border-t-transparent rounded-full mx-auto mb-3">
+                            </div>
+                            <p class="text-xs">Memuat QRIS...</p>
+                        </div>
+                    </div>
+
+                    <p class="text-xs text-gray-400 text-center">
+                        Menunggu konfirmasi pembayaran...<br>
+                        QRIS berlaku selama 15 menit
+                    </p>
+
+                    <button wire:click="kosongkanKeranjang" class="text-sm text-red-500 hover:text-red-700 underline">
+                        Batalkan Pembayaran
+                    </button>
                 </div>
-
-                <p class="text-xs text-gray-400 text-center">
-                    Menunggu konfirmasi pembayaran...<br>
-                    QRIS berlaku selama 15 menit
-                </p>
-
-                <button wire:click="kosongkanKeranjang" class="text-sm text-red-500 hover:text-red-700 underline">
-                    Batalkan Pembayaran
-                </button>
-            </div>
-
-            {{-- Script: Load Midtrans Snap dan tampilkan QR --}}
-            <script>
-                document.addEventListener('livewire:navigated', () => loadSnap());
-                document.addEventListener('DOMContentLoaded', () => loadSnap());
-
-                function loadSnap() {
-                    const container = document.getElementById('snap-container');
-                    if (!container || !container.dataset.snapToken) return;
-
-                    // Cek apakah script Midtrans sudah ada
-                    if (!window.snap) {
-                        const script = document.createElement('script');
-                        script.src =
-                            '{{ config('services.midtrans.is_production')
-                                ? 'https://app.midtrans.com/snap/snap.js'
-                                : 'https://app.sandbox.midtrans.com/snap/snap.js' }}';
-                        script.setAttribute('data-client-key', '{{ config('services.midtrans.client_key') }}');
-                        script.onload = () => renderQris(container.dataset.snapToken);
-                        document.head.appendChild(script);
-                    } else {
-                        renderQris(container.dataset.snapToken);
-                    }
-                }
-
-                function renderQris(token) {
-                    window.snap.embed(token, {
-                        embedId: 'snap-container',
-                        onSuccess: () => {
-                            /* Polling Livewire yang handle */
-                        },
-                        onPending: () => {},
-                        onError: (result) => console.error('Snap error', result),
-                    });
-                }
-            </script>
+            @endif
         @endif
     </div>
+</div>
+
+<script>
+    (function() {
+        if (window._qrisListenerRegistered) return;
+        window._qrisListenerRegistered = true;
+
+        document.addEventListener('livewire:init', () => {
+            Livewire.on('qris-ready', ({
+                token
+            }) => {
+                loadSnapThenRender(token);
+            });
+        });
+
+        function loadSnapThenRender(token) {
+            if (window.snap) {
+                renderQris(token);
+                return;
+            }
+
+            if (document.querySelector('script[src*="snap.js"]')) {
+                setTimeout(() => loadSnapThenRender(token), 10000);
+                return;
+            }
+
+            const isProduction = {{ config('services.midtrans.is_production') ? 'true' : 'false' }};
+            const snapUrl = isProduction ?
+                'https://app.midtrans.com/snap/snap.js' :
+                'https://app.sandbox.midtrans.com/snap/snap.js';
+
+            const script = document.createElement('script');
+            script.src = snapUrl;
+            script.setAttribute('data-client-key', '{{ config('services.midtrans.client_key') }}');
+            script.onload = () => renderQris(token);
+            script.onerror = () => console.error('Gagal memuat Snap.js dari Midtrans');
+            document.head.appendChild(script);
+        }
+
+        function renderQris(token) {
+            const container = document.getElementById('snap-container');
+            if (!container) {
+                console.error('snap-container tidak ditemukan di DOM');
+                return;
+            }
+
+            window.snap.embed(token, {
+                embedId: 'snap-container',
+                onSuccess: () => {
+                    /* Polling Livewire yang handle redirect */
+                },
+                onPending: () => {},
+                onError: (result) => console.error('Snap error', result),
+            });
+        }
+    })();
+</script>
+</div>
 </div>

@@ -15,8 +15,7 @@
         "laravel/framework": "^13.7",
         "laravel/tinker": "^3.0",
         "livewire/livewire": "^4.3",
-        "maatwebsite/excel": "^3.1",
-        "midtrans/midtrans-php": "^2.6"
+        "maatwebsite/excel": "^3.1"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^4.2",

@@ -13,12 +13,14 @@
                 <div class="hidden sm:flex sm:items-center sm:ms-8 sm:space-x-1">
 
                     @auth
-                        {{-- Dashboard semua role --}}
-                        <a href="{{ route('dashboard') }}"
-                            class="px-3 py-2 rounded-md text-sm font-medium transition-colors
+                        @if (auth()->user()->isOwner() || auth()->user()->isSuperAdmin())
+                            {{-- Dashboard Owner $ Super Admin --}}
+                            <a href="{{ route('dashboard') }}"
+                                class="px-3 py-2 rounded-md text-sm font-medium transition-colors
                             {{ request()->routeIs('dashboard') ? 'bg-green-100 text-green-700' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100' }}">
-                            Dashboard
-                        </a>
+                                Dashboard
+                            </a>
+                        @endif
 
                         {{-- Menu Khusus Super Admin --}}
                         @if (auth()->user()->isSuperAdmin())

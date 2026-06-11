@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class Warung extends Model
@@ -24,13 +25,16 @@ class Warung extends Model
         'alamat',
         'telepon',
         'logo',
+        'qris_image',
+        'qris_active',
         'is_active',
     ];
 
     protected function casts(): array
     {
         return [
-            'is_active'  => 'boolean',
+            'qris_active' => 'boolean',
+            'is_active' => 'boolean',
             'deleted_at' => 'datetime',
         ];
     }
@@ -62,9 +66,9 @@ class Warung extends Model
      */
     protected static function generateUniqueSlug(string $name): string
     {
-        $slug      = Str::slug($name);
-        $original  = $slug;
-        $counter   = 2;
+        $slug = Str::slug($name);
+        $original = $slug;
+        $counter = 2;
 
         while (static::withTrashed()->where('slug', $slug)->exists()) {
             $slug = $original . '-' . $counter;
@@ -72,6 +76,21 @@ class Warung extends Model
         }
 
         return $slug;
+    }
+
+
+    /** Cek apakah warung siap menerima QRIS */
+    public function hasQris(): bool
+    {
+        return $this->qris_aktif && !empty($this->qris_image);
+    }
+
+    /** URL publik gambar QR */
+    public function getQrisImageUrlAttribute(): ?string
+    {
+        return $this->qris_image
+            ? Storage::url($this->qris_image)
+            : null;
     }
 
     // =========================================================

@@ -4,7 +4,7 @@
             <h2 class="font-semibold text-xl text-gray-800">Manajemen Karyawan</h2>
             <a href="{{ route('karyawan.create') }}"
                 class="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg text-sm font-medium transition-colors shadow-sm">
-                + Tambah Kasir
+                + Tambah Karyawan
             </a>
         </div>
     </x-slot>
@@ -28,8 +28,8 @@
             <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
                 <div class="px-6 py-4 border-b border-gray-100">
                     <h3 class="font-medium text-gray-800">
-                        Daftar Kasir
-                        <span class="text-sm font-normal text-gray-400">({{ $karyawan->count() }} kasir)</span>
+                        Daftar Karyawan
+                        <span class="text-sm font-normal text-gray-400">({{ $karyawan->count() }} karyawan)</span>
                     </h3>
                 </div>
 
@@ -41,37 +41,42 @@
                                     d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
                             </svg>
                         </div>
-                        <p class="text-gray-400 text-sm mb-4">Belum ada kasir. Tambahkan akun kasir pertama!</p>
+                        <p class="text-gray-400 text-sm mb-4">Belum ada karyawan. Tambahkan akun karyawan pertama!</p>
                         <a href="{{ route('karyawan.create') }}"
                             class="inline-block px-4 py-2 bg-green-600 text-white rounded-lg text-sm hover:bg-green-700 transition-colors">
-                            + Tambah Kasir Pertama
+                            + Tambah Karyawan Pertama
                         </a>
                     </div>
                 @else
                     <div class="divide-y divide-gray-50">
-                        @foreach ($karyawan as $kasir)
+                        @foreach ($karyawan as $user)
                             <div class="flex items-center justify-between px-6 py-4 hover:bg-gray-50 transition-colors">
                                 <div class="flex items-center gap-4">
                                     <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
                                         <span class="text-blue-700 font-bold text-sm">
-                                            {{ strtoupper(substr($kasir->name, 0, 2)) }}
+                                            {{ strtoupper(substr($user->name, 0, 2)) }}
                                         </span>
                                     </div>
                                     <div>
-                                        <p class="font-medium text-gray-800 text-sm">{{ $kasir->name }}</p>
-                                        <p class="text-gray-400 text-xs">{{ $kasir->email }}</p>
+                                        <p class="font-medium text-gray-800 text-sm">{{ $user->name }}</p>
+                                        <p class="text-gray-400 text-xs">{{ $user->email }}</p>
                                     </div>
                                 </div>
 
                                 <div class="flex items-center gap-3">
                                     <span
-                                        class="px-2 py-1 bg-blue-100 text-blue-700 text-xs rounded-full font-medium">Kasir</span>
+                                        class="px-2 py-1 bg-blue-100 text-blue-700 text-xs rounded-full font-medium">{{ $user->role === 'kasir' ? 'Kasir' : 'Pelanggan' }}</span>
                                     <span class="text-xs text-gray-400">
-                                        Bergabung {{ $kasir->created_at->diffForHumans() }}
+                                        Bergabung {{ $user->created_at->diffForHumans() }}
                                     </span>
 
-                                    <form method="POST" action="{{ route('karyawan.destroy', $kasir) }}"
-                                        onsubmit="return confirm('Hapus akun kasir {{ $kasir->name }}?')">
+                                    <a href="{{ route('karyawan.edit', $user) }}"
+                                        class="text-xs text-yellow-500 hover:text-yellow-700 px-2 py-1 rounded hover:bg-yellow-50 transition-colors">
+                                        Edit
+                                    </a>
+
+                                    <form method="POST" action="{{ route('karyawan.destroy', $user) }}"
+                                        onsubmit="return confirm('Hapus akun user {{ $user->name }}?')">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit"

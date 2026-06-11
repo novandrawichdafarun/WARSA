@@ -50,7 +50,7 @@ class AuthenticatedSessionController extends Controller
             return redirect()->intended(route('dashboard', absolute: false));
         }
 
-        if ($user->isKasir()) {
+        if ($user->isKasir() || $user->isPelanggan()) {
             return redirect()->intended(route('pos.index', absolute: false));
         }
 

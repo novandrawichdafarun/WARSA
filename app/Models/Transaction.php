@@ -28,8 +28,6 @@ class Transaction extends Model
         'total_net',
         'payment_method',
         'payment_status',
-        'midtrans_order_id',
-        'midtrans_snap_token',
         'paid_at',
         'cancelled_at',
     ];

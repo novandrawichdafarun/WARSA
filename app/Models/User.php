@@ -74,7 +74,10 @@ class User extends Authenticatable
     {
         return $this->role === 'kasir';
     }
-
+    public function isPelanggan(): bool
+    {
+        return $this->role === 'pelanggan';
+    }
     public function isSuperAdmin(): bool
     {
         return $this->role === 'super_admin';
@@ -94,6 +97,6 @@ class User extends Authenticatable
      */
     public function canAccessPOS(): bool
     {
-        return in_array($this->role, ['owner', 'kasir']);
+        return in_array($this->role, ['owner', 'kasir', 'pelanggan']);
     }
 }

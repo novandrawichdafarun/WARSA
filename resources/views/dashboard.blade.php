@@ -225,8 +225,7 @@
                             <span class="text-2xl">🛒</span>
                         </div>
                         <div>
-                            <p class="text-xs font-bold text-gray-500 uppercase tracking-wider">Total Transaksi
-                                Hari
+                            <p class="text-xs font-bold text-gray-500 uppercase tracking-wider">Total Transaksi Hari
                                 Ini</p>
                             <p class="text-2xl font-bold text-gray-800">{{ $total_transaksi_hari_ini ?? 0 }}
                             </p>

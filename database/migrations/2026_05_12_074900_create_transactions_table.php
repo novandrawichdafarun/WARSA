@@ -20,8 +20,6 @@ return new class extends Migration {
             $table->unsignedBigInteger('total_net');
             $table->enum('payment_method', ['cash', 'qris']);
             $table->enum('payment_status', ['pending', 'paid', 'cancelled'])->default('pending');
-            $table->string('midtrans_order_id')->nullable()->unique();
-            $table->text('midtrans_snap_token')->nullable();
             $table->timestamp('paid_at')->nullable();
             $table->timestamp('cancelled_at')->nullable();
             $table->timestamps();

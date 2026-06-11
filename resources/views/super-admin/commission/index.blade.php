@@ -7,6 +7,12 @@
                     Periode: {{ $dari->format('d M Y') }} — {{ $sampai->format('d M Y') }}
                 </p>
             </div>
+
+            <div>
+                <a href="" class="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg text-sm font-medium transition-colors">
+                    Atur Komisi Warung
+                </a>
+            </div>
         </div>
     </x-slot>
 
@@ -66,10 +72,10 @@
 
                 <div class="bg-white rounded-xl p-5 border border-gray-100 shadow-sm">
                     <div class="flex items-center justify-between mb-3">
-                        <p class="text-xs text-gray-400 font-semibold uppercase tracking-wide">Total Omset Global</p>
-                        <span class="text-xl">💰</span>
+                        <p class="text-xs text-gray-400 font-semibold uppercase tracking-wide">Persentase Komisi</p>
+                        <span class="text-xl">⚖️</span>
                     </div>
-                    <p class="text-xl font-bold text-gray-800">Rp {{ number_format($totalOmset, 0, ',', '.') }}</p>
+                    <p class="text-xl font-bold text-gray-800">{{ number_format($persentaseKomisi, 1) }}%</p>
                 </div>
 
                 <div class="bg-white rounded-xl p-5 border border-gray-100 shadow-sm">
@@ -124,16 +130,16 @@
                                         {{ $trx->warung ? $trx->warung->nama_warung : 'Toko Tidak Diketahui' }}
                                     </td>
                                     <td class="py-3 px-4">
-                                      @if($trx->kasir)
-                                        <div class="flex flex-col">
-                                            <span class="text-gray-800 font-medium">{{ $trx->kasir->name }}</span>
-                                            <span class="text-[10px] font-bold uppercase tracking-wider {{ $trx->kasir->role === 'owner' ? 'text-purple-600' : 'text-blue-600' }}">
-                                                {{ $trx->kasir->role }}
-                                            </span>
-                                        </div>
-                                      @else
-                                        <span class="text-gray-400">-</span>
-                                      @endif
+                                        @if($trx->kasir)
+                                            <div class="flex flex-col">
+                                                <span class="text-gray-800 font-medium">{{ $trx->kasir->name }}</span>
+                                                <span class="text-[10px] font-bold uppercase tracking-wider {{ $trx->kasir->role === 'owner' ? 'text-purple-600' : 'text-blue-600' }}">
+                                                    {{ $trx->kasir->role }}
+                                                </span>
+                                            </div>
+                                        @else
+                                            <span class="text-gray-400">-</span>
+                                        @endif
                                     </td>
                                     <td class="py-3 px-4 text-right font-semibold text-gray-700">
                                         Rp {{ number_format($trx->total_gross, 0, ',', '.') }}

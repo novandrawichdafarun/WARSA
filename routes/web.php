@@ -13,7 +13,6 @@ use App\Http\Controllers\SuperAdmin\CommissionController;
 use App\Http\Controllers\SuperAdmin\UserController;
 use App\Http\Controllers\SuperAdmin\WarungController;
 use App\Http\Controllers\TransaksiController;
-use App\Http\Controllers\WebhookController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -49,7 +48,7 @@ Route::middleware(['auth', 'owner_or_superadmin'])->group(function () {
 // ============================================================
 Route::middleware(['auth', 'warung.setup', 'owner'])->group(function () {
     Route::resource('karyawan', KaryawanController::class)
-        ->only(['index', 'create', 'store', 'destroy']);
+        ->only(['index', 'create', 'store', 'edit', 'update', 'destroy']);
 
     Route::resource('produk', ProdukController::class);
     Route::post('produk/{produk}/stok', [ProdukController::class, 'tambahStok'])
@@ -114,9 +113,5 @@ Route::middleware(['auth', 'super_admin'])->prefix('super-admin')->name('super_a
     Route::get('/commission', [CommissionController::class, 'index'])
         ->name('commission.index');
 });
-
-
-Route::post('/webhook/midtrans', [WebhookController::class, 'handle'])
-    ->name('webhook.midtrans');
 
 require __DIR__ . '/auth.php';
