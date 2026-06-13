@@ -45,13 +45,6 @@
                         @endforeach
                     </select>
                 </div>
-
-                {{-- Toggle Mode --}}
-                <div
-                    class="ml-3 px-3 py-2 border rounded-lg text-xs font-medium transition-colors
-                    {{ $mode === 'katalog' ? 'bg-green-600 text-white border-green-600' : 'bg-white text-gray-600 border-gray-200' }}">
-                    {{ $mode === 'klasik' ? '🏪 Mode Katalog' : '⌨️ Mode Kasir' }}
-                </div>
             </div>
         </div>
 
@@ -115,10 +108,10 @@
     </div>
 
     {{-- ===== SISI KANAN: Keranjang + Checkout ===== --}}
-    <div class="w-80 lg:w-96 flex flex-col bg-white">
+    <div class="w-64 md:w-72 lg:w-80 flex flex-col bg-white">
 
         {{-- Header Keranjang --}}
-        <div class="px-4 py-9 border-b border-gray-100 flex items-center justify-between">
+        <div class="px-4 py-5 border-b border-gray-100 flex items-center justify-between">
             <h3 class="font-semibold text-lg text-gray-800">
                 Keranjang
                 @if ($totalItems > 0)
@@ -127,7 +120,7 @@
                     </span>
                 @endif
             </h3>
-            @if (!empty($keranjang))
+            @if (!empty($keranjang) && !$showQris)
                 <button wire:click="kosongkanKeranjang" wire:confirm="Kosongkan keranjang?"
                     class="text-xs text-red-500 hover:text-red-700">
                     Kosongkan
@@ -225,9 +218,9 @@
             {{-- ===== MODE QRIS: Tampilkan QR Code ===== --}}
         @else
             @if ($showQris)
-                <div class="flex-1 flex flex-col items-center justify-center p-6 gap-4">
+                <div class="flex-1 flex flex-col items-center justify-center p-4 gap-2">
 
-                    <div class="text-center mb-2">
+                    <div class="text-center">
                         <p class="font-semibold text-gray-800">Scan QR untuk Bayar</p>
                         <p class="text-2xl font-bold text-green-600 mt-1">
                             Rp {{ number_format($total, 0, ',', '.') }}
@@ -236,14 +229,13 @@
 
                     {{-- Container QRIS — Midtrans Snap inject QR di sini --}}
                     <div
-                        class="w-full max-w-xs bg-white border-2 border-dashed border-gray-200 rounded-2xl
-                            flex items-center justify-center min-h-64">
+                        class="w-full max-w-72 bg-white border-2 border-dashed border-gray-200 rounded-2xl
+                            flex items-center justify-center min-h-72">
                         {!! \SimpleSoftwareIO\QrCode\Facades\QrCode::size(250)->generate($qrisStringData) !!}
                     </div>
 
                     <p class="text-xs text-gray-400 text-center">
-                        *Mohon masukkan nominal secara manual jika aplikasi tidak mendeteksinya secara otomatis.<br>
-                        Tunjukkan layar ini ke kasir setelah berhasil.
+                        *Mohon masukkan nominal secara manual jika aplikasi tidak mendeteksinya secara otomatis.
                     </p>
 
                     <button wire:click="kosongkanKeranjang" class="text-sm text-red-500 hover:text-red-700 underline">

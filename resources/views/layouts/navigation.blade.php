@@ -167,7 +167,7 @@
                 {{-- POS — owner + kasir --}}
                 @if (auth()->user()->canAccessPOS())
                     <a href="{{ route('pos.index') }}"
-                        class="block px-3 py-2 rounded-md text-sm text-gray-700 hover:bg-gray-100">Kasir / POS</a>
+                        class="block px-3 py-2 rounded-md text-sm text-gray-700 hover:bg-gray-100">Kasir</a>
                 @endif
 
                 {{-- Menu Khusus Owner --}}
