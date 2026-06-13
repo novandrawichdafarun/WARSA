@@ -1,4 +1,31 @@
 <div class="flex h-[calc(100vh-4rem)] border-t border-gray-200 bg-gray-50">
+    <div>
+        <div x-data="{ tampil: false, pesan: '' }"
+            @tampilkan-alert.window="
+            tampil = true; 
+            pesan = $event.detail.pesan; 
+            setTimeout(() => tampil = false, 5000)
+        ">
+            <div x-show="tampil" style="display: none;" x-transition:enter="transition ease-out duration-300"
+                x-transition:enter-start="opacity-0 transform translate-x-8"
+                x-transition:enter-end="opacity-100 transform translate-x-0"
+                x-transition:leave="transition ease-in duration-200"
+                x-transition:leave-start="opacity-100 transform translate-x-0"
+                x-transition:leave-end="opacity-0 transform translate-x-8"
+                class="fixed top-5 right-5 z-50 bg-green-500 text-white px-6 py-4 rounded-lg shadow-xl border-l-4 border-green-700 flex items-center gap-3">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 animate-bounce" fill="none"
+                    viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+                </svg>
+
+                <div>
+                    <p class="font-bold">Pesanan Baru!</p>
+                    <p class="text-sm" x-text="pesan"></p>
+                </div>
+            </div>
+        </div>
+    </div>
 
     {{-- ===== SISI KIRI: Daftar Produk ===== --}}
     <div class="flex-1 flex flex-col overflow-hidden border-r border-gray-200">
@@ -10,7 +37,8 @@
                     <input type="text" wire:model.live.debounce.300ms="search" placeholder="Cari produk..."
                         class="flex-1 px-3 py-2 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-green-500">
 
-                    <select wire:model.live="filterKategori" class="px-3 py-2 border border-gray-200 rounded-lg text-sm">
+                    <select wire:model.live="filterKategori"
+                        class="px-3 py-2 border border-gray-200 rounded-lg text-sm">
                         <option value="">Semua</option>
                         @foreach ($kategori as $kat)
                             <option value="{{ $kat->id }}">{{ $kat->nama_kategori }}</option>
@@ -108,7 +136,7 @@
         </div>
 
         {{-- ===== MODE NORMAL: Tampilkan Keranjang ===== --}}
-        @if (!$qrisDisplayed)
+        @if (!$showQris)
 
             {{-- List Item Keranjang --}}
             <div class="flex-1 overflow-y-auto">
@@ -196,10 +224,8 @@
 
             {{-- ===== MODE QRIS: Tampilkan QR Code ===== --}}
         @else
-            @if ($qrisDisplayed)
-                <div wire:poll.3000ms="cekStatusQris" class="hidden"></div>
-
-                <div wire:ignore class="flex-1 flex flex-col items-center justify-center p-6 gap-4">
+            @if ($showQris)
+                <div class="flex-1 flex flex-col items-center justify-center p-6 gap-4">
 
                     <div class="text-center mb-2">
                         <p class="font-semibold text-gray-800">Scan QR untuk Bayar</p>
@@ -209,20 +235,15 @@
                     </div>
 
                     {{-- Container QRIS — Midtrans Snap inject QR di sini --}}
-                    <div id="snap-container"
+                    <div
                         class="w-full max-w-xs bg-white border-2 border-dashed border-gray-200 rounded-2xl
                             flex items-center justify-center min-h-64">
-                        <div class="text-center text-gray-400">
-                            <div
-                                class="animate-spin w-8 h-8 border-4 border-green-500 border-t-transparent rounded-full mx-auto mb-3">
-                            </div>
-                            <p class="text-xs">Memuat QRIS...</p>
-                        </div>
+                        {!! \SimpleSoftwareIO\QrCode\Facades\QrCode::size(250)->generate($qrisStringData) !!}
                     </div>
 
                     <p class="text-xs text-gray-400 text-center">
-                        Menunggu konfirmasi pembayaran...<br>
-                        QRIS berlaku selama 15 menit
+                        *Mohon masukkan nominal secara manual jika aplikasi tidak mendeteksinya secara otomatis.<br>
+                        Tunjukkan layar ini ke kasir setelah berhasil.
                     </p>
 
                     <button wire:click="kosongkanKeranjang" class="text-sm text-red-500 hover:text-red-700 underline">
@@ -232,62 +253,4 @@
             @endif
         @endif
     </div>
-</div>
-
-<script>
-    (function() {
-        if (window._qrisListenerRegistered) return;
-        window._qrisListenerRegistered = true;
-
-        document.addEventListener('livewire:init', () => {
-            Livewire.on('qris-ready', ({
-                token
-            }) => {
-                loadSnapThenRender(token);
-            });
-        });
-
-        function loadSnapThenRender(token) {
-            if (window.snap) {
-                renderQris(token);
-                return;
-            }
-
-            if (document.querySelector('script[src*="snap.js"]')) {
-                setTimeout(() => loadSnapThenRender(token), 10000);
-                return;
-            }
-
-            const isProduction = {{ config('services.midtrans.is_production') ? 'true' : 'false' }};
-            const snapUrl = isProduction ?
-                'https://app.midtrans.com/snap/snap.js' :
-                'https://app.sandbox.midtrans.com/snap/snap.js';
-
-            const script = document.createElement('script');
-            script.src = snapUrl;
-            script.setAttribute('data-client-key', '{{ config('services.midtrans.client_key') }}');
-            script.onload = () => renderQris(token);
-            script.onerror = () => console.error('Gagal memuat Snap.js dari Midtrans');
-            document.head.appendChild(script);
-        }
-
-        function renderQris(token) {
-            const container = document.getElementById('snap-container');
-            if (!container) {
-                console.error('snap-container tidak ditemukan di DOM');
-                return;
-            }
-
-            window.snap.embed(token, {
-                embedId: 'snap-container',
-                onSuccess: () => {
-                    /* Polling Livewire yang handle redirect */
-                },
-                onPending: () => {},
-                onError: (result) => console.error('Snap error', result),
-            });
-        }
-    })();
-</script>
-</div>
 </div>

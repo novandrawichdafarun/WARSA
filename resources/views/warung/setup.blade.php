@@ -14,7 +14,7 @@
         {{-- Logo --}}
         <div class="text-center mb-8">
             <div class="w-16 h-16 bg-green-600 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg">
-                <span class="text-white font-bold text-2xl">SW</span>
+                <img src="{{ asset('images/logo.png') }}" alt="Logo WARSA" class="w-10 h-10">
             </div>
             <h1 class="text-2xl font-bold text-gray-800">Selamat Datang di WARSA!</h1>
             <p class="text-gray-500 mt-1 text-sm">
@@ -65,6 +65,15 @@
                     <label class="block text-sm font-medium text-gray-700 mb-1">Nomor Telepon</label>
                     <input type="text" name="telepon" value="{{ old('telepon') }}" placeholder="08123456789"
                         class="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent">
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Qris</label>
+                    <input type="text" name="qris_string" value="{{ old('qris_string') }}" placeholder="000201..."
+                        class="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent">
+                    <p class="text-gray-500 text-xs mt-1">
+                        Masukkan tautan QRIS Anda di sini.
+                    </p>
                 </div>
 
                 <button type="submit"

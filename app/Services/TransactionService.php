@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Events\PesananBaruDibuat;
 use App\Models\Product;
 use App\Models\Transaction;
 use App\Models\TransactionItem;
@@ -73,6 +74,8 @@ class TransactionService
         $transaction->update([
           'payment_status' => 'pending',
         ]);
+
+        event(new PesananBaruDibuat($transaction));
       }
 
       return $transaction->fresh(['items', 'commissionLedger']);

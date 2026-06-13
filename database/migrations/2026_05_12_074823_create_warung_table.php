@@ -17,8 +17,8 @@ return new class extends Migration {
             $table->text('alamat')->nullable();
             $table->string('telepon')->nullable();
             $table->string('logo')->nullable();
-            $table->string('qris_image')->nullable();
-            $table->boolean('qris_active')->default(false);
+            $table->string('qris_string')->nullable();
+            $table->boolean('is_qris_active')->default(false);
             $table->boolean('is_active')->default(True);
             $table->softDeletes();
             $table->timestamps();

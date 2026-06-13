@@ -30,9 +30,11 @@ class PengaturanController extends Controller
             'alamat' => ['nullable', 'string'],
             'telepon' => ['nullable', 'string', 'max:20'],
             'logo' => ['nullable', 'image', 'mimes:jpg,jpeg,png', 'max:2048'],
+            'is_qris_active' => ['nullable', 'boolean'],
+            'qris_string' => ['nullable', 'string'],
         ]);
 
-        $data = $request->only(['nama_warung', 'alamat', 'telepon']);
+        $data = $request->only(['nama_warung', 'alamat', 'telepon', 'is_qris_active', 'qris_string']);
 
         if ($request->hasFile('logo')) {
             if ($warung->logo) {

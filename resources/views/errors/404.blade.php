@@ -14,9 +14,9 @@
         <p class="text-gray-500 mb-6">
             Halaman yang kamu cari tidak ditemukan atau sudah dipindahkan.
         </p>
-        <a href="{{ auth()->check() ? route('dashboard') : route('login') }}"
+        <a href="{{ auth()->check() ? route('pos.index') : route('login') }}"
             class="px-6 py-3 bg-green-600 text-white rounded-xl font-medium hover:bg-green-700 transition-colors">
-            Kembali ke {{ auth()->check() ? 'Dashboard' : 'Login' }}
+            Kembali ke {{ auth()->check() ? 'pos.index' : 'Login' }}
         </a>
     </div>
 </body>

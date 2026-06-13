@@ -46,23 +46,17 @@
 
 ## Sprint 4 Checklist
 
-[x] Routes transaksi & webhook ditambahkan ke web.php
-[x] Webhook dikecualikan dari CSRF di bootstrap/app.php
+[x] Routes transaksi ditambahkan ke web.php
 [x] CommissionService dibuat
 [x] TransactionService dibuat (create, settle, cancel)
-[x] MidtransService dibuat (createQris, verifySignature)
-[x] config/services.php diisi konfigurasi Midtrans
-[ ] .env diisi MIDTRANS_SERVER_KEY & CLIENT_KEY
 [x] Livewire PosKasir dibuat
 [x] livewire/pos-kasir.blade.php selesai
-[x] WebhookController dibuat
 [x] TransaksiController dibuat
 [x] pos/index.blade.php diupdate pakai @livewire('pos-kasir')
 [x] transaksi/struk.blade.php selesai
 [x] transaksi/riwayat.blade.php selesai
 [x] Test cash: transaksi → stok berkurang → struk tampil
-[ ] Test QRIS: QR muncul → polling aktif → after webhook paid → redirect struk
-[ ] Test webhook: signature valid → status update → stok berkurang
+[ ] Test QRIS: QR muncul
 [x] Test: komisi tercatat di commission_ledger setiap transaksi paid
 
 ## Sprint 5 Checklist
@@ -128,7 +122,6 @@ POS — QRIS:
 [ ] Pilih QRIS → klik Generate QRIS → QR tampil
 [ ] Polling setiap 3 detik aktif (cek di network tab browser)
 [ ] Batalkan pembayaran → kembali ke mode keranjang
-[ ] Simulasi webhook paid → polling deteksi → redirect ke struk
 
 LAPORAN:
 [ ] Buka laporan → default bulan ini → data benar
@@ -170,7 +163,6 @@ ISOLASI DATA (KRITIS):
 
 [ ] APP_DEBUG=false di .env production
 [ ] APP_KEY sudah di-generate
-[ ] Midtrans sudah switch ke production key
 [ ] Database production sudah dibuat
 [ ] php artisan migrate --force (jalankan di server)
 [ ] php artisan storage:link (jalankan di server)
@@ -180,8 +172,3 @@ ISOLASI DATA (KRITIS):
 [ ] npm run build (hasil dist/ di-commit atau di-build di server)
 [ ] Folder storage/app/public writable (chmod 775)
 [ ] .env tidak ikut di-commit ke git (.gitignore cek)
-
-## Menambahkan user dengan role pelanggan untuk membedakan akses UI antara pelanggan dan kasir/owner dimana:
-
-- Pelanggan hanya bisa melihat menu POS dengan fitur pembelian saja dengan metode pembayaran qris
-- Kasir/Owner bisa melihat menu POS dengan fitur pembelian dan stok produk dan metode pembayaran cash dan qris

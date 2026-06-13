@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Events\PesananBaruDibuat;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\Transaction;
@@ -12,6 +13,7 @@ use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 use Livewire\WithPagination;
 use Throwable;
+use Livewire\Attributes\On;
 
 class PosKasir extends Component
 {
@@ -27,9 +29,9 @@ class PosKasir extends Component
   public bool $showCheckout = false;
 
   public ?int $transaksiId = null;
-  public string $qrisImageUrl = '';
+  public string $qrisStringData = '';
   public string $qrisMerchantName = '-';
-  public bool $qrisDisplayed = false;
+  public bool $showQris = false;
 
   public ?string $errorMessage = null;
 
@@ -112,7 +114,7 @@ class PosKasir extends Component
     $this->keranjang = [];
     $this->showCheckout = false;
     $this->transaksiId = null;
-    $this->qrisDisplayed = false;
+    $this->showQris = false;
     $this->errorMessage = null;
   }
 
@@ -146,14 +148,14 @@ class PosKasir extends Component
       if ($this->paymentMethod == 'qris') {
         $warung = Auth::user()->warung;
 
-        if (!$warung || !$warung->qris_active || !$warung->qris_image) {
-          $this->addError('qris', 'QRIS belum diaktifkan. Hubungi pemilik warung.');
+        if (!$warung || !$warung->is_qris_active || empty($warung->qris_string)) {
+          $this->errorMessage = 'QRIS belum diaktifkan. Hubungi pemilik warung.';
           return;
         }
 
-        $this->qrisImageUrl = Storage::url($warung->qri_image);
-        $this->qrisMerchantName = $warung->nama_warung;
-        $this->qrisDisplayed = true;
+        $this->qrisStringData = $warung->qris_string;
+        $this->showQris = true;
+
       } else {
         $this->redirect(route('transaksi.struk', $transaksi->id));
       }
@@ -162,21 +164,10 @@ class PosKasir extends Component
     }
   }
 
-  public function cekStatusQris(): void
+  #[On('echo:channel-warung,PesananBaruDibuat')]
+  public function notifikasiPesananBaru(Transaction $transaksi)
   {
-    if (!$this->transaksiId || !$this->qrisDisplayed)
-      return;
-
-    $transaksi = Transaction::find($this->transaksiId);
-
-    if ($transaksi && $transaksi->isPaid()) {
-      $this->redirect(route('transaksi.struk', $transaksi->id));
-    }
-
-    if ($transaksi && $transaksi->isCancelled()) {
-      $this->errorMessage = "Pembayaran dibatalkan atau expired.";
-      $this->qrisDisplayed = false;
-    }
+    $this->dispatch('tampilkan-notifikasi', pesan: 'Pesanan baru masuk dengan ID: ' . $transaksi->id);
   }
 
   public function mount()

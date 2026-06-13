@@ -25,15 +25,15 @@ class Warung extends Model
         'alamat',
         'telepon',
         'logo',
-        'qris_image',
-        'qris_active',
+        'qris_string',
+        'is_qris_active',
         'is_active',
     ];
 
     protected function casts(): array
     {
         return [
-            'qris_active' => 'boolean',
+            'is_qris_active' => 'boolean',
             'is_active' => 'boolean',
             'deleted_at' => 'datetime',
         ];
@@ -82,15 +82,13 @@ class Warung extends Model
     /** Cek apakah warung siap menerima QRIS */
     public function hasQris(): bool
     {
-        return $this->qris_aktif && !empty($this->qris_image);
+        return $this->is_qris_active && !empty($this->qris_string);
     }
 
-    /** URL publik gambar QR */
-    public function getQrisImageUrlAttribute(): ?string
+    /** String QRIS */
+    public function getQrisAttribute(): ?string
     {
-        return $this->qris_image
-            ? Storage::url($this->qris_image)
-            : null;
+        return $this->qris_string;
     }
 
     // =========================================================

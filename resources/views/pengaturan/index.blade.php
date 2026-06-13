@@ -95,6 +95,37 @@
                                         class="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-500">
                                 </div>
 
+                                <div>
+                                    <div class="mt-4 flex items-center">
+                                        <label for="is_qris_active" class="flex items-center cursor-pointer">
+                                            <div class="relative">
+                                                <input type="checkbox" id="is_qris_active" name="is_qris_active"
+                                                    value="1" class="sr-only peer"
+                                                    {{ $warung->is_qris_active ? 'checked' : '' }}>
+                                                <div
+                                                    class="block w-14 h-8 bg-gray-300 rounded-full peer-checked:bg-green-500 transition">
+                                                </div>
+                                                <div
+                                                    class="dot absolute left-1 top-1 bg-white w-6 h-6 rounded-full transition transform peer-checked:translate-x-6">
+                                                </div>
+                                            </div>
+                                            <div class="ml-3 text-gray-700 font-medium">
+                                                Aktifkan Pembayaran QRIS
+                                            </div>
+                                        </label>
+                                    </div>
+
+                                    <div class="mt-4">
+                                        <x-input-label for="qris_string" :value="__('Kode/String QRIS Warung')" />
+                                        <textarea id="qris_string" name="qris_string" rows="4"
+                                            class="block w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1"
+                                            placeholder="Masukkan string QRIS, contoh: 0002010102122666...">{{ old('qris_string', $warung->qris_string) }}</textarea>
+                                        <x-input-error :messages="$errors->get('qris_string')" class="mt-2" />
+                                        <p class="text-sm text-gray-500 mt-1">Kosongkan jika fitur QRIS dinonaktifkan.
+                                        </p>
+                                    </div>
+                                </div>
+
                                 {{-- Info Slug --}}
                                 <div class="p-3 bg-gray-50 rounded-lg">
                                     <p class="text-xs text-gray-500">

@@ -65,6 +65,11 @@ class User extends Authenticatable
     // HELPER METHODS — dipakai di Middleware dan Blade @if
     // =========================================================
 
+    public function isAuthenticated(): bool
+    {
+        return !!$this->role;
+    }
+
     public function isOwner(): bool
     {
         return $this->role === 'owner';
