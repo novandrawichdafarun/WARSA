@@ -4,14 +4,14 @@
         <div class="flex flex-wrap items-center gap-3 w-full md:w-auto">
             <div class="relative w-full sm:w-72">
                 <span class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-gray-400">
-                    🔍
+                    <x-lucide-search class="w-4 h-4" />
                 </span>
                 <input type="text" wire:model.live.debounce.300ms="search" placeholder="Cari nama produk..."
-                    class="pl-9 pr-4 py-2 bg-gray-50 border border-gray-200 focus:border-green-500 focus:ring-2 focus:ring-green-100 rounded-xl text-sm w-full transition-all">
+                    class="pl-9 pr-4 py-2 bg-gray-50 border border-gray-200 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100 rounded-xl text-sm w-full transition-all">
             </div>
 
             <select wire:model.live="filterKategori"
-                class="px-7 py-2 bg-gray-50 border border-gray-200 focus:border-green-500 focus:ring-2 focus:ring-green-100 rounded-xl text-sm text-gray-600 transition-all cursor-pointer">
+                class="px-7 py-2 bg-gray-50 border border-gray-200 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100 rounded-xl text-sm text-gray-600 transition-all cursor-pointer">
                 <option value="">Semua Kategori</option>
                 @foreach ($kategori as $kat)
                     <option value="{{ $kat->id }}">{{ $kat->nama_kategori }}</option>
@@ -19,7 +19,7 @@
             </select>
 
             <select wire:model.live="filterStatus"
-                class="px-7 py-2 bg-gray-50 border border-gray-200 focus:border-green-500 focus:ring-2 focus:ring-green-100 rounded-xl text-sm text-gray-600 transition-all cursor-pointer">
+                class="px-7 py-2 bg-gray-50 border border-gray-200 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100 rounded-xl text-sm text-gray-600 transition-all cursor-pointer">
                 <option value="">Semua Status</option>
                 <option value="aktif">Aktif</option>
                 <option value="nonaktif">Nonaktif</option>
@@ -27,8 +27,8 @@
         </div>
 
         <button wire:click="resetFilters"
-            class="px-4 py-2 border border-gray-200 hover:border-gray-300 bg-white hover:bg-gray-50 text-gray-600 rounded-xl text-sm font-semibold transition-all w-full md:w-auto text-center shadow-sm">
-            🔄 Reset Filter
+            class="flex px-4 py-2 border border-gray-200 hover:border-gray-300 bg-white hover:bg-gray-50 text-gray-600 rounded-xl text-sm font-semibold transition-all w-full md:w-auto text-center shadow-sm">
+            <x-lucide-rotate-ccw class="w-4 h-4 mr-1 mt-0.5" /> Reset Filter
         </button>
     </div>
 
@@ -80,13 +80,22 @@
                             </td>
 
                             <td class="py-4 px-4 text-sm">
-                                @if (method_exists($item, 'isLowStock') && $item->isLowStock())
+                                @if ($item->stok <= 0)
                                     <div class="inline-flex flex-col">
                                         <span
                                             class="px-2.5 py-0.5 rounded-full bg-red-50 text-red-600 font-bold text-xs inline-flex items-center gap-1">
-                                            ⚠️ {{ $item->stok }}
+                                            <x-lucide-triangle-alert stroke-width="2" class="w-4 h-4" />
+                                            <span class="text-[10px] text-red-500 font-bold mt-0.5 pl-1">Habis!</span>
                                         </span>
-                                        <span class="text-[10px] text-red-500 font-bold mt-0.5 pl-1">Menipis!</span>
+                                    </div>
+                                @elseif ($item->isLowstock())
+                                    <div class="inline-flex flex-col">
+                                        <span
+                                            class="px-2.5 py-0.5 rounded-full bg-yellow-50 text-yellow-600 font-bold text-xs inline-flex items-center gap-1">
+                                            <x-lucide-triangle-alert stroke-width="2" class="w-4 h-4" />
+                                            {{ $item->stok }}
+                                        </span>
+                                        <span class="text-[10px] text-yellow-500 font-bold mt-0.5 pl-1">Menipis!</span>
                                     </div>
                                 @else
                                     <span
@@ -109,21 +118,49 @@
                                 <div class="flex items-center justify-end gap-2">
                                     <a href="{{ route('produk.edit', $item) }}"
                                         class="inline-flex items-center px-3 py-1.5 bg-white border border-gray-200 hover:border-blue-300 text-blue-600 hover:bg-blue-50 text-xs font-semibold rounded-lg shadow-sm transition-all">
-                                        ✏️ Edit
+                                        <x-lucide-square-pen class="w-3 h-3 mr-0.5" /> Edit
                                     </a>
-                                    <x-confirm-delete action="{{ route('produk.destroy', $item) }}"
-                                        message="Hapus produk {{ $item->nama_produk }}? Data tidak bisa dikembalikan."
-                                        label="🗑️ Hapus"
-                                        class="inline-flex items-center px-3 py-1.5 bg-white border border-gray-200 hover:border-red-300 text-red-600 hover:bg-red-50 text-xs font-semibold rounded-lg shadow-sm transition-all" />
+                                    <button x-data=""
+                                        x-on:click.prevent="$dispatch('open-modal', 'delete-produk-{{ $item->id }}')"
+                                        class="inline-flex items-center px-3 py-1.5 bg-white border border-gray-200 hover:border-red-300 text-red-600 hover:bg-red-50 text-xs font-semibold rounded-lg shadow-sm transition-all">
+                                        <x-lucide-trash-2 class="w-3 h-3 mr-0.5" /> Hapus
+                                    </button>
                                 </div>
                             </td>
                         </tr>
+
+                        {{-- Modal Delete User --}}
+                        <x-modal name="delete-produk-{{ $item->id }}" focusable>
+                            <form method="POST" action="{{ route('produk.destroy', $item) }}" class="p-6 text-center">
+                                @csrf
+                                @method('DELETE')
+                                <div
+                                    class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                                    <x-lucide-triangle-alert stroke-width="2" class="w-8 h-8 text-red-500" />
+                                </div>
+                                <h2 class="text-xl font-bold text-gray-900 mb-2">Hapus Produk Ini?</h2>
+                                <p class="text-sm text-gray-500 mb-6">
+                                    Hapus produk {{ $item->nama_produk }}? Data tidak bisa dikembalikan.
+                                </p>
+
+                                <div class="flex justify-center gap-3">
+                                    <button type="button" x-on:click="$dispatch('close')"
+                                        class="px-4 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 transition-colors">
+                                        Batal
+                                    </button>
+                                    <button type="submit"
+                                        class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg text-sm font-medium transition-colors shadow-sm">
+                                        Ya, Hapus Produk
+                                    </button>
+                                </div>
+                            </form>
+                        </x-modal>
                     @empty
-                        {{-- Keadaan Kosong (Empty State) yang Cantik --}}
+                        {{-- Keadaan Kosong (Empty State) --}}
                         <tr>
                             <td colspan="7" class="text-center text-gray-400 py-12">
                                 <div class="max-w-xs mx-auto flex flex-col items-center">
-                                    <span class="text-4xl mb-2">📦</span>
+                                    <span class="text-4xl mb-2"><x-lucide-package class="w-12 h-12" /></span>
                                     <p class="text-sm font-bold text-gray-500">Tidak ada produk ditemukan</p>
                                     <p class="text-xs text-gray-400 mt-1">Coba sesuaikan kata kunci pencarian atau
                                         bersihkan filter Anda.</p>
@@ -137,7 +174,7 @@
     </div>
 
     {{-- Navigasi Halaman (Pagination) --}}
-    <div class="mt-6 pt-4 border-t border-gray-100">
+    <div class="mt-6 pt-4 border-t border-emerald-100">
         {{ $produk->links() }}
     </div>
 </div>

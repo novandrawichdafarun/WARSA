@@ -5,7 +5,7 @@
                 🔍
             </span>
             <input wire:model.live.debounce.300ms="search" type="text"
-                class="pl-9 pr-4 py-2.5 bg-gray-50 border border-gray-200 focus:border-green-500 focus:ring-2 focus:ring-green-100 rounded-xl text-sm w-full transition-all"
+                class="pl-9 pr-4 py-2.5 bg-gray-50 border border-gray-200 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100 rounded-xl text-sm w-full transition-all"
                 placeholder="Cari nama atau email user..." />
         </div>
     </div>
@@ -61,12 +61,12 @@
                                         <button x-data=""
                                             x-on:click.prevent="$dispatch('open-modal', 'edit-user-{{ $user->id }}')"
                                             class="inline-flex items-center px-3 py-1.5 bg-white border border-gray-200 hover:border-blue-300 text-blue-600 hover:bg-blue-50 text-xs font-semibold rounded-lg shadow-sm transition-all">
-                                            ✏️ Edit
+                                            <x-lucide-square-pen class="w-3 h-3 mr-0.5" /> Edit
                                         </button>
                                         <button x-data=""
                                             x-on:click.prevent="$dispatch('open-modal', 'delete-user-{{ $user->id }}')"
                                             class="inline-flex items-center px-3 py-1.5 bg-white border border-gray-200 hover:border-red-300 text-red-600 hover:bg-red-50 text-xs font-semibold rounded-lg shadow-sm transition-all">
-                                            🗑️ Hapus
+                                            <x-lucide-trash-2 class="w-3 h-3 mr-0.5" /> Hapus
                                         </button>
                                     </div>
                                 </td>
@@ -93,14 +93,14 @@
                                     <div>
                                         <label class="block text-sm font-medium text-gray-700 mb-1">Nama Lengkap</label>
                                         <input type="text" name="name" value="{{ $user->name }}" required
-                                            class="block w-full border-gray-300 rounded-lg shadow-sm text-sm focus:border-green-500 focus:ring focus:ring-green-200 focus:ring-opacity-50 transition-colors">
+                                            class="block w-full border-gray-300 rounded-lg shadow-sm text-sm focus:border-emerald-500 focus:ring focus:ring-emerald-200 focus:ring-opacity-50 transition-colors">
                                     </div>
 
                                     <!-- Email -->
                                     <div>
                                         <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
                                         <input type="email" name="email" value="{{ $user->email }}" required
-                                            class="block w-full border-gray-300 bg-gray-50 rounded-lg shadow-sm text-sm focus:border-green-500 focus:ring focus:ring-green-200 focus:ring-opacity-50 transition-colors">
+                                            class="block w-full border-gray-300 bg-gray-50 rounded-lg shadow-sm text-sm focus:border-emerald-500 focus:ring focus:ring-emerald-200 focus:ring-opacity-50 transition-colors">
                                     </div>
 
                                     <!-- Password -->
@@ -109,7 +109,7 @@
                                                 class="text-gray-400 font-normal">(Opsional)</span></label>
                                         <input type="password" name="password" autocomplete="new-password"
                                             placeholder="Kosongkan jika tidak diubah"
-                                            class="block w-full border-gray-300 rounded-lg shadow-sm text-sm focus:border-green-500 focus:ring focus:ring-green-200 focus:ring-opacity-50 transition-colors">
+                                            class="block w-full border-gray-300 rounded-lg shadow-sm text-sm focus:border-emerald-500 focus:ring focus:ring-emerald-200 focus:ring-opacity-50 transition-colors">
                                     </div>
 
                                     <!-- Role & Warung (2 Kolom) -->
@@ -117,7 +117,7 @@
                                         <div>
                                             <label class="block text-sm font-medium text-gray-700 mb-1">Role</label>
                                             <select name="role" required
-                                                class="block w-full border-gray-300 rounded-lg shadow-sm text-sm focus:border-green-500 focus:ring focus:ring-green-200 focus:ring-opacity-50 bg-white transition-colors">
+                                                class="block w-full border-gray-300 rounded-lg shadow-sm text-sm focus:border-emerald-500 focus:ring focus:ring-emerald-200 focus:ring-opacity-50 bg-white transition-colors">
                                                 <option value="kasir" {{ $user->role == 'kasir' ? 'selected' : '' }}>
                                                     Kasir</option>
                                                 <option value="owner" {{ $user->role == 'owner' ? 'selected' : '' }}>
@@ -132,7 +132,7 @@
                                             <label class="block text-sm font-medium text-gray-700 mb-1">Pilih
                                                 Warung</label>
                                             <select name="warung_id"
-                                                class="block w-full border-gray-300 rounded-lg shadow-sm text-sm focus:border-green-500 focus:ring focus:ring-green-200 focus:ring-opacity-50 bg-white transition-colors">
+                                                class="block w-full border-gray-300 rounded-lg shadow-sm text-sm focus:border-emerald-500 focus:ring focus:ring-emerald-200 focus:ring-opacity-50 bg-white transition-colors">
                                                 <option value="">-- Tidak Ada --</option>
                                                 @foreach ($warungs as $w)
                                                     <option value="{{ $w->id }}"
@@ -150,7 +150,7 @@
                                             class="flex items-start p-4 bg-gray-50/70 rounded-xl border border-gray-200 cursor-pointer hover:bg-gray-100 transition-colors shadow-sm">
                                             <div class="flex items-center h-5 mt-0.5">
                                                 <input type="checkbox" name="is_verified" value="1"
-                                                    class="w-5 h-5 rounded border-gray-300 text-green-600 focus:ring-green-500 focus:ring-2 shadow-sm"
+                                                    class="w-5 h-5 rounded border-gray-300 text-emerald-600 focus:ring-emerald-500 focus:ring-2 shadow-sm"
                                                     {{ $user->email_verified_at ? 'checked' : '' }}>
                                             </div>
                                             <div class="ml-3 flex-1">
@@ -170,7 +170,7 @@
                                         Batal
                                     </button>
                                     <button type="submit"
-                                        class="px-5 py-2.5 bg-green-600 hover:bg-green-700 text-white rounded-lg text-sm font-medium transition-colors shadow-sm">
+                                        class="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-sm font-medium transition-colors shadow-sm">
                                         Simpan Perubahan
                                     </button>
                                 </div>
@@ -185,7 +185,7 @@
                                 @method('DELETE')
                                 <div
                                     class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                                    <span class="text-3xl">⚠️</span>
+                                    <x-lucide-triangle-alert stroke-width="2" class="w-8 h-8 text-red-500" />
                                 </div>
                                 <h2 class="text-xl font-bold text-gray-900 mb-2">Hapus User Ini?</h2>
                                 <p class="text-sm text-gray-500 mb-6">

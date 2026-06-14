@@ -4,7 +4,7 @@
 
         {{-- Filter Produk --}}
         <select wire:model.live="filterProduk"
-            class="px-3 py-2 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-green-500 focus:border-transparent">
+            class="px-3 py-2 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-emerald-500 focus:border-transparent">
             <option value="">Semua Produk</option>
             @foreach ($produkList as $produk)
                 <option value="{{ $produk->id }}">{{ $produk->nama_produk }}</option>
@@ -13,7 +13,7 @@
 
         {{-- Filter Tipe --}}
         <select wire:model.live="filterTipe"
-            class="px-3 py-2 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-green-500">
+            class="px-3 py-2 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-emerald-500">
             <option value="">Semua Tipe</option>
             <option value="in">Stok Masuk</option>
             <option value="out">Stok Keluar</option>
@@ -21,11 +21,11 @@
 
         {{-- Filter Dari Tanggal --}}
         <input type="date" wire:model.live="filterDariTgl"
-            class="px-3 py-2 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-green-500">
+            class="px-3 py-2 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-emerald-500">
 
         {{-- Filter Sampai Tanggal --}}
         <input type="date" wire:model.live="filterSampaiTgl"
-            class="px-3 py-2 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-green-500">
+            class="px-3 py-2 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-emerald-500">
     </div>
 
     {{-- Tombol Reset --}}
@@ -66,13 +66,13 @@
                         <td class="py-3 px-4">
                             <span
                                 class="px-2 py-1 rounded-full text-xs font-semibold
-                                {{ $movement->type === 'in' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700' }}">
+                                {{ $movement->type === 'in' ? 'bg-emerald-100 text-emerald-700' : 'bg-red-100 text-red-700' }}">
                                 {{ $movement->type === 'in' ? '↑ Masuk' : '↓ Keluar' }}
                             </span>
                         </td>
                         <td
                             class="py-3 px-4 text-right font-bold
-                            {{ $movement->type === 'in' ? 'text-green-600' : 'text-red-600' }}">
+                            {{ $movement->type === 'in' ? 'text-emerald-600' : 'text-red-600' }}">
                             {{ $movement->type === 'in' ? '+' : '-' }}{{ $movement->quantity }}
                         </td>
                         <td class="py-3 px-4 text-right text-gray-500">{{ $movement->stok_sebelum }}</td>

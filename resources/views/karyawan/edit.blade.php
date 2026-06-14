@@ -49,7 +49,7 @@
                         </label>
                         <input type="text" name="name" value="{{ old('name', $user->name) }}"
                             placeholder="Nama karyawan" required
-                            class="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-500
+                            class="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500
                                       @error('name') border-red-400 @enderror">
                         @error('name')
                             <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
@@ -62,7 +62,7 @@
                         </label>
                         <input type="email" name="email" value="{{ old('email', $user->email) }}"
                             placeholder="karyawan@email.com" required
-                            class="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-500
+                            class="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500
                                       @error('email') border-red-400 @enderror">
                         @error('email')
                             <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
@@ -74,7 +74,7 @@
                             Role <span class="text-red-500">*</span>
                         </label>
                         <select name="accepted_role" required
-                            class="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-500
+                            class="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500
                                       @error('accepted_role') border-red-400 @enderror">
                             <option value="kasir"
                                 {{ old('accepted_role', $user->role) === 'kasir' ? 'selected' : '' }}>Kasir
@@ -93,7 +93,7 @@
                             Password <span class="text-gray-400 text-xs">(kosongkan jika tidak ingin mengganti)</span>
                         </label>
                         <input type="password" name="password" placeholder="Minimal 8 karakter"
-                            class="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-500
+                            class="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500
                                       @error('password') border-red-400 @enderror">
                         @error('password')
                             <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
@@ -106,7 +106,7 @@
                             Batal
                         </a>
                         <button type="submit"
-                            class="px-5 py-2.5 bg-green-600 hover:bg-green-700 text-white rounded-lg text-sm font-medium transition-colors shadow-sm">
+                            class="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-sm font-medium transition-colors shadow-sm">
                             Edit Akun Karyawan
                         </button>
                     </div>

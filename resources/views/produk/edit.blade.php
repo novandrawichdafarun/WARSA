@@ -10,7 +10,7 @@
             <div>
                 <h2 class="font-bold text-2xl text-gray-800 leading-tight">Edit Produk</h2>
                 <p class="text-xs text-gray-500 mt-0.5">Mengubah data inventaris: <span
-                        class="font-semibold text-green-600">{{ $produk->nama_produk }}</span></p>
+                        class="font-semibold text-emerald-600">{{ $produk->nama_produk }}</span></p>
             </div>
         </div>
     </x-slot>
@@ -49,7 +49,7 @@
                     <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
                         <h3 class="font-bold text-sm text-gray-400 uppercase tracking-wider mb-4">Foto Produk</h3>
 
-                        <div class="w-full aspect-square bg-gray-50 border-2 border-dashed border-gray-200 rounded-2xl flex items-center justify-center mb-4 overflow-hidden relative group cursor-pointer transition-all hover:border-green-400"
+                        <div class="w-full aspect-square bg-gray-50 border-2 border-dashed border-gray-200 rounded-2xl flex items-center justify-center mb-4 overflow-hidden relative group cursor-pointer transition-all hover:border-emerald-400"
                             onclick="document.getElementById('foto-input-sync').click()">
                             @if ($produk->foto)
                                 <img id="foto-preview" src="{{ Storage::url($produk->foto) }}"
@@ -148,13 +148,13 @@
                                 </label>
                                 <input type="text" name="nama_produk"
                                     value="{{ old('nama_produk', $produk->nama_produk) }}" required
-                                    class="w-full px-3 py-2.5 bg-gray-50 border border-gray-200 focus:border-green-500 focus:ring-2 focus:ring-green-100 rounded-xl text-sm transition-all">
+                                    class="w-full px-3 py-2.5 bg-gray-50 border border-gray-200 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100 rounded-xl text-sm transition-all">
                             </div>
 
                             <div>
                                 <label class="block text-sm font-semibold text-gray-700 mb-1.5">Kategori Group</label>
                                 <select name="category_id"
-                                    class="w-full px-3 py-2.5 bg-gray-50 border border-gray-200 focus:border-green-500 focus:ring-2 focus:ring-green-100 rounded-xl text-sm transition-all text-gray-600 cursor-pointer">
+                                    class="w-full px-3 py-2.5 bg-gray-50 border border-gray-200 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100 rounded-xl text-sm transition-all text-gray-600 cursor-pointer">
                                     <option value="">— Tanpa Kategori —</option>
                                     @foreach ($kategori as $kat)
                                         <option value="{{ $kat->id }}"
@@ -169,7 +169,7 @@
                                 <label class="block text-sm font-semibold text-gray-700 mb-1.5">Deskripsi
                                     Singkat</label>
                                 <textarea name="deskripsi" rows="3" placeholder="Tulis rincian atau spesifikasi barang disini..."
-                                    class="w-full px-3 py-2.5 bg-gray-50 border border-gray-200 focus:border-green-500 focus:ring-2 focus:ring-green-100 rounded-xl text-sm transition-all resize-none">{{ old('deskripsi', $produk->deskripsi) }}</textarea>
+                                    class="w-full px-3 py-2.5 bg-gray-50 border border-gray-200 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100 rounded-xl text-sm transition-all resize-none">{{ old('deskripsi', $produk->deskripsi) }}</textarea>
                             </div>
                         </div>
 
@@ -186,7 +186,7 @@
                                             class="absolute inset-y-0 left-0 pl-3.5 flex items-center text-sm font-bold text-gray-400 pointer-events-none">Rp</span>
                                         <input type="number" name="harga_jual" min="1" required
                                             value="{{ old('harga_jual', $produk->harga_jual) }}"
-                                            class="w-full pl-10 pr-3 py-2.5 bg-gray-50 border border-gray-200 focus:border-green-500 focus:ring-2 focus:ring-green-100 rounded-xl text-sm transition-all">
+                                            class="w-full pl-10 pr-3 py-2.5 bg-gray-50 border border-gray-200 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100 rounded-xl text-sm transition-all">
                                     </div>
                                 </div>
                                 <div>
@@ -197,7 +197,7 @@
                                             class="absolute inset-y-0 left-0 pl-3.5 flex items-center text-sm font-bold text-gray-400 pointer-events-none">Rp</span>
                                         <input type="number" name="harga_beli" min="1"
                                             value="{{ old('harga_beli', $produk->harga_beli) }}"
-                                            class="w-full pl-10 pr-3 py-2.5 bg-gray-50 border border-gray-200 focus:border-green-500 focus:ring-2 focus:ring-green-100 rounded-xl text-sm transition-all">
+                                            class="w-full pl-10 pr-3 py-2.5 bg-gray-50 border border-gray-200 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100 rounded-xl text-sm transition-all">
                                     </div>
                                 </div>
                             </div>
@@ -213,7 +213,7 @@
                                         Alert</label>
                                     <input type="number" name="stok_minimal" min="0" required
                                         value="{{ old('stok_minimal', $produk->stok_minimal) }}"
-                                        class="w-full px-3 py-2.5 bg-gray-50 border border-gray-200 focus:border-green-500 focus:ring-2 focus:ring-green-100 rounded-xl text-sm transition-all">
+                                        class="w-full px-3 py-2.5 bg-gray-50 border border-gray-200 focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100 rounded-xl text-sm transition-all">
                                 </div>
                                 <div class="flex items-end">
                                     <div
@@ -226,7 +226,7 @@
                                                 {{ old('is_active', $produk->is_active) ? 'checked' : '' }}
                                                 class="sr-only peer">
                                             <div
-                                                class="w-11 h-6 bg-gray-200 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-green-600">
+                                                class="w-11 h-6 bg-gray-200 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-emerald-600">
                                             </div>
                                         </label>
                                     </div>
@@ -248,7 +248,7 @@
                                 Batal
                             </a>
                             <button type="submit" form="form-edit-utama"
-                                class="w-full sm:w-auto px-6 py-2.5 bg-green-600 hover:bg-green-700 text-white rounded-xl text-sm font-bold transition-all shadow-sm active:scale-95 text-center">
+                                class="w-full sm:w-auto px-6 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-sm font-bold transition-all shadow-sm active:scale-95 text-center">
                                 Simpan Perubahan Data
                             </button>
                         </div>

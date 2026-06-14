@@ -10,9 +10,10 @@
 
             {{-- Alert Sukses bergaya baru --}}
             @if (session('success'))
-                <div class="mb-5 p-4 bg-green-50 border border-green-200 rounded-xl flex items-center gap-2 shadow-sm">
-                    <span class="text-green-600 font-bold">✓</span>
-                    <p class="text-sm font-medium text-green-700">{{ session('success') }}</p>
+                <div
+                    class="mb-5 p-4 bg-emerald-50 border border-emerald-200 rounded-xl flex items-center gap-2 shadow-sm">
+                    <span class="text-emerald-600 font-bold">✓</span>
+                    <p class="text-sm font-medium text-emerald-700">{{ session('success') }}</p>
                 </div>
             @endif
 

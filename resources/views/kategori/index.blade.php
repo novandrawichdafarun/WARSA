@@ -7,9 +7,9 @@
         <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
 
             @if (session('success'))
-                <div class="mb-5 p-4 bg-green-50 border border-green-200 rounded-lg flex items-center gap-2">
-                    <span class="text-green-600">✓</span>
-                    <p class="text-sm text-green-700">{{ session('success') }}</p>
+                <div class="mb-5 p-4 bg-emerald-50 border border-emerald-200 rounded-lg flex items-center gap-2">
+                    <span class="text-emerald-600">✓</span>
+                    <p class="text-sm text-emerald-700">{{ session('success') }}</p>
                 </div>
             @endif
 
@@ -26,14 +26,14 @@
                                 <label class="block text-sm font-medium text-gray-700 mb-1">Nama Kategori</label>
                                 <input type="text" name="nama_kategori" value="{{ old('nama_kategori') }}"
                                     placeholder="Contoh: Minuman" required
-                                    class="w-full px-3 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-500
+                                    class="w-full px-3 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500
                                               @error('nama_kategori') border-red-400 @enderror">
                                 @error('nama_kategori')
                                     <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
                                 @enderror
                             </div>
                             <button type="submit"
-                                class="w-full bg-green-600 hover:bg-green-700 text-white py-2.5 rounded-lg text-sm font-medium transition-colors">
+                                class="w-full bg-emerald-600 hover:bg-emerald-700 text-white py-2.5 rounded-lg text-sm font-medium transition-colors">
                                 + Tambah
                             </button>
                         </form>
@@ -67,8 +67,8 @@
                                         class="flex items-center justify-between p-3 bg-gray-50 hover:bg-gray-100 rounded-lg transition-colors group">
                                         <div class="flex items-center gap-3">
                                             <div
-                                                class="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center">
-                                                <span class="text-green-700 text-xs font-bold">
+                                                class="w-8 h-8 bg-emerald-100 rounded-lg flex items-center justify-center">
+                                                <span class="text-emerald-700 text-xs font-bold">
                                                     {{ strtoupper(substr($kat->nama_kategori, 0, 2)) }}
                                                 </span>
                                             </div>

@@ -42,8 +42,8 @@
                     x-transition:leave-end="opacity-0 -translate-y-2" class="fixed top-4 right-4 z-50 max-w-sm w-full">
 
                     @if (session('success'))
-                        <div class="flex items-start gap-3 bg-white border border-green-200 shadow-lg rounded-xl p-4">
-                            <span class="text-green-500 text-xl shrink-0">✓</span>
+                        <div class="flex items-start gap-3 bg-white border border-emerald-200 shadow-lg rounded-xl p-4">
+                            <span class="text-emerald-500 text-xl shrink-0">✓</span>
                             <p class="text-sm text-gray-700">{{ session('success') }}</p>
                             <button @click="show = false" class="ml-auto text-gray-300 hover:text-gray-500">×</button>
                         </div>
@@ -55,7 +55,8 @@
                         </div>
                     @elseif (session('warning'))
                         <div class="flex items-start gap-3 bg-white border border-amber-200 shadow-lg rounded-xl p-4">
-                            <span class="text-amber-500 text-xl shrink-0">⚠️</span>
+                            <span class="text-amber-500 text-xl shrink-0"> <x-lucide-triangle-alert stroke-width="2"
+                                    class="w-4 h-4" /></span>
                             <p class="text-sm text-gray-700">{{ session('warning') }}</p>
                             <button @click="show = false" class="ml-auto text-gray-300 hover:text-gray-500">×</button>
                         </div>
@@ -76,7 +77,7 @@
     <div wire:loading.flex wire:loading.delay.shortest
         class="fixed inset-0 bg-black/10 z-40 items-center justify-center hidden">
         <div class="bg-white rounded-2xl shadow-xl px-8 py-6 flex items-center gap-4">
-            <div class="w-6 h-6 border-3 border-green-500 border-t-transparent rounded-full animate-spin"></div>
+            <div class="w-6 h-6 border-3 border-emerald-500 border-t-transparent rounded-full animate-spin"></div>
             <span class="text-sm font-medium text-gray-700">Memproses...</span>
         </div>
     </div>

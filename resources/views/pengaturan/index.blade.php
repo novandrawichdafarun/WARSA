@@ -7,9 +7,9 @@
         <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
 
             @if (session('success'))
-                <div class="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg flex items-center gap-2">
-                    <span class="text-green-600">✓</span>
-                    <p class="text-sm text-green-700">{{ session('success') }}</p>
+                <div class="mb-6 p-4 bg-emerald-50 border border-emerald-200 rounded-lg flex items-center gap-2">
+                    <span class="text-emerald-600">✓</span>
+                    <p class="text-sm text-emerald-700">{{ session('success') }}</p>
                 </div>
             @endif
 
@@ -44,8 +44,8 @@
                                         class="hidden w-full h-full object-cover rounded-xl">
                                     <div id="logo-placeholder" class="text-center p-4">
                                         <div
-                                            class="w-16 h-16 bg-green-100 rounded-2xl flex items-center justify-center mx-auto mb-2">
-                                            <span class="text-green-700 font-bold text-2xl">
+                                            class="w-16 h-16 bg-emerald-100 rounded-2xl flex items-center justify-center mx-auto mb-2">
+                                            <span class="text-emerald-700 font-bold text-2xl">
                                                 {{ strtoupper(substr($warung->nama_warung, 0, 2)) }}
                                             </span>
                                         </div>
@@ -75,7 +75,7 @@
                                     </label>
                                     <input type="text" name="nama_warung"
                                         value="{{ old('nama_warung', $warung->nama_warung) }}" required
-                                        class="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-500
+                                        class="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500
                                         @error('nama_warung') border-red-400 @enderror">
                                     @error('nama_warung')
                                         <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
@@ -85,14 +85,14 @@
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700 mb-1">Alamat</label>
                                     <textarea name="alamat" rows="3" placeholder="Alamat lengkap warung"
-                                        class="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-500 resize-none">{{ old('alamat', $warung->alamat) }}</textarea>
+                                        class="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 resize-none">{{ old('alamat', $warung->alamat) }}</textarea>
                                 </div>
 
                                 <div>
                                     <label class="block text-sm font-medium text-gray-700 mb-1">Nomor Telepon</label>
                                     <input type="text" name="telepon" value="{{ old('telepon', $warung->telepon) }}"
                                         placeholder="08123456789"
-                                        class="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-500">
+                                        class="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
                                 </div>
 
                                 <div>
@@ -103,7 +103,7 @@
                                                     value="1" class="sr-only peer"
                                                     {{ $warung->is_qris_active ? 'checked' : '' }}>
                                                 <div
-                                                    class="block w-14 h-8 bg-gray-300 rounded-full peer-checked:bg-green-500 transition">
+                                                    class="block w-14 h-8 bg-gray-300 rounded-full peer-checked:bg-emerald-500 transition">
                                                 </div>
                                                 <div
                                                     class="dot absolute left-1 top-1 bg-white w-6 h-6 rounded-full transition transform peer-checked:translate-x-6">
@@ -130,7 +130,7 @@
                                 <div class="p-3 bg-gray-50 rounded-lg">
                                     <p class="text-xs text-gray-500">
                                         <span class="font-medium">Slug warung:</span>
-                                        <span class="font-mono text-green-700">{{ $warung->slug }}</span>
+                                        <span class="font-mono text-emerald-700">{{ $warung->slug }}</span>
                                     </p>
                                 </div>
                             </div>
@@ -141,7 +141,7 @@
                                     Batal
                                 </a>
                                 <button type="submit"
-                                    class="px-6 py-2.5 bg-green-600 hover:bg-green-700 text-white rounded-lg text-sm font-medium transition-colors shadow-sm">
+                                    class="px-6 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-sm font-medium transition-colors shadow-sm">
                                     Simpan Pengaturan
                                 </button>
                             </div>

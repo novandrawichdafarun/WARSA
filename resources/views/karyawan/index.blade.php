@@ -3,7 +3,7 @@
         <div class="flex items-center justify-between">
             <h2 class="font-semibold text-xl text-gray-800">Manajemen Karyawan</h2>
             <a href="{{ route('karyawan.create') }}"
-                class="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg text-sm font-medium transition-colors shadow-sm">
+                class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-sm font-medium transition-colors shadow-sm">
                 + Tambah Karyawan
             </a>
         </div>
@@ -19,9 +19,9 @@
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
 
             @if (session('success'))
-                <div class="mb-5 p-4 bg-green-50 border border-green-200 rounded-lg flex items-center gap-2">
-                    <span class="text-green-600">✓</span>
-                    <p class="text-sm text-green-700">{{ session('success') }}</p>
+                <div class="mb-5 p-4 bg-emerald-50 border border-emerald-200 rounded-lg flex items-center gap-2">
+                    <span class="text-emerald-600">✓</span>
+                    <p class="text-sm text-emerald-700">{{ session('success') }}</p>
                 </div>
             @endif
 
@@ -43,7 +43,7 @@
                         </div>
                         <p class="text-gray-400 text-sm mb-4">Belum ada karyawan. Tambahkan akun karyawan pertama!</p>
                         <a href="{{ route('karyawan.create') }}"
-                            class="inline-block px-4 py-2 bg-green-600 text-white rounded-lg text-sm hover:bg-green-700 transition-colors">
+                            class="inline-block px-4 py-2 bg-emerald-600 text-white rounded-lg text-sm hover:bg-emerald-700 transition-colors">
                             + Tambah Karyawan Pertama
                         </a>
                     </div>

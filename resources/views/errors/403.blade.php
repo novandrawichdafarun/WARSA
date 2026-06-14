@@ -17,12 +17,12 @@
         </p>
         @if (auth()->user()->isKasir() || auth()->user()->isPelanggan())
             <a href="{{ route('pos.index') }}"
-                class="px-6 py-3 bg-green-600 text-white rounded-xl font-medium hover:bg-green-700 transition-colors">
+                class="px-6 py-3 bg-emerald-600 text-white rounded-xl font-medium hover:bg-emerald-700 transition-colors">
                 Kembali ke POS Kasir
             </a>
         @else
             <a href="{{ route('dashboard') }}"
-                class="px-6 py-3 bg-green-600 text-white rounded-xl font-medium hover:bg-green-700 transition-colors">
+                class="px-6 py-3 bg-emerald-600 text-white rounded-xl font-medium hover:bg-emerald-700 transition-colors">
                 Kembali ke Dashboard
             </a>
         @endif

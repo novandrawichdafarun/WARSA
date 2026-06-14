@@ -17,7 +17,7 @@
                             {{-- Dashboard Owner $ Super Admin --}}
                             <a href="{{ route('dashboard') }}"
                                 class="px-3 py-2 rounded-md text-sm font-medium transition-colors
-                            {{ request()->routeIs('dashboard') ? 'bg-green-100 text-green-700' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100' }}">
+                            {{ request()->routeIs('dashboard') ? 'bg-emerald-100 text-emerald-700' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100' }}">
                                 Dashboard
                             </a>
                         @endif
@@ -26,17 +26,17 @@
                         @if (auth()->user()->isSuperAdmin())
                             <a href="{{ route('super_admin.users.index') }}"
                                 class="px-3 py-2 rounded-md text-sm font-medium transition-colors
-                                {{ request()->routeIs('super_admin.users.*') ? 'bg-green-100 text-green-700' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100' }}">
+                                {{ request()->routeIs('super_admin.users.*') ? 'bg-emerald-100 text-emerald-700' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100' }}">
                                 Manajemen User
                             </a>
                             <a href="{{ route('super_admin.warungs.index') }}"
                                 class="px-3 py-2 rounded-md text-sm font-medium transition-colors
-                                {{ request()->routeIs('super_admin.warungs.*') ? 'bg-green-100 text-green-700' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100' }}">
+                                {{ request()->routeIs('super_admin.warungs.*') ? 'bg-emerald-100 text-emerald-700' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100' }}">
                                 Manajemen Warung
                             </a>
                             <a href="{{ route('super_admin.commission.index') }}"
                                 class="px-3 py-2 rounded-md text-sm font-medium transition-colors
-                                {{ request()->routeIs('super_admin.commission.*') ? 'bg-green-100 text-green-700' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100' }}">
+                                {{ request()->routeIs('super_admin.commission.*') ? 'bg-emerald-100 text-emerald-700' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100' }}">
                                 Komisi
                             </a>
                         @endif
@@ -45,7 +45,7 @@
                         @if (auth()->user()->canAccessPOS())
                             <a href="{{ route('pos.index') }}"
                                 class="px-3 py-2 rounded-md text-sm font-medium transition-colors
-                                {{ request()->routeIs('pos.*') ? 'bg-green-100 text-green-700' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100' }}">
+                                {{ request()->routeIs('pos.*') ? 'bg-emerald-100 text-emerald-700' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100' }}">
                                 Kasir
                             </a>
                         @endif
@@ -54,28 +54,28 @@
                         @if (auth()->user()->isOwner())
                             <a href="{{ route('produk.index') }}"
                                 class="px-3 py-2 rounded-md text-sm font-medium transition-colors
-                                {{ request()->routeIs('produk.*') ? 'bg-green-100 text-green-700' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100' }}">
+                                {{ request()->routeIs('produk.*') ? 'bg-emerald-100 text-emerald-700' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100' }}">
                                 Produk
                             </a>
 
                             <a href="{{ route('stok.index') }}"
                                 class="px-3 py-2 rounded-md text-sm font-medium transition-colors
-                                {{ request()->routeIs('stok.*') ? 'bg-green-100 text-green-700' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100' }}">
+                                {{ request()->routeIs('stok.*') ? 'bg-emerald-100 text-emerald-700' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100' }}">
                                 Stok
                             </a>
                             <a href="{{ route('kategori.index') }}"
                                 class="px-3 py-2 rounded-md text-sm font-medium transition-colors
-                                {{ request()->routeIs('kategori.*') ? 'bg-green-100 text-green-700' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100' }}">
+                                {{ request()->routeIs('kategori.*') ? 'bg-emerald-100 text-emerald-700' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100' }}">
                                 Kategori
                             </a>
                             <a href="{{ route('karyawan.index') }}"
                                 class="px-3 py-2 rounded-md text-sm font-medium transition-colors
-                                {{ request()->routeIs('karyawan.*') ? 'bg-green-100 text-green-700' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100' }}">
+                                {{ request()->routeIs('karyawan.*') ? 'bg-emerald-100 text-emerald-700' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100' }}">
                                 Karyawan
                             </a>
                             <a href="{{ route('laporan.index') }}"
                                 class="px-3 py-2 rounded-md text-sm font-medium transition-colors
-                                {{ request()->routeIs('laporan.*') ? 'bg-green-100 text-green-700' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100' }}">
+                                {{ request()->routeIs('laporan.*') ? 'bg-emerald-100 text-emerald-700' : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100' }}">
                                 Laporan
                             </a>
                         @endif
@@ -97,7 +97,7 @@
                     <div x-data="{ dropOpen: false }" class="relative">
                         <button @click="dropOpen = !dropOpen"
                             class="flex items-center gap-2 px-3 py-2 rounded-md text-sm text-gray-600 hover:text-gray-900 hover:bg-gray-100 transition-colors">
-                            <div class="w-7 h-7 bg-green-600 rounded-full flex items-center justify-center">
+                            <div class="w-7 h-7 bg-emerald-600 rounded-full flex items-center justify-center">
                                 <span class="text-white text-xs font-bold">
                                     {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
                                 </span>
@@ -116,15 +116,15 @@
                             </div>
                             @if (auth()->user()->isOwner() || auth()->user()->isSuperAdmin())
                                 <a href="{{ route('pengaturan.index') }}"
-                                    class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">
-                                    ⚙️ Pengaturan Warung
+                                    class="flex px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">
+                                    <x-lucide-settings class="w-5 h-5 mr-1" /> Pengaturan Warung
                                 </a>
                             @endif
                             <form method="POST" action="{{ route('logout') }}">
                                 @csrf
                                 <button type="submit"
-                                    class="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50">
-                                    → Keluar
+                                    class="flex w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50">
+                                    <x-lucide-log-out class="w-5 h-5 mr-1" /> Keluar
                                 </button>
                             </form>
                         </div>

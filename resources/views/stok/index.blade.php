@@ -3,7 +3,7 @@
         <div class="flex items-center justify-between">
             <h2>Manajemen Stok</h2>
             <a href="{{ route('stok.create') }}"
-                class="inline-flex items-center gap-2 px-4 py-2.5 bg-green-600 hover:bg-green-700 text-white text-sm font-semibold rounded-xl shadow-sm transition-all hover:shadow-md transform active:scale-95">+
+                class="inline-flex items-center gap-2 px-4 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-semibold rounded-xl shadow-sm transition-all hover:shadow-md transform active:scale-95">+
                 Tambah Stok Manual</a>
         </div>
     </x-slot>
@@ -17,7 +17,7 @@
                 {{-- Card: Total Masuk Hari Ini --}}
                 <div class="bg-white rounded-xl p-5 border border-gray-100 shadow-sm">
                     <p class="text-xs text-gray-400 uppercase font-semibold mb-1">Stok Masuk Hari Ini</p>
-                    <p class="text-3xl font-bold text-green-600">{{ $totalMasukHariIni }}</p>
+                    <p class="text-3xl font-bold text-emerald-600">{{ $totalMasukHariIni }}</p>
                     <p class="text-xs text-gray-400 mt-1">unit dari semua produk</p>
                 </div>
 

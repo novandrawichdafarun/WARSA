@@ -32,7 +32,7 @@
                     <div>
                         <label class="block text-xs font-medium text-gray-600 mb-1">Periode Cepat</label>
                         <select name="preset" onchange="this.form.submit()"
-                            class="px-3 py-2 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-green-500">
+                            class="px-3 py-2 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-emerald-500">
                             <option value="hari_ini" {{ request('preset') === 'hari_ini' ? 'selected' : '' }}>Hari Ini
                             </option>
                             <option value="minggu_ini" {{ request('preset') === 'minggu_ini' ? 'selected' : '' }}>Minggu
@@ -51,15 +51,15 @@
                     <div>
                         <label class="block text-xs font-medium text-gray-600 mb-1">Dari Tanggal</label>
                         <input type="date" name="dari" value="{{ request('dari', $dari->format('Y-m-d')) }}"
-                            class="px-3 py-2 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-green-500">
+                            class="px-3 py-2 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-emerald-500">
                     </div>
                     <div>
                         <label class="block text-xs font-medium text-gray-600 mb-1">Sampai Tanggal</label>
                         <input type="date" name="sampai" value="{{ request('sampai', $sampai->format('Y-m-d')) }}"
-                            class="px-3 py-2 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-green-500">
+                            class="px-3 py-2 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-emerald-500">
                     </div>
                     <button type="submit"
-                        class="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg text-sm font-medium transition-colors">
+                        class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-sm font-medium transition-colors">
                         Terapkan Filter
                     </button>
                 </form>
@@ -73,7 +73,7 @@
                         [
                             'label' => 'Total Omset',
                             'value' => 'Rp ' . number_format($laporan['summary']['total_omset'], 0, ',', '.'),
-                            'color' => 'green',
+                            'color' => 'emerald',
                             'icon' => '💰',
                         ],
                         [
@@ -128,7 +128,7 @@
                     <p class="text-xs text-gray-400 font-semibold uppercase mb-3">Breakdown Pembayaran</p>
                     <div class="flex items-center justify-center gap-10 mt-14">
                         <div class="text-center">
-                            <p class="text-4xl font-bold text-green-600">{{ $laporan['metode_bayar']['cash'] }}</p>
+                            <p class="text-4xl font-bold text-emerald-600">{{ $laporan['metode_bayar']['cash'] }}</p>
                             <p class="text-xl text-gray-400 mt-1">💵 Cash</p>
                         </div>
                         <div class="h-12 w-px bg-gray-100"></div>
@@ -186,7 +186,7 @@
                 <div class="px-6 py-4 border-b border-gray-100 flex items-center justify-between">
                     <h3 class="font-semibold text-gray-800">Detail Transaksi</h3>
                     <a href="{{ route('laporan.komisi', request()->query()) }}"
-                        class="text-sm text-green-600 hover:underline">
+                        class="text-sm text-emerald-600 hover:underline">
                         Lihat Laporan Komisi →
                     </a>
                 </div>
@@ -196,7 +196,8 @@
                             <tr class="bg-gray-50 border-b border-gray-100">
                                 <th class="text-left py-3 px-4 text-xs font-semibold text-gray-400 uppercase">No</th>
                                 <th class="text-left py-3 px-4 text-xs font-semibold text-gray-400 uppercase">Waktu</th>
-                                <th class="text-left py-3 px-4 text-xs font-semibold text-gray-400 uppercase">Petugas</th>
+                                <th class="text-left py-3 px-4 text-xs font-semibold text-gray-400 uppercase">Petugas
+                                </th>
                                 <th class="text-right py-3 px-4 text-xs font-semibold text-gray-400 uppercase">Omset
                                 </th>
                                 <th class="text-right py-3 px-4 text-xs font-semibold text-gray-400 uppercase">Komisi
@@ -215,10 +216,11 @@
                                         {{ $trx->paid_at->format('d M, H:i') }}
                                     </td>
                                     <td class="py-3 px-4 text-gray-700">
-                                        @if($trx->kasir)
+                                        @if ($trx->kasir)
                                             <div class="flex flex-col">
                                                 <span class="text-gray-800 font-medium">{{ $trx->kasir->name }}</span>
-                                                <span class="text-[10px] font-bold uppercase tracking-wider {{ $trx->kasir->role === 'owner' ? 'text-purple-600' : 'text-blue-600' }}">
+                                                <span
+                                                    class="text-[10px] font-bold uppercase tracking-wider {{ $trx->kasir->role === 'owner' ? 'text-purple-600' : 'text-blue-600' }}">
                                                     {{ $trx->kasir->role }}
                                                 </span>
                                             </div>
@@ -232,13 +234,13 @@
                                     <td class="py-3 px-4 text-right text-red-500 text-xs">
                                         -Rp {{ number_format($trx->commission_amount, 0, ',', '.') }}
                                     </td>
-                                    <td class="py-3 px-4 text-right font-semibold text-green-600">
+                                    <td class="py-3 px-4 text-right font-semibold text-emerald-600">
                                         Rp {{ number_format($trx->total_net, 0, ',', '.') }}
                                     </td>
                                     <td class="py-3 px-4">
                                         <span
                                             class="px-2 py-0.5 rounded text-xs font-medium uppercase
-                                            {{ $trx->payment_method === 'qris' ? 'bg-blue-100 text-blue-700' : 'bg-green-100 text-green-700' }}">
+                                            {{ $trx->payment_method === 'qris' ? 'bg-blue-100 text-blue-700' : 'bg-emerald-100 text-emerald-700' }}">
                                             {{ $trx->payment_method }}
                                         </span>
                                     </td>

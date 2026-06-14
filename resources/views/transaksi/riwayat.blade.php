@@ -3,7 +3,7 @@
         <div class="flex items-center justify-between">
             <h2 class="font-semibold text-xl text-gray-800">Riwayat Transaksi</h2>
             <a href="{{ route('pos.index') }}"
-                class="px-4 py-2 bg-green-600 text-white rounded-lg text-sm font-medium hover:bg-green-700">
+                class="px-4 py-2 bg-emerald-600 text-white rounded-lg text-sm font-medium hover:bg-emerald-700">
                 + Transaksi Baru
             </a>
         </div>
@@ -16,7 +16,7 @@
             <div class="grid grid-cols-2 gap-4">
                 <div class="bg-white rounded-xl p-5 border border-gray-100 shadow-sm">
                     <p class="text-xs text-gray-400 uppercase font-semibold">Omset Hari Ini</p>
-                    <p class="text-2xl font-bold text-green-600 mt-1">
+                    <p class="text-2xl font-bold text-emerald-600 mt-1">
                         Rp {{ number_format($totalOmsetHariIni, 0, ',', '.') }}
                     </p>
                 </div>
@@ -59,7 +59,7 @@
                                 <td class="py-3 px-4">
                                     <span
                                         class="px-2 py-0.5 rounded text-xs font-medium uppercase
-                                        {{ $trx->payment_method === 'qris' ? 'bg-blue-100 text-blue-700' : 'bg-green-100 text-green-700' }}">
+                                        {{ $trx->payment_method === 'qris' ? 'bg-blue-100 text-blue-700' : 'bg-emerald-100 text-emerald-700' }}">
                                         {{ $trx->payment_method }}
                                     </span>
                                 </td>

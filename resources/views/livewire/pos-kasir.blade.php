@@ -12,7 +12,7 @@
                 x-transition:leave="transition ease-in duration-200"
                 x-transition:leave-start="opacity-100 transform translate-x-0"
                 x-transition:leave-end="opacity-0 transform translate-x-8"
-                class="fixed top-5 right-5 z-50 bg-green-500 text-white px-6 py-4 rounded-lg shadow-xl border-l-4 border-green-700 flex items-center gap-3">
+                class="fixed top-5 right-5 z-50 bg-emerald-500 text-white px-6 py-4 rounded-lg shadow-xl border-l-4 border-emerald-700 flex items-center gap-3">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 animate-bounce" fill="none"
                     viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -35,7 +35,7 @@
             <div class="flex items-center justify-between">
                 <div class="flex items-center gap-3 flex-1">
                     <input type="text" wire:model.live.debounce.300ms="search" placeholder="Cari produk..."
-                        class="flex-1 px-3 py-2 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-green-500">
+                        class="flex-1 px-3 py-2 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-emerald-500">
 
                     <select wire:model.live="filterKategori"
                         class="px-3 py-2 border border-gray-200 rounded-lg text-sm">
@@ -51,7 +51,7 @@
         {{-- Error Message --}}
         @if ($errorMessage)
             <div class="mx-4 mt-3 p-3 bg-red-50 border border-red-200 rounded-lg text-sm text-red-600">
-                ⚠️ {{ $errorMessage }}
+                <x-lucide-triangle-alert stroke-width="2" class="w-4 h-4" /> {{ $errorMessage }}
                 <button wire:click="$set('errorMessage', null)" class="float-right">×</button>
             </div>
         @endif
@@ -65,7 +65,7 @@
 
                 @forelse ($produk as $item)
                     <button wire:click="tambahKeKeranjang({{ $item->id }})"
-                        class="bg-white border border-gray-100 rounded-xl overflow-hidden hover:border-green-400 shadow-md transition-all text-left group
+                        class="bg-white border border-gray-100 rounded-xl overflow-hidden hover:border-emerald-400 shadow-md transition-all text-left group
                         {{ $item->stok <= 0 ? 'opacity-50 cursor-not-allowed' : '' }}"
                         {{ $item->stok <= 0 ? 'disabled' : '' }}>
 
@@ -75,29 +75,33 @@
                                 <img src="{{ Storage::url($item->foto) }}"
                                     class="w-full h-full object-cover group-hover:scale-105 transition-transform">
                             @else
-                                <div class="w-full h-full flex items-center justify-center text-3xl">🛍️</div>
+                                <div class="w-full h-full flex items-center justify-center text-3xl">
+                                    <x-lucide-shopping-bag class="w-12 h-12 text-emerald-500" />
+                                </div>
                             @endif
                         </div>
 
                         {{-- Info --}}
                         <div class="p-3">
                             <p class="text-sm font-semibold text-gray-800 truncate">{{ $item->nama_produk }}</p>
-                            <p class="text-green-600 font-bold text-sm mt-0.5">
+                            <p class="text-emerald-600 font-bold text-sm mt-0.5">
                                 Rp {{ number_format($item->harga_jual, 0, ',', '.') }}
                             </p>
                             <p class="text-xs text-gray-400 mt-0.5">
                                 @if ($item->stok <= 0)
-                                    <span class="text-red-600 font-bold">Stok Habis ⚠</span>
+                                    <span class="flex gap-1 text-red-600 font-bold">Stok Habis <x-lucide-triangle-alert
+                                            class="w-3 h-3 mt-0.5" /></span>
                                 @elseif ($item->isLowStock())
-                                    <span class="text-orange-500 font-medium">Stok Menipis ⚠</span>
+                                    <span class="flex gap-1 text-orange-500 font-medium">Stok Menipis
+                                        <x-lucide-triangle-alert class="w-3 h-3 mt-0.5" /></span>
                                 @endif
                             </p>
                         </div>
                     </button>
                 @empty
                     <div class="col-span-full py-16 text-center text-gray-400">
-                        <p class="text-4xl mb-2">📦</p>
-                        <p class="text-sm">Tidak ada produk ditemukan</p>
+                        <p class="text-4xl mb-2"><x-lucide-package class="w-8 h-8 text-emerald-500" /></p>
+                        <p class="text-sm">Tidak ada produk yang dijual</p>
                     </div>
                 @endforelse
             </div>
@@ -115,7 +119,7 @@
             <h3 class="font-semibold text-lg text-gray-800">
                 Keranjang
                 @if ($totalItems > 0)
-                    <span class="ml-1 bg-green-600 text-white text-xs rounded-full px-2 py-0.5">
+                    <span class="ml-1 bg-emerald-600 text-white text-xs rounded-full px-2 py-0.5">
                         {{ $totalItems }}
                     </span>
                 @endif
@@ -150,7 +154,7 @@
                             </button>
                             <span class="text-sm font-bold w-6 text-center">{{ $item['qty'] }}</span>
                             <button wire:click="tambahKeKeranjang({{ $key }})"
-                                class="w-7 h-7 bg-gray-100 hover:bg-green-100 rounded-lg text-gray-600 hover:text-green-600 text-lg leading-none transition-colors">
+                                class="w-7 h-7 bg-gray-100 hover:bg-emerald-100 rounded-lg text-gray-600 hover:text-emerald-600 text-lg leading-none transition-colors">
                                 +
                             </button>
                         </div>
@@ -161,7 +165,7 @@
                     </div>
                 @empty
                     <div class="flex flex-col items-center justify-center h-48 text-gray-300">
-                        <span class="text-5xl mb-3">🛒</span>
+                        <span class="text-5xl mb-3"><x-lucide-shopping-cart class="w-14 h-14 text-emerald-500" /></span>
                         <p class="text-sm">Keranjang kosong</p>
                         <p class="text-xs mt-1">Pilih produk dari kiri</p>
                     </div>
@@ -185,32 +189,40 @@
                         <p class="text-xs text-gray-500 mb-2 font-medium">Metode Pembayaran</p>
                         <div class="grid {{ !auth()->user()->isPelanggan() ? 'grid-cols-2' : 'grid-cols-1' }} gap-2">
                             @if (!auth()->user()->isPelanggan())
-                                <button wire:click="$set('paymentMethod', 'cash')"
-                                    class="py-2.5 rounded-xl text-sm font-semibold border-2 transition-all
-                                {{ $paymentMethod === 'cash'
-                                    ? 'border-green-500 bg-green-50 text-green-700'
-                                    : 'border-gray-200 text-gray-500 hover:border-gray-300' }}">
-                                    💵 Cash
+                                <button type="button" wire:click="$set('paymentMethod', 'cash')"
+                                    aria-pressed="{{ $paymentMethod === 'cash' ? 'true' : 'false' }}"
+                                    class="w-full inline-flex items-center justify-center gap-2 py-2.5 min-h-[44px] rounded-xl text-sm font-semibold border-2 transition-all focus:outline-none
+                    {{ $paymentMethod === 'cash'
+                        ? 'border-emerald-500 bg-emerald-50 text-emerald-700'
+                        : 'border-gray-200 text-gray-500 hover:border-gray-300' }}">
+                                    <x-lucide-hand-coins class="w-5 h-5" /> <span>Cash</span>
                                 </button>
                             @endif
-                            <button wire:click="$set('paymentMethod', 'qris')"
-                                class="py-2.5 rounded-xl text-sm font-semibold border-2 transition-all
-                                {{ $paymentMethod === 'qris'
-                                    ? 'border-blue-500 bg-blue-50 text-blue-700'
-                                    : 'border-gray-200 text-gray-500 hover:border-gray-300' }}">
-                                📱 QRIS
+
+                            <button type="button" wire:click="$set('paymentMethod', 'qris')"
+                                aria-pressed="{{ $paymentMethod === 'qris' ? 'true' : 'false' }}"
+                                class="w-full inline-flex items-center justify-center gap-2 py-2.5 min-h-[44px] rounded-xl text-sm font-semibold border-2 transition-all focus:outline-none
+                {{ $paymentMethod === 'qris'
+                    ? 'border-blue-500 bg-blue-50 text-blue-700'
+                    : 'border-gray-200 text-gray-500 hover:border-gray-300' }}">
+                                <x-lucide-qr-code class="w-5 h-5" /> <span>QRIS</span>
                             </button>
                         </div>
                     </div>
 
                     {{-- Tombol Proses --}}
                     <button wire:click="prosesCheckout" wire:loading.attr="disabled"
-                        class="w-full py-3 bg-green-600 hover:bg-green-700 disabled:bg-green-400
-                        text-white font-bold rounded-xl transition-colors shadow-sm">
-                        <span wire:loading.remove>
-                            {{ $paymentMethod === 'cash' ? '✓ Bayar Cash' : '📱 Generate QRIS' }}
+                        class="w-full py-3 bg-emerald-600 hover:bg-emerald-700 disabled:bg-emerald-400 text-white font-bold rounded-xl transition-colors shadow-sm flex items-center justify-center">
+                        <span wire:loading.remove class="flex items-center justify-center gap-1">
+                            @if ($paymentMethod === 'cash')
+                                <x-lucide-hand-coins class="w-6 h-6" />
+                                <span class="text-base">Bayar Cash</span>
+                            @else
+                                <x-lucide-qr-code class="w-6 h-6" />
+                                <span class="text-base">Generate QRIS</span>
+                            @endif
                         </span>
-                        <span wire:loading>Memproses...</span>
+                        <span wire:loading class="flex items-center justify-center">Memproses...</span>
                     </button>
                 </div>
             @endif
@@ -222,7 +234,7 @@
 
                     <div class="text-center">
                         <p class="font-semibold text-gray-800">Scan QR untuk Bayar</p>
-                        <p class="text-2xl font-bold text-green-600 mt-1">
+                        <p class="text-2xl font-bold text-emerald-600 mt-1">
                             Rp {{ number_format($total, 0, ',', '.') }}
                         </p>
                     </div>

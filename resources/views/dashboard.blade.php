@@ -9,15 +9,15 @@
             </div>
             @if (auth()->user()->warung)
                 <div
-                    class="bg-green-50 border border-green-200 rounded-xl px-4 py-2 flex items-center gap-2 self-start md:self-auto">
+                    class="bg-emerald-50 border border-emerald-200 rounded-xl px-4 py-2 flex items-center gap-2 self-start md:self-auto">
                     @if (auth()->user()->warung->logo)
                         <img src="{{ asset('storage/' . auth()->user()->warung->logo) }}" alt="Logo Warung"
                             class="w-10 h-10 rounded-full object-cover">
                     @else
-                        <span class="text-xl">🏪</span>
+                        <x-lucide-store class="w-8 h-8 text-emerald-500" />
                     @endif
                     <div>
-                        <p class="text-xs text-green-600 font-medium">Nama Warung</p>
+                        <p class="text-xs text-emerald-600 font-medium">Nama Warung</p>
                         <p class="text-sm font-bold text-gray-800">{{ auth()->user()->warung->nama_warung }}</p>
                     </div>
                 </div>
@@ -28,7 +28,8 @@
             <div class="bg-amber-50 border border-amber-200 rounded-2xl p-5 mt-3">
                 <div class="flex items-center justify-between mb-3">
                     <p class="font-semibold text-amber-800 flex items-center gap-2">
-                        ⚠️ Stok Menipis ({{ $produk_low_stock }} produk)
+                        <x-lucide-triangle-alert class="w-4 h-4" /> Stok Menipis
+                        ({{ $produk_low_stock }} produk)
                     </p>
                     <a href="{{ route('stok.index') }}" class="text-xs text-amber-600 hover:text-amber-800 underline">
                         Lihat semua →
@@ -57,8 +58,8 @@
                     <div
                         class="bg-white rounded-xl shadow-sm border border-gray-100 p-6 flex items-center gap-4 hover:shadow-md transition-all">
                         <div
-                            class="w-14 h-14 bg-green-100 rounded-full flex items-center justify-center border border-green-100">
-                            <span class="text-2xl">💰</span>
+                            class="w-14 h-14 bg-emerald-100 rounded-full flex items-center justify-center border border-emerald-100">
+                            <x-lucide-circle-dollar-sign class="w-8 h-8 text-emerald-500" />
                         </div>
                         <div>
                             <p class="text-xs font-bold text-gray-500 uppercase tracking-wider">Omset Hari Ini</p>
@@ -71,7 +72,7 @@
                         class="bg-white rounded-xl shadow-sm border border-gray-100 p-6 flex items-center gap-4 hover:shadow-md transition-all">
                         <div
                             class="w-14 h-14 bg-blue-100 rounded-full flex items-center justify-center border border-blue-100">
-                            <span class="text-2xl">🛒</span>
+                            <x-lucide-shopping-bag class="w-8 h-8 text-blue-500" />
                         </div>
                         <div>
                             <p class="text-xs font-bold text-gray-500 uppercase tracking-wider">Transaksi Hari
@@ -84,7 +85,7 @@
                         class="bg-white rounded-xl shadow-sm border border-gray-100 p-6 flex items-center gap-4 hover:shadow-md transition-all">
                         <div
                             class="w-14 h-14 bg-purple-100 rounded-full flex items-center justify-center border border-purple-100">
-                            <span class="text-2xl">📦</span>
+                            <x-lucide-package class="w-8 h-8 text-purple-500" />
                         </div>
                         <div>
                             <p class="text-xs font-bold text-gray-500 uppercase tracking-wider">Total Produk</p>
@@ -97,7 +98,7 @@
                         class="bg-white rounded-xl shadow-sm border border-gray-100 p-6 flex items-center gap-4 hover:shadow-md transition-all">
                         <div
                             class="w-14 h-14{{ $produk_low_stock > 0 ? ' bg-red-100 border-red-100 animate-pulse' : 'bg-gray-100 border-gray-100' }} rounded-full flex items-center justify-center border ">
-                            <span class="text-2xl">⚠️</span>
+                            <x-lucide-triangle-alert class="w-8 h-8 text-red-500" />
                         </div>
                         <div>
                             <p class="text-xs font-bold text-gray-500 uppercase tracking-wider">Stok Menipis</p>
@@ -113,9 +114,11 @@
                     <h3 class="text-lg font-bold text-gray-800 mb-4">Aksi Cepat Menu Manajemen</h3>
                     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
                         <a href="{{ route('pos.index') }}"
-                            class="p-4 border border-gray-100 rounded-xl bg-gray-50 hover:bg-green-50 hover:border-green-300 transition-all flex items-center gap-3 group">
+                            class="p-4 border border-gray-100 rounded-xl bg-gray-50 hover:bg-emerald-50 hover:border-emerald-300 transition-all flex items-center gap-3 group">
                             <span
-                                class="text-2xl p-2 bg-white shadow-sm rounded-lg group-hover:scale-110 transition-transform">🖥️</span>
+                                class="text-2xl p-2 bg-white shadow-sm rounded-lg group-hover:scale-110 transition-transform"><x-lucide-monitor
+                                    class="w-6 h-6 text-emerald-500" />
+                            </span>
                             <div>
                                 <p class="font-semibold text-sm text-gray-800">Buka Kasir (POS)</p>
                                 <p class="text-xs text-gray-400">Mulai transaksi baru</p>
@@ -123,9 +126,10 @@
                         </a>
 
                         <a href="{{ route('produk.create') }}"
-                            class="p-4 border border-gray-100 rounded-xl bg-gray-50 hover:bg-green-50 hover:border-green-300 transition-all flex items-center gap-3 group">
+                            class="p-4 border border-gray-100 rounded-xl bg-gray-50 hover:bg-emerald-50 hover:border-emerald-300 transition-all flex items-center gap-3 group">
                             <span
-                                class="text-2xl p-2 bg-white shadow-sm rounded-lg group-hover:scale-110 transition-transform">➕</span>
+                                class="text-2xl p-2 bg-white shadow-sm rounded-lg group-hover:scale-110 transition-transform"><x-lucide-package-plus
+                                    class="w-6 h-6 text-emerald-500" /></span>
                             <div>
                                 <p class="font-semibold text-sm text-gray-800">Tambah Produk</p>
                                 <p class="text-xs text-gray-400">Input produk baru</p>
@@ -133,19 +137,21 @@
                         </a>
 
                         <a href="{{ route('karyawan.index') }}"
-                            class="p-4 border border-gray-100 rounded-xl bg-gray-50 hover:bg-green-50 hover:border-green-300 transition-all flex items-center gap-3 group">
+                            class="p-4 border border-gray-100 rounded-xl bg-gray-50 hover:bg-emerald-50 hover:border-emerald-300 transition-all flex items-center gap-3 group">
                             <span
-                                class="text-2xl p-2 bg-white shadow-sm rounded-lg group-hover:scale-110 transition-transform">👥</span>
+                                class="text-2xl p-2 bg-white shadow-sm rounded-lg group-hover:scale-110 transition-transform"><x-lucide-users
+                                    class="w-6 h-6 text-emerald-500" /></span>
                             <div>
                                 <p class="font-semibold text-sm text-gray-800">Kelola Karyawan</p>
-                                <p class="text-xs text-gray-400">Manajemen hak akses</p>
+                                <p class="text-xs text-gray-400">Manajemen karyawan warung</p>
                             </div>
                         </a>
 
                         <a href="{{ route('pengaturan.index') }}"
-                            class="p-4 border border-gray-100 rounded-xl bg-gray-50 hover:bg-green-50 hover:border-green-300 transition-all flex items-center gap-3 group">
+                            class="p-4 border border-gray-100 rounded-xl bg-gray-50 hover:bg-emerald-50 hover:border-emerald-300 transition-all flex items-center gap-3 group">
                             <span
-                                class="text-2xl p-2 bg-white shadow-sm rounded-lg group-hover:scale-110 transition-transform">⚙️</span>
+                                class="text-2xl p-2 bg-white shadow-sm rounded-lg group-hover:scale-110 transition-transform"><x-lucide-settings
+                                    class="w-6 h-6 text-emerald-500" /></span>
                             <div>
                                 <p class="font-semibold text-sm text-gray-800">Pengaturan</p>
                                 <p class="text-xs text-gray-400">Konfigurasi profile warung</p>
@@ -158,7 +164,7 @@
                 <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
                     <div class="flex items-center justify-between mb-4">
                         <h3 class="font-bold text-gray-800">Omset Bulan Ini</h3>
-                        <a href="{{ route('laporan.index') }}" class="text-xs text-green-600 hover:underline">
+                        <a href="{{ route('laporan.index') }}" class="text-xs text-emerald-600 hover:underline">
                             Lihat laporan lengkap →
                         </a>
                     </div>
@@ -182,8 +188,8 @@
                     <div
                         class="bg-white rounded-xl shadow-sm border border-gray-100 p-6 flex items-center gap-4 hover:shadow-md transition-all">
                         <div
-                            class="w-14 h-14 bg-green-50 rounded-full flex items-center justify-center border border-green-100">
-                            <span class="text-2xl">🏪</span>
+                            class="w-14 h-14 bg-emerald-50 rounded-full flex items-center justify-center border border-emerald-100">
+                            <x-lucide-store class="w-8 h-8 text-emerald-500" />
                         </div>
                         <div>
                             <p class="text-xs font-bold text-gray-500 uppercase tracking-wider">Total
@@ -195,7 +201,7 @@
                     <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6 flex items-center gap-4">
                         <div
                             class="w-14 h-14 bg-blue-50 rounded-full flex items-center justify-center border border-blue-100">
-                            <span class="text-2xl">👥</span>
+                            <x-lucide-users class="w-8 h-8 text-blue-500" />
                         </div>
                         <div>
                             <p class="text-xs font-bold text-gray-500 uppercase tracking-wider">Total
@@ -207,8 +213,8 @@
                     <div
                         class="bg-white rounded-xl shadow-sm border border-gray-100 p-6 flex items-center gap-4 hover:shadow-md transition-all">
                         <div
-                            class="w-14 h-14 bg-green-100 rounded-full flex items-center justify-center border border-green-100">
-                            <span class="text-2xl">💰</span>
+                            class="w-14 h-14 bg-emerald-100 rounded-full flex items-center justify-center border border-emerald-100">
+                            <x-lucide-circle-dollar-sign class="w-8 h-8 text-emerald-500" />
                         </div>
                         <div>
                             <p class="text-xs font-bold text-gray-500 uppercase tracking-wider">Omset Hari Ini
@@ -222,7 +228,7 @@
                         class="bg-white rounded-xl shadow-sm border border-gray-100 p-6 flex items-center gap-4 hover:shadow-md transition-all">
                         <div
                             class="w-14 h-14 bg-blue-100 rounded-full flex items-center justify-center border border-blue-100">
-                            <span class="text-2xl">🛒</span>
+                            <x-lucide-shopping-bag class="w-8 h-8 text-blue-500" />
                         </div>
                         <div>
                             <p class="text-xs font-bold text-gray-500 uppercase tracking-wider">Total Transaksi Hari
@@ -238,7 +244,7 @@
                 <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
                     <div class="flex items-center justify-between mb-4">
                         <h3 class="font-bold text-gray-800">Omset Bulan Ini</h3>
-                        <a href="{{ route('laporan.index') }}" class="text-xs text-green-600 hover:underline">
+                        <a href="{{ route('laporan.index') }}" class="text-xs text-emerald-600 hover:underline">
                             Lihat laporan lengkap →
                         </a>
                     </div>
@@ -263,7 +269,7 @@
                 datasets: [{
                     label: 'Omset',
                     data: data,
-                    borderColor: '#16a34a',
+                    borderColor: '#059669',
                     backgroundColor: 'rgba(22, 163, 74, 0.05)',
                     borderWidth: 2,
                     fill: true,

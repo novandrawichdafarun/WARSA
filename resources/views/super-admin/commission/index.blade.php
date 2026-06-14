@@ -9,7 +9,8 @@
             </div>
 
             <div>
-                <a href="" class="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg text-sm font-medium transition-colors">
+                <a href=""
+                    class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-sm font-medium transition-colors">
                     Atur Komisi Warung
                 </a>
             </div>
@@ -27,7 +28,7 @@
                     <div>
                         <label class="block text-xs font-medium text-gray-600 mb-1">Periode Cepat</label>
                         <select name="preset" onchange="this.form.submit()"
-                            class="px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-green-500 bg-white">
+                            class="px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-emerald-500 bg-white">
                             <option value="hari_ini" {{ request('preset') === 'hari_ini' ? 'selected' : '' }}>Hari Ini
                             </option>
                             <option value="minggu_ini" {{ request('preset') === 'minggu_ini' ? 'selected' : '' }}>Minggu
@@ -46,15 +47,15 @@
                     <div>
                         <label class="block text-xs font-medium text-gray-600 mb-1">Dari Tanggal</label>
                         <input type="date" name="dari" value="{{ request('dari', $dari->format('Y-m-d')) }}"
-                            class="px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-green-500">
+                            class="px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-emerald-500">
                     </div>
                     <div>
                         <label class="block text-xs font-medium text-gray-600 mb-1">Sampai Tanggal</label>
                         <input type="date" name="sampai" value="{{ request('sampai', $sampai->format('Y-m-d')) }}"
-                            class="px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-green-500">
+                            class="px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-emerald-500">
                     </div>
                     <button type="submit"
-                        class="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg text-sm font-medium transition-colors">
+                        class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-sm font-medium transition-colors">
                         Terapkan Filter
                     </button>
                 </form>
@@ -65,15 +66,15 @@
                 <div class="bg-white rounded-xl p-5 border border-gray-100 shadow-sm">
                     <div class="flex items-center justify-between mb-3">
                         <p class="text-xs text-gray-400 font-semibold uppercase tracking-wide">Total Komisi Didapat</p>
-                        <span class="text-xl">💸</span>
+                        <x-lucide-hand-coins class="w-6 h-6 text-emerald-500" />
                     </div>
-                    <p class="text-xl font-bold text-green-600">Rp {{ number_format($totalKomisi, 0, ',', '.') }}</p>
+                    <p class="text-xl font-bold text-emerald-600">Rp {{ number_format($totalKomisi, 0, ',', '.') }}</p>
                 </div>
 
                 <div class="bg-white rounded-xl p-5 border border-gray-100 shadow-sm">
                     <div class="flex items-center justify-between mb-3">
                         <p class="text-xs text-gray-400 font-semibold uppercase tracking-wide">Persentase Komisi</p>
-                        <span class="text-xl">⚖️</span>
+                        <x-lucide-percent class="w-6 h-6 text-yellow-500" />
                     </div>
                     <p class="text-xl font-bold text-gray-800">{{ number_format($persentaseKomisi, 1) }}%</p>
                 </div>
@@ -81,7 +82,7 @@
                 <div class="bg-white rounded-xl p-5 border border-gray-100 shadow-sm">
                     <div class="flex items-center justify-between mb-3">
                         <p class="text-xs text-gray-400 font-semibold uppercase tracking-wide">Total Transaksi</p>
-                        <span class="text-xl">🧾</span>
+                        <x-lucide-scroll-text class="w-6 h-6 text-blue-500" />
                     </div>
                     <p class="text-xl font-bold text-gray-800">{{ $totalTransaksi }} nota</p>
                 </div>
@@ -89,7 +90,7 @@
                 <div class="bg-white rounded-xl p-5 border border-gray-100 shadow-sm">
                     <div class="flex items-center justify-between mb-3">
                         <p class="text-xs text-gray-400 font-semibold uppercase tracking-wide">Rata-rata Komisi/Nota</p>
-                        <span class="text-xl">📊</span>
+                        <x-lucide-chart-no-axes-combined class="w-6 h-6 text-purple-500" />
                     </div>
                     <p class="text-xl font-bold text-gray-800">Rp {{ number_format($rataRata, 0, ',', '.') }}</p>
                 </div>
@@ -113,7 +114,8 @@
                                 <th class="text-left py-3 px-4 text-xs font-semibold text-gray-400 uppercase">Waktu</th>
                                 <th class="text-left py-3 px-4 text-xs font-semibold text-gray-400 uppercase">Toko
                                     (Warung)</th>
-                                <th class="text-left py-3 px-4 text-xs font-semibold text-gray-400 uppercase">Petugas</th>
+                                <th class="text-left py-3 px-4 text-xs font-semibold text-gray-400 uppercase">Petugas
+                                </th>
                                 <th class="text-right py-3 px-4 text-xs font-semibold text-gray-400 uppercase">Omset
                                     Toko</th>
                                 <th class="text-right py-3 px-4 text-xs font-semibold text-gray-400 uppercase">Komisi
@@ -130,10 +132,11 @@
                                         {{ $trx->warung ? $trx->warung->nama_warung : 'Toko Tidak Diketahui' }}
                                     </td>
                                     <td class="py-3 px-4">
-                                        @if($trx->kasir)
+                                        @if ($trx->kasir)
                                             <div class="flex flex-col">
                                                 <span class="text-gray-800 font-medium">{{ $trx->kasir->name }}</span>
-                                                <span class="text-[10px] font-bold uppercase tracking-wider {{ $trx->kasir->role === 'owner' ? 'text-purple-600' : 'text-blue-600' }}">
+                                                <span
+                                                    class="text-[10px] font-bold uppercase tracking-wider {{ $trx->kasir->role === 'owner' ? 'text-purple-600' : 'text-blue-600' }}">
                                                     {{ $trx->kasir->role }}
                                                 </span>
                                             </div>
@@ -144,7 +147,7 @@
                                     <td class="py-3 px-4 text-right font-semibold text-gray-700">
                                         Rp {{ number_format($trx->total_gross, 0, ',', '.') }}
                                     </td>
-                                    <td class="py-3 px-4 text-right font-bold text-green-600">
+                                    <td class="py-3 px-4 text-right font-bold text-emerald-600">
                                         +Rp {{ number_format($trx->commission_amount, 0, ',', '.') }}
                                     </td>
                                 </tr>
@@ -186,7 +189,7 @@
                     label: 'Pendapatan Komisi (Rp)',
                     data: data,
                     backgroundColor: 'rgba(22, 163, 74, 0.15)',
-                    borderColor: '#16a34a',
+                    borderColor: '#059669',
                     borderWidth: 2,
                     borderRadius: 4,
                 }]

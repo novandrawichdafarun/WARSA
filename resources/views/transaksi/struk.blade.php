@@ -23,14 +23,14 @@
     <div class="bg-white w-80 rounded-2xl shadow-lg overflow-hidden">
 
         {{-- Header Struk --}}
-        <div class="bg-green-600 text-white text-center py-6 px-4">
+        <div class="bg-emerald-600 text-white text-center py-6 px-4">
             @if ($transaksi->warung->logo)
                 <img src="{{ Storage::url($transaksi->warung->logo) }}"
                     class="w-12 h-12 object-cover rounded-full mx-auto mb-2">
             @endif
             <h1 class="font-bold text-lg">{{ $transaksi->warung->nama_warung }}</h1>
             @if ($transaksi->warung->alamat)
-                <p class="text-green-200 text-xs mt-1">{{ $transaksi->warung->alamat }}</p>
+                <p class="text-emerald-200 text-xs mt-1">{{ $transaksi->warung->alamat }}</p>
             @endif
         </div>
 
@@ -94,7 +94,7 @@
     {{-- Tombol Aksi --}}
     <div class="no-print fixed bottom-6 left-1/2 -translate-x-1/2 flex gap-3 bg-white shadow-lg rounded-2xl px-6 py-4">
         <button onclick="window.print()"
-            class="px-5 py-2 bg-green-600 text-white rounded-xl text-sm font-semibold hover:bg-green-700">
+            class="px-5 py-2 bg-emerald-600 text-white rounded-xl text-sm font-semibold hover:bg-emerald-700">
             🖨️ Cetak Struk
         </button>
         <a href="{{ route('pos.index') }}"
