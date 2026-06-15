@@ -19,7 +19,7 @@ Route::get('/', function () {
     return redirect()->route('login');
 });
 
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/setup-warung', [WarungSetupController::class, 'create'])
         ->name('warung.setup');
     Route::post('/setup-warung', [WarungSetupController::class, 'store'])
@@ -33,7 +33,7 @@ Route::middleware(['auth'])->group(function () {
 // ============================================================
 // OWNER WARUNG & SUPER ADMIN
 // ============================================================
-Route::middleware(['auth', 'owner_or_superadmin'])->group(function () {
+Route::middleware(['auth', 'verified', 'owner_or_superadmin'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])
         ->name('dashboard');
 
@@ -46,7 +46,7 @@ Route::middleware(['auth', 'owner_or_superadmin'])->group(function () {
 // ============================================================
 // OWNER WARUNG 
 // ============================================================
-Route::middleware(['auth', 'warung.setup', 'owner'])->group(function () {
+Route::middleware(['auth', 'warung.setup', 'verified', 'owner'])->group(function () {
     Route::resource('karyawan', KaryawanController::class)
         ->only(['index', 'create', 'store', 'edit', 'update', 'destroy']);
 
@@ -76,7 +76,7 @@ Route::middleware(['auth', 'warung.setup', 'owner'])->group(function () {
 // ============================================================
 // KASIR WARUNG
 // ============================================================
-Route::middleware(['auth', 'warung.setup', 'kasir'])->group(function () {
+Route::middleware(['auth', 'warung.setup', 'verified', 'kasir'])->group(function () {
     Route::get('/pos', [TransaksiController::class, 'pos'])
         ->name('pos.index');
 
@@ -95,7 +95,7 @@ Route::middleware(['auth', 'warung.setup', 'kasir'])->group(function () {
 // ============================================================
 // SUPER ADMIN
 // ============================================================
-Route::middleware(['auth', 'super_admin'])->prefix('super-admin')->name('super_admin.')->group(function () {
+Route::middleware(['auth', 'verified', 'super_admin'])->prefix('super-admin')->name('super_admin.')->group(function () {
     Route::get('/users', [UserController::class, 'index'])
         ->name('users.index');
     Route::put('/users/{user}', [UserController::class, 'update'])

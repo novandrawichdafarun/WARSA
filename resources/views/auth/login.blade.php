@@ -7,7 +7,7 @@
             <x-application-logo class="h-40 w-auto" />
         </div>
         <div>
-            <h2 class="text-3xl font-extrabold text-gray-950 tracking-tight">Selamat Datang Kembali</h2>
+            <h2 class="text-3xl font-extrabold text-gray-950 tracking-tight">Selamat Datang</h2>
             <p class="text-gray-500 text-sm mt-1">Silakan masuk untuk mengelola usahamu hari ini.</p>
         </div>
     </div>

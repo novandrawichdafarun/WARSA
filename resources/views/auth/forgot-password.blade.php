@@ -4,7 +4,7 @@
             <x-application-logo class="h-40 w-auto" />
         </div>
         <div>
-            <h2 class="text-3xl font-extrabold text-gray-950 tracking-tight">Selamat Datang Kembali</h2>
+            <h2 class="text-3xl font-extrabold text-gray-950 tracking-tight">Selamat Datang</h2>
             <p class="text-gray-500 text-sm mt-1">Silakan masuk untuk mengelola usahamu hari ini.</p>
         </div>
     </div>
@@ -44,7 +44,7 @@
         <div class="pt-2">
             <button type="submit"
                 class="w-full py-3 px-6 bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-white rounded-xl font-bold text-lg shadow-lg shadow-emerald-100 transition-all duration-300 transform active:scale-95 text-center">
-                {{ __('KIRIM TAUTAN PEMULIHAN') }}
+                {{ __('KIRIM KODE PEMULIHAN') }}
             </button>
         </div>
 

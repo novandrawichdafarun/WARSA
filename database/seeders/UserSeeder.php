@@ -25,6 +25,7 @@ class UserSeeder extends Seeder
             'password' => Hash::make('password'),
             'role' => 'super_admin',
             'warung_id' => $warungAdmin->id,
+            'email_verified_at' => now(),
         ]);
 
         User::create([
@@ -33,6 +34,7 @@ class UserSeeder extends Seeder
             'password' => Hash::make('password'),
             'role' => 'owner',
             'warung_id' => $WarungOtong->id,
+            'email_verified_at' => now(),
         ]);
 
         User::create([
@@ -41,6 +43,7 @@ class UserSeeder extends Seeder
             'password' => Hash::make('password'),
             'role' => 'kasir',
             'warung_id' => $WarungOtong->id,
+            'email_verified_at' => now(),
         ]);
 
         User::create([
@@ -49,6 +52,7 @@ class UserSeeder extends Seeder
             'password' => Hash::make('password'),
             'role' => 'pelanggan',
             'warung_id' => $WarungOtong->id,
+            'email_verified_at' => now(),
         ]);
 
         User::create([
@@ -57,6 +61,7 @@ class UserSeeder extends Seeder
             'password' => Hash::make('password'),
             'role' => 'owner',
             'warung_id' => $warungPakBejo->id,
+            'email_verified_at' => now(),
         ]);
 
         User::create([
@@ -65,6 +70,7 @@ class UserSeeder extends Seeder
             'password' => Hash::make('password'),
             'role' => 'kasir',
             'warung_id' => $warungPakBejo->id,
+            'email_verified_at' => now(),
         ]);
 
         User::create([
@@ -73,6 +79,7 @@ class UserSeeder extends Seeder
             'password' => Hash::make('password'),
             'role' => 'pelanggan',
             'warung_id' => $warungPakBejo->id,
+            'email_verified_at' => now(),
         ]);
 
         User::create([
@@ -81,6 +88,7 @@ class UserSeeder extends Seeder
             'password' => Hash::make('password'),
             'role' => 'owner',
             'warung_id' => $warungMbakYuni->id,
+            'email_verified_at' => now(),
         ]);
 
         User::create([
@@ -89,6 +97,7 @@ class UserSeeder extends Seeder
             'password' => Hash::make('password'),
             'role' => 'kasir',
             'warung_id' => $warungMbakYuni->id,
+            'email_verified_at' => now(),
         ]);
 
         User::create([
@@ -97,6 +106,7 @@ class UserSeeder extends Seeder
             'password' => Hash::make('password'),
             'role' => 'pelanggan',
             'warung_id' => $warungMbakYuni->id,
+            'email_verified_at' => now(),
         ]);
     }
 }
