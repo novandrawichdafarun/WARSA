@@ -2,7 +2,7 @@
     <x-slot name="header">
         <div class="flex items-center gap-3">
             <a href="{{ route('produk.index') }}"
-                class="text-gray-400 hover:text-gray-600 transition-colors p-1.5 hover:bg-gray-100 rounded-lg">
+                class="text-gray-400 hover:text-gray-600 transition-colors p-2 hover:bg-gray-100 rounded-xl border border-transparent hover:border-gray-200">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7" />
                 </svg>
@@ -47,8 +47,10 @@
                             <img id="foto-preview" src=""
                                 class="hidden w-full h-full object-cover rounded-xl transition-transform duration-300 group-hover:scale-105">
 
-                            <div id="foto-placeholder" class="text-center p-4">
-                                <span class="text-3xl block mb-2">🖼️</span>
+                            <div id="foto-placeholder"
+                                class="flex flex-col items-center justify-center w-full h-full p-4 text-center">
+                                <span class="text-3xl block mb-2"><x-lucide-image-up
+                                        class="w-16 h-16 text-emerald-500" /></span>
                                 <p class="text-xs font-semibold text-gray-500">Klik untuk unggah foto</p>
                                 <p class="text-[10px] text-gray-400 mt-1">Format PNG, JPG max 2MB</p>
                             </div>
@@ -71,8 +73,10 @@
 
                         {{-- Section 1: Informasi Produk --}}
                         <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 space-y-4">
-                            <h3 class="font-bold text-base text-gray-800 border-b border-gray-50 pb-3">📋 Detail
-                                Informasi Barang</h3>
+                            <h3 class="flex gap-2 font-bold text-base text-gray-800 border-b border-gray-50 pb-3">
+                                <x-lucide-notepad-text class="w-6 h-6 text-emerald-500" /> Detail Informasi
+                                Barang
+                            </h3>
 
                             <div>
                                 <label class="block text-sm font-semibold text-gray-700 mb-1.5">
@@ -107,8 +111,9 @@
 
                         {{-- Section 2: Keuangan --}}
                         <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 mt-6">
-                            <h3 class="font-bold text-base text-gray-800 border-b border-gray-50 pb-3">💰 Aturan
-                                Finansial</h3>
+                            <h3 class="flex gap-2 font-bold text-base text-gray-800 border-b border-gray-50 pb-3">
+                                <x-lucide-circle-dollar-sign class="w-6 h-6 text-emerald-500" /> Aturan Finansial
+                            </h3>
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
                                 <div>
                                     <label class="block text-sm font-semibold text-gray-700 mb-1.5">Harga Jual Konsumen
@@ -137,8 +142,9 @@
 
                         {{-- Section 3: Stok Awal & Konfigurasi --}}
                         <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 mt-6">
-                            <h3 class="font-bold text-base text-gray-800 border-b border-gray-50 pb-3">⚙️ Stok &
-                                Konfigurasi Sistem</h3>
+                            <h3 class="flex gap-2 font-bold text-base text-gray-800 border-b border-gray-50 pb-3">
+                                <x-lucide-settings class="w-6 h-6 text-emerald-500" /> Stok & Konfigurasi Sistem
+                            </h3>
 
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
                                 <div>

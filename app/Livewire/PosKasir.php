@@ -198,8 +198,9 @@ class PosKasir extends Component
     $kategori = Category::orderBy('nama_kategori')->get();
     $total = $this->getTotalAttribute();
     $totalItems = $this->getTotalItemsAttribute();
+    $warung = Auth::user()->warung ?? null;
 
-    return view('livewire.pos-kasir', compact('produk', 'kategori', 'total', 'totalItems'));
+    return view('livewire.pos-kasir', compact('produk', 'kategori', 'total', 'totalItems', 'warung'));
   }
 
   public function handleLivewireException(Throwable $e): void

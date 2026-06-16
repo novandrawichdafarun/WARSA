@@ -21,8 +21,7 @@
                         <th class="py-3.5 px-4 text-xs font-bold text-gray-400 uppercase tracking-wider">Role</th>
                         <th class="py-3.5 px-4 text-xs font-bold text-gray-400 uppercase tracking-wider">Warung</th>
                         <th class="py-3.5 px-4 text-xs font-bold text-gray-400 uppercase tracking-wider">Status</th>
-                        <th
-                            class="py-3.5 px-4 text-xs font-bold text-gray-400 uppercase tracking-wider text-right w-40">
+                        <th class="py-3.5 px-4 text-xs font-bold text-gray-400 uppercase tracking-wider w-40">
                             Aksi</th>
                     </tr>
                 </thead>
@@ -60,12 +59,12 @@
                                     <div class="flex items-center justify-end gap-2">
                                         <button x-data=""
                                             x-on:click.prevent="$dispatch('open-modal', 'edit-user-{{ $user->id }}')"
-                                            class="inline-flex items-center px-3 py-1.5 bg-white border border-gray-200 hover:border-blue-300 text-blue-600 hover:bg-blue-50 text-xs font-semibold rounded-lg shadow-sm transition-all">
+                                            class="flex gap-1 items-center px-3 py-1.5 bg-white border border-gray-200 hover:border-yellow-300 text-yellow-600 hover:bg-yellow-50 text-xs font-semibold rounded-lg shadow-sm transition-all">
                                             <x-lucide-square-pen class="w-3 h-3 mr-0.5" /> Edit
                                         </button>
                                         <button x-data=""
                                             x-on:click.prevent="$dispatch('open-modal', 'delete-user-{{ $user->id }}')"
-                                            class="inline-flex items-center px-3 py-1.5 bg-white border border-gray-200 hover:border-red-300 text-red-600 hover:bg-red-50 text-xs font-semibold rounded-lg shadow-sm transition-all">
+                                            class="flex gap-1 items-center px-3 py-1.5 bg-white border border-gray-200 hover:border-red-300 text-red-600 hover:bg-red-50 text-xs font-semibold rounded-lg shadow-sm transition-all">
                                             <x-lucide-trash-2 class="w-3 h-3 mr-0.5" /> Hapus
                                         </button>
                                     </div>

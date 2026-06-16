@@ -2,14 +2,14 @@
     <x-slot name="header">
         <div class="flex items-center gap-3">
             <a href="{{ route('produk.index') }}"
-                class="text-gray-400 hover:text-gray-600 transition-colors p-1.5 hover:bg-gray-100 rounded-lg">
+                class="text-gray-400 hover:text-gray-600 transition-colors p-2 hover:bg-gray-100 rounded-xl border border-transparent hover:border-gray-200">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7" />
                 </svg>
             </a>
             <div>
                 <h2 class="font-bold text-2xl text-gray-800 leading-tight">Edit Produk</h2>
-                <p class="text-xs text-gray-500 mt-0.5">Mengubah data inventaris: <span
+                <p class="text-xs text-gray-500 mt-0.5">Mengubah data produk: <span
                         class="font-semibold text-emerald-600">{{ $produk->nama_produk }}</span></p>
             </div>
         </div>
@@ -57,13 +57,16 @@
                                     alt="{{ $produk->nama_produk }}">
                                 <div
                                     class="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                                    <span class="text-xs text-white font-semibold">📸 Ganti Gambar</span>
+                                    <span class="text-xs text-white font-semibold">Ganti Gambar</span>
                                 </div>
                             @else
                                 <img id="foto-preview" src=""
-                                    class="hidden w-full h-full object-cover rounded-xl">
-                                <div id="foto-placeholder" class="text-center p-4">
-                                    <span class="text-3xl block mb-2">🖼️</span>
+                                    class="hidden w-full h-full object-cover rounded-xl transition-transform duration-300 group-hover:scale-105">
+
+                                <div id="foto-placeholder"
+                                    class="flex flex-col items-center justify-center w-full h-full p-4 text-center">
+                                    <span class="text-3xl block mb-2"><x-lucide-image-up
+                                            class="w-16 h-16 text-emerald-500" /></span>
                                     <p class="text-xs font-semibold text-gray-500">Klik untuk unggah foto</p>
                                     <p class="text-[10px] text-gray-400 mt-1">Format PNG, JPG max 2MB</p>
                                 </div>
@@ -88,7 +91,7 @@
                             @if ($produk->isLowStock())
                                 <span
                                     class="text-[10px] bg-rose-50 text-rose-600 font-bold px-2 py-0.5 rounded-md mt-1 inline-block">
-                                    ⚠ Limit < {{ $produk->stok_minimal }} </span>
+                                    Limit < {{ $produk->stok_minimal }} </span>
                                     @else
                                         <span
                                             class="text-[10px] bg-emerald-50 text-emerald-600 font-bold px-2 py-0.5 rounded-md mt-1 inline-block">
@@ -117,8 +120,8 @@
                                     class="w-full px-3 py-2 bg-gray-50 border border-gray-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-100 rounded-xl text-sm transition-all">
                             </div>
                             <button type="submit"
-                                class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2.5 rounded-xl text-sm font-semibold shadow-sm transition-colors">
-                                ⚡ Eksekusi Tambah Stok
+                                class="flex gap-2 justify-center items-center w-full bg-blue-600 hover:bg-blue-700 text-white py-2.5 rounded-xl text-sm font-semibold shadow-sm transition-colors">
+                                <x-lucide-package-plus class="w-6 h-6" /> Eksekusi Tambah Stok
                             </button>
                         </form>
                     </div>
@@ -139,8 +142,10 @@
 
                         {{-- Section Konten Detail --}}
                         <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 space-y-4">
-                            <h3 class="font-bold text-base text-gray-800 border-b border-gray-50 pb-3">📋 Detail
-                                Informasi Barang</h3>
+                            <h3 class="flex gap-2 font-bold text-base text-gray-800 border-b border-gray-50 pb-3">
+                                <x-lucide-notepad-text class="w-6 h-6 text-emerald-500" />
+                                Detail Informasi Barang
+                            </h3>
 
                             <div>
                                 <label class="block text-sm font-semibold text-gray-700 mb-1.5">
@@ -175,8 +180,10 @@
 
                         {{-- Section Pricing / Keuangan --}}
                         <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 mt-6">
-                            <h3 class="font-bold text-base text-gray-800 border-b border-gray-50 pb-3">💰 Aturan
-                                Finansial</h3>
+                            <h3 class="flex gap-2 font-bold text-base text-gray-800 border-b border-gray-50 pb-3">
+                                <x-lucide-circle-dollar-sign class="w-6 h-6 text-emerald-500" />
+                                Aturan Finansial
+                            </h3>
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
                                 <div>
                                     <label class="block text-sm font-semibold text-gray-700 mb-1.5">Harga Jual Konsumen
@@ -205,8 +212,10 @@
 
                         {{-- Section Manajemen Pengaturan Stok Minim & Status --}}
                         <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 mt-6">
-                            <h3 class="font-bold text-base text-gray-800 border-b border-gray-50 pb-3">⚙️ Konfigurasi
-                                Sistem</h3>
+                            <h3 class="flex gap-2 font-bold text-base text-gray-800 border-b border-gray-50 pb-3">
+                                <x-lucide-settings class="w-6 h-6 text-emerald-500" />
+                                Konfigurasi Sistem
+                            </h3>
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
                                 <div>
                                     <label class="block text-sm font-semibold text-gray-700 mb-1.5">Batas Minimum Stok
@@ -238,8 +247,8 @@
                     {{-- AKSI FORMS FOOTER CONTROL (DIPEGANG OLEH ATTRIBUTE FORM HTML5) --}}
                     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pt-2">
                         <button type="submit" form="form-hapus-produk"
-                            class="w-full sm:w-auto px-4 py-2.5 border border-rose-200 text-rose-600 rounded-xl text-sm font-bold hover:bg-rose-50 transition-colors text-center">
-                            🗑️ Hapus & Arsipkan Produk
+                            class="flex gap-2 w-full sm:w-auto px-4 py-2.5 border border-rose-200 text-rose-600 rounded-xl text-sm font-bold hover:bg-rose-50 transition-colors text-center">
+                            <x-lucide-trash-2 class="w-4 h-4" /> Hapus & Arsipkan Produk
                         </button>
 
                         <div class="flex items-center gap-3 w-full sm:w-auto">
@@ -264,13 +273,17 @@
 
                     {{-- BAGIAN: RIWAYAT HISTORI STOK --}}
                     <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
-                        <h3 class="font-bold text-sm text-gray-400 uppercase tracking-wider mb-4">📜 Histori Log Stok
-                            (10 Terakhir)</h3>
                         @if ($riwayatStok->isEmpty())
-                            <div class="text-center py-6 text-gray-400 text-xs">
-                                <span class="text-2xl block mb-1">📋</span> Belum ada mutasi log stok barang.
+                            <div
+                                class="flex flex-col items-center justify-center w-full py-6 text-gray-400 text-xs text-center">
+                                <span class="text-2xl mb-1"><x-lucide-scroll-text class="w-16 h-16" /></span>
+                                <p class="m-0">Belum ada mutasi log stok barang.</p>
                             </div>
                         @else
+                            <h3 class="flex gap-2 font-bold text-sm text-gray-400 uppercase tracking-wider mb-4">
+                                <x-lucide-scroll-text class="w-6 h-6" /> Histori Log Stok
+                                (10 Terakhir)
+                            </h3>
                             <div class="overflow-x-auto -mx-6">
                                 <div class="inline-block min-w-full align-middle px-6">
                                     <table class="w-full text-xs text-left border-collapse">
