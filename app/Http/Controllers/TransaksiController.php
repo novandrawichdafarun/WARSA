@@ -32,6 +32,20 @@ class TransaksiController extends Controller
         ]);
     }
 
+    public function updateStatus(Transaction $transaksi, TransactionService $transactionService): RedirectResponse
+    {
+        abort_if(!Auth::user()->canAccessPOS(), 403);
+        abort_if($transaksi->warung_id !== Auth::user()->warung_id, 403);
+
+        if ($transaksi->payment_status === 'pending' && $transaksi->payment_method === 'qris') {
+            $transactionService->settle($transaksi);
+
+            return back()->with('success', 'Pembayaran QRIS berhasil dikonfirmasi dan dilunasi.');
+        }
+
+        return back()->with('error', 'Status transaksi tidak dapat diupdate.');
+    }
+
     public function struk(Transaction $transaksi): View
     {
         abort_if($transaksi->warung_id !== Auth::user()->warung_id, 403);
@@ -46,7 +60,7 @@ class TransaksiController extends Controller
     {
         $transaksi = Transaction::paid()
             ->with(['items', 'kasir'])
-            ->latest('paid_at')
+            ->latest('created_at')
             ->paginate(20);
 
         $totalOmsetHariIni = Transaction::paid()->today()->sum('total_gross');

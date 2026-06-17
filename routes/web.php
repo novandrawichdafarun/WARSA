@@ -86,6 +86,8 @@ Route::middleware(['auth', 'warung.setup', 'verified', 'kasir'])->group(function
         ->name('transaksi.riwayat');
     Route::get('/transaksi/{transaksi}/status', [TransaksiController::class, 'checkStatus'])
         ->name('transaksi.status');
+    Route::patch('/transaksi/{transaksi}/status', [TransaksiController::class, 'updateStatus'])
+        ->name('transaksi.updateStatus');
     Route::get('/transaksi/{transaksi}/struk', [TransaksiController::class, 'struk'])
         ->name('transaksi.struk');
     Route::patch('/transaksi/{transaksi}/batal', [TransaksiController::class, 'batal'])
