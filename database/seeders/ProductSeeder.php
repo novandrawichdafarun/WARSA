@@ -7,6 +7,9 @@ use App\Models\Product;
 use App\Models\Warung;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class ProductSeeder extends Seeder
 {
@@ -150,12 +153,83 @@ class ProductSeeder extends Seeder
             ->keyBy('nama_kategori');
     }
 
+    private function getRealImageUrl(string $namaProduk, string $kategori): string
+    {
+        $nama = strtolower($namaProduk);
+
+        if (str_contains($nama, 'nasi goreng'))
+            return 'https://images.unsplash.com/photo-1604908176997-125f25cc6f3d?auto=format&fit=crop&w=400&q=80';
+        if (str_contains($nama, 'mie') || str_contains($nama, 'indomie'))
+            return 'https://images.unsplash.com/photo-1569718212165-3a8278d5f624?auto=format&fit=crop&w=400&q=80';
+        if (str_contains($nama, 'bakso') || str_contains($nama, 'rawon') || str_contains($nama, 'lodeh'))
+            return 'https://images.unsplash.com/photo-1594998893017-36147cbcae05?auto=format&fit=crop&w=400&q=80';
+        if (str_contains($nama, 'pecel') || str_contains($nama, 'lele') || str_contains($nama, 'tempe') || str_contains($nama, 'tahu'))
+            return 'https://images.unsplash.com/photo-1621852004158-f3bc188ace2d?auto=format&fit=crop&w=400&q=80';
+
+        if (str_contains($nama, 'kopi') || str_contains($nama, 'latte'))
+            return 'https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=400&q=80';
+        if (str_contains($nama, 'teh'))
+            return 'https://images.unsplash.com/photo-1556679343-c7306c1976bc?auto=format&fit=crop&w=400&q=80';
+        if (str_contains($nama, 'jeruk') || str_contains($nama, 'jus') || str_contains($nama, 'alpukat') || str_contains($nama, 'soda') || str_contains($nama, 'matcha'))
+            return 'https://images.unsplash.com/photo-1600271886742-f049cd451bba?auto=format&fit=crop&w=400&q=80';
+        if (str_contains($nama, 'air') || str_contains($nama, 'aqua'))
+            return 'https://images.unsplash.com/photo-1548839140-29a749e1bc4e?auto=format&fit=crop&w=400&q=80';
+        if (str_contains($nama, 'susu') || str_contains($nama, 'coklat'))
+            return 'https://images.unsplash.com/photo-1570197781417-063fbdd5743c?auto=format&fit=crop&w=400&q=80';
+
+        if (str_contains($nama, 'beras'))
+            return 'https://images.unsplash.com/photo-1586201375761-83865001e8ac?auto=format&fit=crop&w=400&q=80';
+        if (str_contains($nama, 'telur'))
+            return 'https://images.unsplash.com/photo-1587486913049-53fc88980cfc?auto=format&fit=crop&w=400&q=80';
+        if (str_contains($nama, 'minyak') || str_contains($nama, 'gula') || str_contains($nama, 'tepung'))
+            return 'https://images.unsplash.com/photo-1626806787426-5910811b6325?auto=format&fit=crop&w=400&q=80';
+        if (str_contains($nama, 'bawang') || str_contains($nama, 'cabe'))
+            return 'https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&w=400&q=80';
+
+        if (str_contains($nama, 'roti') || str_contains($nama, 'pisang') || str_contains($nama, 'cireng') || str_contains($nama, 'chitato') || str_contains($nama, 'oreo'))
+            return 'https://images.unsplash.com/photo-1621939514649-280e2ee25f60?auto=format&fit=crop&w=400&q=80';
+
+        if (str_contains($nama, 'rokok') || str_contains($nama, 'garam') || str_contains($nama, 'sampoerna') || str_contains($nama, 'djarum') || str_contains($nama, 'mild') || str_contains($nama, 'strike'))
+            return 'https://images.unsplash.com/photo-1528321917418-40bcce6f05bf?auto=format&fit=crop&w=400&q=80';
+        if (str_contains($nama, 'sabun') || str_contains($nama, 'plastik'))
+            return 'https://images.unsplash.com/photo-1584824486509-114594d65b7a?auto=format&fit=crop&w=400&q=80';
+
+        if (str_contains(strtolower($kategori), 'makanan'))
+            return 'https://images.unsplash.com/photo-1543826173-70651703c5a4?auto=format&fit=crop&w=400&q=80';
+        if (str_contains(strtolower($kategori), 'minuman'))
+            return 'https://images.unsplash.com/photo-1556679343-c7306c1976bc?auto=format&fit=crop&w=400&q=80';
+
+        // Default jika tidak ada yang cocok
+        return 'https://images.unsplash.com/photo-1580828369062-cb0f074d2845?auto=format&fit=crop&w=400&q=80';
+    }
+
     private function bulkCreate(int $warungId, Collection $cat, array $produk): void
     {
+        if (!Storage::disk('public')->exists('produk')) {
+            Storage::disk('public')->makeDirectory('produk');
+        }
         foreach ($produk as $namaKategori => $items) {
             $category = $cat->get($namaKategori);
 
             foreach ($items as $item) {
+                $namaFileGambar = Str::slug($item['nama_produk']) . '.jpg';
+                $pathLokal = 'produk/' . $namaFileGambar;
+
+                if (!Storage::disk('public')->exists($pathLokal)) {
+                    $imageUrl = $this->getRealImageUrl($item['nama_produk'], $category?->nama_kategori ?? '');
+
+                    try {
+                        $response = Http::timeout(10)->get($imageUrl);
+
+                        if ($response->successful()) {
+                            Storage::disk('public')->put($pathLokal, $response->body());
+                            $this->command->line("  ✓ Terunduh: " . $item['nama_produk']);
+                        }
+                    } catch (\Exception $e) {
+                        $this->command->error("  ✗ Gagal unduh foto: " . $item['nama_produk']);
+                    }
+                }
+
                 Product::create([
                     'warung_id' => $warungId,
                     'category_id' => $category?->id,
@@ -165,6 +239,7 @@ class ProductSeeder extends Seeder
                     'stok' => $item['stok'],
                     'stok_minimal' => $item['stok_minimal'] ?? 5,
                     'is_active' => true,
+                    'foto' => Storage::disk('public')->exists($pathLokal) ? $pathLokal : null,
                 ]);
             }
         }

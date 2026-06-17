@@ -162,12 +162,16 @@ class TransactionSeeder extends Seeder
         $qrisPercentage = str_contains($warung->slug, 'mbak-yuni') ? 65 : 45;
         $paymentMethod = rand(1, 100) <= $qrisPercentage ? 'qris' : 'cash';
 
-        $roll = rand(1, 100);
-        $paymentStatus = match (true) {
-            $roll <= 87 => 'paid',
-            $roll <= 95 => 'cancelled',
-            default => 'pending',
-        };
+        if ($paymentMethod === 'cash') {
+            $paymentStatus = 'paid';
+        } else {
+            $roll = rand(1, 100);
+            $paymentStatus = match (true) {
+                $roll <= 87 => 'paid',
+                $roll <= 95 => 'cancelled',
+                default => 'pending',
+            };
+        }
 
         $commissionAmount = (int) round($totalGross * self::COMMISSION_RATE);
         $totalNet = $totalGross - $commissionAmount;

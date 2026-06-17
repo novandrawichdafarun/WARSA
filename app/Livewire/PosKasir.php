@@ -34,6 +34,7 @@ class PosKasir extends Component
   public bool $showQris = false;
 
   public ?string $errorMessage = null;
+  public ?int $pendingTransactionId = null;
 
   public function getTotalAttribute(): int
   {
@@ -155,12 +156,31 @@ class PosKasir extends Component
 
         $this->qrisStringData = $warung->qris_string;
         $this->showQris = true;
+        $this->pendingTransactionId = $transaksi->id;
 
       } else {
         $this->redirect(route('transaksi.struk', $transaksi->id));
       }
     } catch (\Exception $e) {
       $this->errorMessage = $e->getMessage();
+    }
+  }
+
+  public function checkPaymentStatus()
+  {
+    if ($this->pendingTransactionId) {
+      $trx = Transaction::find($this->pendingTransactionId);
+
+      if ($trx && $trx->payment_status === 'paid') {
+        $this->pendingTransactionId = null;
+        $this->showQris = false;
+        $this->keranjang = [];
+        $this->dispatch('tampilkan-alert', pesan: 'Pembayaran QRIS Anda Berhasil Dikonfirmasi!');
+      } elseif ($trx && $trx->payment_status === 'failed') {
+        $this->pendingTransactionId = null;
+        $this->showQris = false;
+        $this->dispatch('tampilkan-alert', pesan: 'Pembayaran Ditolak / Dibatalkan oleh Kasir.');
+      }
     }
   }
 

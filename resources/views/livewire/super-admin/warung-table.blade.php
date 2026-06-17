@@ -79,13 +79,13 @@
                             <div class="flex items-center justify-end gap-2">
                                 <button x-data=""
                                     x-on:click.prevent="$dispatch('open-modal', 'edit-warung-{{ $warung->id }}')"
-                                    class="p-2 text-amber-500 hover:bg-amber-50 border border-transparent hover:border-amber-200 rounded-lg transition-colors"
+                                    class="inline-flex items-center justify-center w-9 h-9 bg-white border border-gray-200 hover:border-amber-300 text-amber-500 hover:bg-amber-50 rounded-xl shadow-sm transition-all"
                                     title="Edit Warung">
                                     <x-lucide-square-pen class="w-4 h-4" />
                                 </button>
                                 <button x-data=""
                                     x-on:click.prevent="$dispatch('open-modal', 'delete-warung-{{ $warung->id }}')"
-                                    class="p-2 text-rose-500 hover:bg-rose-50 border border-transparent hover:border-rose-200 rounded-lg transition-colors"
+                                    class="inline-flex items-center justify-center w-9 h-9 bg-white border border-gray-200 hover:border-rose-300 text-rose-500 hover:bg-rose-50 rounded-xl shadow-sm transition-all"
                                     title="Hapus Warung">
                                     <x-lucide-trash-2 class="w-4 h-4" />
                                 </button>

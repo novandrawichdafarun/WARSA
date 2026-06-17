@@ -122,7 +122,7 @@
                                             {{-- Badge Metode Pembayaran --}}
                                             <span
                                                 class="px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider rounded-md border
-                                                {{ $trx->payment_method === 'qris' ? 'bg-blue-50 text-blue-700 border-blue-200' : 'bg-gray-100 text-gray-700 border-gray-200' }}">
+                                                {{ $trx->payment_method === 'qris' ? 'bg-blue-50 text-blue-700 border-blue-200' : 'bg-emerald-50 text-emerald-700 border-emerald-200' }}">
                                                 {{ $trx->payment_method }}
                                             </span>
 
@@ -151,25 +151,26 @@
                                             @if ($trx->payment_status === 'pending' && $trx->payment_method === 'qris')
                                                 <button x-data=""
                                                     x-on:click.prevent="$dispatch('open-modal', 'transaksi-confirm-{{ $trx->id }}')"
-                                                    class="inline-flex items-center justify-center w-9 h-9 bg-white border border-gray-200 hover:border-rose-300 text-rose-500 hover:bg-rose-50 rounded-xl shadow-sm transition-all"
-                                                    title="Konfirmasi Bayar">
+                                                    class="inline-flex gap-1 items-center justify-center w-28 h-9 bg-white border border-gray-200 hover:border-emerald-300 text-emerald-500 hover:bg-emerald-50 rounded-xl shadow-sm transition-all">
+                                                    <x-lucide-check-check class="w-4 h-4" /> Konfirmasi
                                                 </button>
                                             @endif
 
                                             {{-- Tombol Lihat Struk --}}
                                             @if ($trx->payment_status === 'paid')
                                                 <a href="{{ route('transaksi.struk', $trx) }}"
-                                                    class="inline-flex items-center justify-center gap-1.5 px-3 py-1.5 border-2 border-emerald-100 hover:border-emerald-300 hover:bg-emerald-50 text-emerald-600 text-xs font-bold rounded-lg transition-all w-full">
-                                                    <x-lucide-receipt class="w-3.5 h-3.5" /> Cetak Struk
+                                                    class="inline-flex gap-1 items-center justify-center w-28 h-9 bg-white border border-gray-200 hover:border-emerald-300 text-emerald-500 hover:bg-emerald-50 rounded-xl shadow-sm transition-all">
+                                                    <x-lucide-receipt-text class="w-4 h-4" /> Cetak Struk
                                                 </a>
                                             @endif
                                         </div>
                                     </td>
                                 </tr>
-                                <x-modal name="trnsaksi-confirm-{{ $trx->id }}" focusable>
+                                <x-modal name="transaksi-confirm-{{ $trx->id }}" focusable>
                                     <form action="{{ route('transaksi.updateStatus', $trx) }}" method="POST"
                                         class="p-6 text-center">
                                         @csrf
+                                        @method('PATCH')
                                         <div
                                             class="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-4">
                                             <x-lucide-receipt stroke-width="2" class="w-8 h-8 text-emerald-500" />
@@ -178,7 +179,7 @@
                                             menunjukkan bukti pembayaran QRIS yang valid?</h2>
                                         <p class="text-sm text-gray-500 mb-6">
                                             Anda akan mengkonfirmasi pembayaran untuk transaksi
-                                            <strong>{{ $trx->id }}</strong> <br>
+                                            <strong>#{{ str_pad($trx->id, 6, '0', STR_PAD_LEFT) }}</strong> <br>
                                             Total Pembayaran <strong>Rp
                                                 {{ number_format($trx->total_gross, 0, ',', '.') }}</strong>
                                         </p>

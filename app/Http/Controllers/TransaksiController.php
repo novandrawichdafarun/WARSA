@@ -58,8 +58,7 @@ class TransaksiController extends Controller
 
     public function riwayat(): View
     {
-        $transaksi = Transaction::paid()
-            ->with(['items', 'kasir'])
+        $transaksi = Transaction::with(['items', 'kasir'])
             ->latest('created_at')
             ->paginate(20);
 

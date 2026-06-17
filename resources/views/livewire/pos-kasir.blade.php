@@ -1,4 +1,4 @@
-<div class="flex h-[calc(100vh)] bg-gray-50/50">
+<div class="flex h-[calc(130vh)] bg-gray-50/50">
 
     {{-- Alert Notifikasi Kustom (Muncul dari Atas Kanan) --}}
     <div x-data="{ tampil: false, pesan: '' }"
@@ -214,7 +214,7 @@
         @if (!$showQris)
 
             {{-- Daftar Belanjaan --}}
-            <div class="flex-1 overflow-y-auto px-2 py-2 bg-white">
+            <div class="flex-1 overflow-y-auto px-2 bg-white">
                 @forelse ($keranjang as $key => $item)
                     <div
                         class="flex flex-col gap-2 p-4 mx-2 my-2 bg-white border border-gray-100 rounded-2xl shadow-sm hover:border-emerald-200 hover:shadow-md transition-all group">
@@ -389,21 +389,17 @@
             {{-- MODE 2: TAMPILAN QRIS GENERATED --}}
         @else
             @if ($showQris)
-                <div class="flex-1 flex flex-col bg-gray-50/50">
+                <div wire:poll.2s="checkPaymentStatus" class="flex-1 flex flex-col bg-gray-50/50">
 
                     {{-- Konten QR --}}
-                    <div class="flex-1 flex flex-col items-center justify-center p-8 text-center animate-fade-in-up">
-                        <div
-                            class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mb-4 border-4 border-white shadow-sm">
-                            <x-lucide-scan-line class="w-8 h-8 text-blue-600" />
-                        </div>
+                    <div class="flex-1 flex flex-col items-center justify-center p-4 text-center animate-fade-in-up">
 
                         <h4 class="font-black text-xl text-gray-800 tracking-tight">Selesaikan Pembayaran</h4>
-                        <p class="text-sm font-medium text-gray-500 mt-1 mb-8">Pindai kode QR di bawah ini menggunakan
+                        <p class="text-sm font-medium text-gray-500 mt-1 mb-4">Pindai kode QR di bawah ini menggunakan
                             aplikasi e-Wallet atau M-Banking pelanggan.</p>
 
                         <div
-                            class="bg-white p-6 rounded-3xl shadow-xl shadow-blue-900/10 border-2 border-blue-100 inline-block mb-6 relative group overflow-hidden">
+                            class="bg-white p-3 rounded-3xl shadow-xl shadow-blue-900/10 border-2 border-blue-100 inline-block mb-6 relative group overflow-hidden">
                             <div
                                 class="absolute inset-0 bg-gradient-to-br from-blue-50 to-transparent opacity-50 pointer-events-none">
                             </div>
@@ -415,7 +411,7 @@
                         </div>
 
                         <div
-                            class="bg-white px-6 py-4 rounded-2xl border border-gray-200 shadow-sm w-full max-w-[280px]">
+                            class="bg-white px-6 py-4 rounded-2xl border border-gray-200 shadow-sm w-full max-w-[180px]">
                             <p class="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1">Total Tagihan
                                 (QRIS)</p>
                             <p class="text-3xl font-black text-blue-600 tracking-tight">
@@ -426,17 +422,17 @@
                     </div>
 
                     {{-- Footer Batal QRIS --}}
-                    <div class="p-6 border-t border-gray-200/80 bg-white">
-                        <div class="flex items-start gap-3 p-4 bg-amber-50 rounded-xl border border-amber-100 mb-4">
+                    <div class="p-3 border-t border-gray-200/80 bg-white">
+                        <div class="flex items-start gap-3 p-4 bg-amber-50 rounded-xl border border-amber-100 mb-2">
                             <x-lucide-info class="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" />
                             <p class="text-[11px] text-amber-800 font-medium leading-relaxed">
-                                Konfirmasi pembayaran dari aplikasi pelanggan. Jika gagal, Anda dapat membatalkan
-                                transaksi ini.
+                                Jika sudah dibayar mohon konfirmasikan ke petugas kasir. Jika pesanan belum sesuai anda
+                                bisa membatalkannya
                             </p>
                         </div>
 
                         <button wire:click="kosongkanKeranjang"
-                            class="w-full py-3.5 bg-white border-2 border-gray-200 hover:border-rose-300 hover:bg-rose-50 text-gray-600 hover:text-rose-600 font-bold rounded-2xl transition-all shadow-sm active:scale-95 flex items-center justify-center gap-2">
+                            class="w-full py-3 bg-white border-2 border-gray-200 hover:border-rose-300 hover:bg-rose-50 text-gray-600 hover:text-rose-600 font-bold rounded-2xl transition-all shadow-sm active:scale-95 flex items-center justify-center gap-2">
                             <x-lucide-x-circle class="w-5 h-5" /> Batalkan Transaksi
                         </button>
                     </div>

@@ -12,6 +12,8 @@ class WarungSeeder extends Seeder
      */
     public function run(): void
     {
+        $qrisDemo = '00020101021126580010ID.CO.QRIS.WWW0215ID10202213324670303UMI51440014ID.CO.QRIS.WWW0215ID10202213324670303UMI5204599953033605802ID5913DEMO TOKO KITA6009SURABAYA6105602326304E691';
+
         Warung::create([
             'nama_warung' => 'Pemilik WARSA',
             'slug' => 'warsa',
@@ -19,6 +21,8 @@ class WarungSeeder extends Seeder
             'telepon' => '0882009633169',
             'logo' => null,
             'is_active' => true,
+            'is_qris_active' => false,
+            'qris_string' => null,
         ]);
 
         Warung::create([
@@ -28,6 +32,8 @@ class WarungSeeder extends Seeder
             'telepon' => '081234567890',
             'logo' => null,
             'is_active' => true,
+            'is_qris_active' => true,
+            'qris_string' => $qrisDemo,
         ]);
 
         Warung::create([
@@ -37,6 +43,8 @@ class WarungSeeder extends Seeder
             'telepon' => '085678901234',
             'logo' => null,
             'is_active' => true,
+            'is_qris_active' => true,
+            'qris_string' => $qrisDemo,
         ]);
 
         Warung::create([
@@ -46,6 +54,8 @@ class WarungSeeder extends Seeder
             'telepon' => '087890123456',
             'logo' => null,
             'is_active' => true,
+            'is_qris_active' => true,
+            'qris_string' => $qrisDemo,
         ]);
     }
 }

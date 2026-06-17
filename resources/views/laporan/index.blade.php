@@ -10,7 +10,7 @@
             {{-- Tombol Export --}}
             <div class="flex gap-2">
                 <a href="{{ route('laporan.export.pdf', request()->query()) }}"
-                    class="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-xl text-sm font-bold transition-all shadow-sm active:scale-95 flex items-center gap-2">
+                    class="px-4 py-2 bg-rose-600 hover:bg-rose-700 text-white rounded-xl text-sm font-bold transition-all shadow-sm active:scale-95 flex items-center gap-2">
                     <x-lucide-file-text class="w-4 h-4" /> Export PDF
                 </a>
                 <a href="{{ route('laporan.export.excel', request()->query()) }}"
