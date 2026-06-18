@@ -8,6 +8,18 @@
                         {{ $sampai->format('d M Y') }}</span>
                 </p>
             </div>
+
+            {{-- Tombol Export --}}
+            <div class="flex gap-2">
+                <a href="{{ route('super_admin.commission.export.pdf', request()->query()) }}"
+                    class="px-4 py-2 bg-rose-600 hover:bg-rose-700 text-white rounded-xl text-sm font-bold transition-all shadow-sm active:scale-95 flex items-center gap-2">
+                    <x-lucide-file-text class="w-4 h-4" /> Export PDF
+                </a>
+                <a href="{{ route('super_admin.commission.export.excel', request()->query()) }}"
+                    class="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-sm font-bold transition-all shadow-sm active:scale-95 flex items-center gap-2">
+                    <x-lucide-file-chart-column class="w-4 h-4" /> Export Excel
+                </a>
+            </div>
         </div>
     </x-slot>
 
@@ -51,6 +63,21 @@
                             Tanggal</label>
                         <input type="date" name="sampai" value="{{ request('sampai', $sampai->format('Y-m-d')) }}"
                             class="px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-emerald-100 focus:border-emerald-500 transition-colors font-medium text-gray-700">
+                    </div>
+
+                    <div>
+                        <label class="block text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-2">Filter
+                            Toko</label>
+                        <select name="warung_id" onchange="this.form.submit()"
+                            class="px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-emerald-100 focus:border-emerald-500 transition-colors cursor-pointer font-medium text-gray-700">
+                            <option value="">Semua Toko</option>
+                            @foreach ($warungs as $warung)
+                                <option value="{{ $warung->id }}"
+                                    {{ request('warung_id') == $warung->id ? 'selected' : '' }}>
+                                    {{ $warung->nama_warung }}
+                                </option>
+                            @endforeach
+                        </select>
                     </div>
 
                     <button type="submit"

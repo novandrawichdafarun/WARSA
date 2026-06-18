@@ -24,10 +24,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
         ->name('warung.setup');
     Route::post('/setup-warung', [WarungSetupController::class, 'store'])
         ->name('warung.setup.store');
-
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
 // ============================================================
@@ -114,6 +110,10 @@ Route::middleware(['auth', 'verified', 'super_admin'])->prefix('super-admin')->n
 
     Route::get('/commission', [CommissionController::class, 'index'])
         ->name('commission.index');
+    Route::get('/commission.export.pdf', [CommissionController::class, 'exportPdf'])
+        ->name('commission.export.pdf');
+    Route::get('/commission/export/excel', [CommissionController::class, 'exportExcel'])
+        ->name('commission.export.excel');
 });
 
 require __DIR__ . '/auth.php';

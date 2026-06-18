@@ -56,8 +56,17 @@ class TransaksiController extends Controller
         return view('transaksi.struk', compact('transaksi'));
     }
 
-    public function riwayat(): View
+    public function riwayat(TransactionService $transactionService): View
     {
+        $expiredTransactions = Transaction::where('payment_status', 'pending')
+            ->where('payment_method', 'qris')
+            ->where('created_at', '<', now()->subDay())
+            ->get();
+
+        foreach ($expiredTransactions as $expiredTrx) {
+            $transactionService->cancel($expiredTrx);
+        }
+
         $transaksi = Transaction::with(['items', 'kasir'])
             ->latest('created_at')
             ->paginate(20);
