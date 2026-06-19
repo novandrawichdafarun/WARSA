@@ -50,6 +50,9 @@
                                 {{ request()->routeIs('pos.*') ? 'bg-emerald-50 text-emerald-700 font-bold' : 'text-gray-500 hover:text-emerald-600 hover:bg-gray-50 font-semibold' }}">
                                 Kasir (POS)
                             </a>
+                        @endif
+
+                        @if (auth()->user()->isKasir() || auth()->user()->isOwner())
                             <a href="{{ route('transaksi.riwayat') }}"
                                 class="flex items-center gap-1.5 px-3 py-2 rounded-xl text-sm transition-all
                                 {{ request()->routeIs('transaksi.*') ? 'bg-emerald-50 text-emerald-700 font-bold' : 'text-gray-500 hover:text-emerald-600 hover:bg-gray-50 font-semibold' }}">

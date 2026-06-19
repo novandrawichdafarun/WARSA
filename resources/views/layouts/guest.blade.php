@@ -24,7 +24,7 @@
 
         {{-- BAGIAN KIRI: PANEL GRADIENT HIJAU & TEKS --}}
         <div
-            class="hidden md:flex w-full md:w-1/2 bg-gradient-to-br from-emerald-500 to-emerald-700 p-8 sm:p-12 md:p-16 flex-col justify-between text-white relative overflow-hidden order-2 md:order-1">
+            class="hidden md:flex w-full md:w-1/2 bg-gradient-to-br from-emerald-500 to-emerald-700 p-6 sm:p-10 md:p-14 flex-col justify-between text-white relative overflow-hidden order-2 md:order-1">
             <div class="absolute inset-0 opacity-10">
                 <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
                     <defs>

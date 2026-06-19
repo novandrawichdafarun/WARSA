@@ -8,6 +8,7 @@ use App\Http\Controllers\Auth\NewPasswordController;
 use App\Http\Controllers\Auth\PasswordController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Controllers\Auth\SocialLoginController;
 use App\Http\Controllers\Auth\VerifyEmailController;
 use App\Http\Controllers\Auth\VerifyEmailOtpController;
 use App\Http\Controllers\Auth\VerifyResetOtpController;
@@ -38,6 +39,11 @@ Route::middleware('guest')->group(function () {
         ->name('password.reset.form');
     Route::post('reset-password', [NewPasswordController::class, 'store'])
         ->name('password.store');
+
+    Route::get('/auth/{provider}/redirect', [SocialLoginController::class, 'redirect'])
+        ->name('social.redirect');
+    Route::get('/auth/{provider}/callback', [SocialLoginController::class, 'callback'])
+        ->name('social.callback');
 });
 
 Route::middleware('auth')->group(function () {

@@ -19,6 +19,7 @@ return new class extends Migration {
             $table->string('reset_password_code', 6)->nullable();
             $table->string('password');
             $table->rememberToken();
+            $table->string('google_id')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

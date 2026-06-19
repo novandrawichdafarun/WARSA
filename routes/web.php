@@ -75,9 +75,16 @@ Route::middleware(['auth', 'warung.setup', 'verified', 'owner'])->group(function
 Route::middleware(['auth', 'warung.setup', 'verified', 'kasir'])->group(function () {
     Route::get('/pos', [TransaksiController::class, 'pos'])
         ->name('pos.index');
-
     Route::post('/transaksi', [TransaksiController::class, 'store'])
         ->name('transaksi.store');
+    Route::patch('/transaksi/{transaksi}/batal', [TransaksiController::class, 'batal'])
+        ->name('transaksi.batal');
+});
+
+// ============================================================
+// KASIR OR OWNER WARUNG
+// ============================================================
+Route::middleware(['auth', 'warung.setup', 'verified', 'kasir_or_owner'])->group(function () {
     Route::get('/transaksi/riwayat', [TransaksiController::class, 'riwayat'])
         ->name('transaksi.riwayat');
     Route::get('/transaksi/{transaksi}/status', [TransaksiController::class, 'checkStatus'])
@@ -86,8 +93,6 @@ Route::middleware(['auth', 'warung.setup', 'verified', 'kasir'])->group(function
         ->name('transaksi.updateStatus');
     Route::get('/transaksi/{transaksi}/struk', [TransaksiController::class, 'struk'])
         ->name('transaksi.struk');
-    Route::patch('/transaksi/{transaksi}/batal', [TransaksiController::class, 'batal'])
-        ->name('transaksi.batal');
 });
 
 // ============================================================

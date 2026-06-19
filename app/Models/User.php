@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Notifications\VerifyEmailOtp;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -10,7 +9,6 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Override;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -25,6 +23,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at',
         'verification_code',
         'reset_password_code',
+        'google_id',
     ];
 
     protected $hidden = [
@@ -39,14 +38,6 @@ class User extends Authenticatable implements MustVerifyEmail
             'password' => 'hashed',
             'deleted_at' => 'datetime',
         ];
-    }
-
-    #[Override]
-    public function sendEmailVerificationNotification()
-    {
-        $code = sprintf("%06d", mt_rand(1, 999999));
-        $this->update(['verification_code' => $code]);
-        $this->notify(new VerifyEmailOtp($code));
     }
 
     // =========================================================
