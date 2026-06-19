@@ -44,7 +44,7 @@ class SocialLoginController extends Controller
         Auth::login($user);
 
         if ($user->isSuperAdmin()) {
-            return redirect()->intended(route('dashboard', absolute: false));
+            return redirect()->route('dashboard');
         }
 
         if (!$user->hasWarung()) {
@@ -58,7 +58,7 @@ class SocialLoginController extends Controller
         }
 
         if ($user->isKasir() || $user->isPelanggan()) {
-            return redirect()->intended(route('pos.index', absolute: false));
+            return redirect()->route('pos.index');
         }
 
         return redirect('/');

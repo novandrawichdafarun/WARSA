@@ -144,7 +144,7 @@
                 @empty
                     <div class="col-span-full py-20 flex flex-col items-center justify-center text-center">
                         <div class="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mb-4">
-                            <x-lucide-package-search class="w-10 h-10 text-gray-400" />
+                            <x-lucide-package-search class="w-12 h-12 text-gray-400" />
                         </div>
                         <h4 class="text-lg font-bold text-gray-700">Produk Tidak Ditemukan</h4>
                         <p class="text-sm text-gray-500 mt-1 max-w-sm">Coba gunakan kata kunci pencarian yang lain atau

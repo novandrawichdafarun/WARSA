@@ -29,13 +29,17 @@ class WarungSetupController extends Controller
             'qris_string' => ['nullable', 'string'],
         ]);
 
-        $logoPath = $request->hasFile('logo') ? $request->file('logo')->store('logos', 'public') : null;
+        $logoPath = null;
+
+        if ($request->hasFile('logo')) {
+            $logoPath = $request->file('logo')->store('logos', 'public');
+        }
 
         $warung = Warung::create([
             'nama_warung' => $request->nama_warung,
             'alamat' => $request->alamat,
             'telepon' => $request->telepon,
-            'logo' => $request->file('logo')->store('logos', 'public'),
+            'logo' => $logoPath,
             'is_qris_active' => $request->is_qris_active || false,
             'qris_string' => $request->qris_string,
         ]);

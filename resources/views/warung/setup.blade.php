@@ -22,7 +22,7 @@
         {{-- Logo --}}
         <div class="text-center mb-8">
             <div class="w-16 h-16 bg-emerald-600 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg">
-                <img src="{{ asset('images/logo.png') }}" alt="Logo WARSA" class="w-14 h-14">
+                <img src="{{ asset('images/logo.svg') }}" alt="Logo WARSA" class="w-12 h-12">
             </div>
             <h1 class="text-2xl font-bold text-gray-800">Selamat Datang di WARSA!</h1>
             <p class="text-gray-500 mt-1 text-sm">
