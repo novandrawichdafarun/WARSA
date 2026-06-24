@@ -56,7 +56,7 @@
                                 @else
                                     <img id="logo-preview" src=""
                                         class="hidden w-full h-full object-cover rounded-xl">
-                                    <div id="foto-placeholder"
+                                    <div id="logo-placeholder"
                                         class="flex flex-col items-center justify-center w-full h-full p-4 text-center">
                                         <span class="text-3xl block mb-2"><x-lucide-image-up
                                                 class="w-16 h-16 text-emerald-500" /></span>
