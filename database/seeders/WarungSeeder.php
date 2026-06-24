@@ -22,7 +22,7 @@ class WarungSeeder extends Seeder
             'logo' => null,
             'is_active' => true,
             'is_qris_active' => false,
-            'qris_string' => null,
+            'qris_image' => null,
         ]);
 
         Warung::create([
@@ -33,7 +33,7 @@ class WarungSeeder extends Seeder
             'logo' => null,
             'is_active' => true,
             'is_qris_active' => false,
-            'qris_string' => null,
+            'qris_image' => null,
         ]);
 
         Warung::create([
@@ -44,7 +44,7 @@ class WarungSeeder extends Seeder
             'logo' => null,
             'is_active' => true,
             'is_qris_active' => false,
-            'qris_string' => null,
+            'qris_image' => null,
         ]);
 
         Warung::create([
@@ -55,7 +55,7 @@ class WarungSeeder extends Seeder
             'logo' => null,
             'is_active' => true,
             'is_qris_active' => false,
-            'qris_string' => null,
+            'qris_image' => null,
         ]);
     }
 }
