@@ -32,8 +32,8 @@ class WarungSeeder extends Seeder
             'telepon' => '081234567890',
             'logo' => null,
             'is_active' => true,
-            'is_qris_active' => true,
-            'qris_string' => $qrisDemo,
+            'is_qris_active' => false,
+            'qris_string' => null,
         ]);
 
         Warung::create([
@@ -43,8 +43,8 @@ class WarungSeeder extends Seeder
             'telepon' => '085678901234',
             'logo' => null,
             'is_active' => true,
-            'is_qris_active' => true,
-            'qris_string' => $qrisDemo,
+            'is_qris_active' => false,
+            'qris_string' => null,
         ]);
 
         Warung::create([
@@ -54,8 +54,8 @@ class WarungSeeder extends Seeder
             'telepon' => '087890123456',
             'logo' => null,
             'is_active' => true,
-            'is_qris_active' => true,
-            'qris_string' => $qrisDemo,
+            'is_qris_active' => false,
+            'qris_string' => null,
         ]);
     }
 }
