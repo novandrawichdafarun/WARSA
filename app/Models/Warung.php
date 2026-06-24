@@ -25,7 +25,7 @@ class Warung extends Model
         'alamat',
         'telepon',
         'logo',
-        'qris_string',
+        'qris_image',
         'is_qris_active',
         'is_active',
     ];
@@ -82,15 +82,9 @@ class Warung extends Model
     /** Cek apakah warung siap menerima QRIS */
     public function hasQris(): bool
     {
-        return $this->is_qris_active && !empty($this->qris_string);
+        return $this->is_qris_active && !empty($this->qris_image);
     }
-
-    /** String QRIS */
-    public function getQrisAttribute(): ?string
-    {
-        return $this->qris_string;
-    }
-
+    
     // =========================================================
     // RELATIONSHIPS
     // =========================================================

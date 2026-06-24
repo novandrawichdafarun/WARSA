@@ -31,16 +31,23 @@ class PengaturanController extends Controller
             'telepon' => ['nullable', 'string', 'max:20'],
             'logo' => ['nullable', 'image', 'mimes:jpg,jpeg,png', 'max:2048'],
             'is_qris_active' => ['nullable', 'boolean'],
-            'qris_string' => ['nullable', 'string'],
+            'qris_image' => ['nullable', 'image', 'mimes:jpg,jpeg,png', 'max:2048'],
         ]);
 
-        $data = $request->only(['nama_warung', 'alamat', 'telepon', 'is_qris_active', 'qris_string']);
+        $data = $request->only(['nama_warung', 'alamat', 'telepon', 'is_qris_active']);
 
         if ($request->hasFile('logo')) {
             if ($warung->logo) {
                 Storage::disk('public')->delete($warung->logo);
             }
             $data['logo'] = $request->file('logo')->store('logos', 'public');
+        }
+
+        if ($request->hasFile('qris_image')) {
+            if ($warung->qris_image) {
+                Storage::disk('public')->delete($warung->qris_image);
+            }
+            $data['qris_image'] = $request->file('qris_image')->store('qris', 'public');
         }
 
         $warung->update($data);

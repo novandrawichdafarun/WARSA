@@ -104,31 +104,54 @@
                 </div>
 
 
-                {{-- Qris --}}
-                <div>
+                {{-- QRIS Image Upload --}}
+                <div class="bg-white rounded-xl border border-gray-100 p-4">
+                    <label class="block text-sm font-medium text-gray-700 mb-3">
+                        Gambar QRIS <span class="text-gray-400 font-normal">(Opsional)</span>
+                    </label>
+
+                    {{-- Preview Area --}}
+                    <div class="w-full aspect-video bg-gray-50 border-2 border-dashed border-gray-200 rounded-xl
+                    flex items-center justify-center mb-3 overflow-hidden cursor-pointer hover:border-emerald-400"
+                        onclick="document.getElementById('qris-input').click()">
+                        <img id="qris-preview" src="" class="hidden w-full h-full object-contain p-2">
+                        <div id="qris-placeholder" class="text-center p-4">
+                            <div
+                                class="w-12 h-12 bg-emerald-100 rounded-xl flex items-center justify-center mx-auto mb-2">
+                                <svg class="w-7 h-7 text-emerald-500" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M12 4v16m8-8H4" />
+                                </svg>
+                            </div>
+                            <p class="text-xs text-gray-400">Klik untuk upload gambar QRIS</p>
+                            <p class="text-[10px] text-gray-400 mt-1">JPG, PNG — maks 2MB</p>
+                        </div>
+                    </div>
+
+                    <input type="file" id="qris-input" name="qris_image" accept="image/*" class="hidden"
+                        onchange="previewQris(this)">
+
+                    @error('qris_image')
+                        <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                {{-- Toggle Aktifkan QRIS --}}
+                <div class="flex items-center gap-3 px-1">
                     <label for="is_qris_active" class="flex items-center cursor-pointer">
                         <div class="relative">
                             <input type="checkbox" id="is_qris_active" name="is_qris_active" value="1"
-                                class="sr-only peer">
-                            <div class="block w-12 h-6 bg-gray-300 rounded-full peer-checked:bg-emerald-500 transition">
+                                class="sr-only peer" {{ old('is_qris_active') ? 'checked' : '' }}>
+                            <div
+                                class="block w-14 h-8 bg-gray-300 rounded-full peer-checked:bg-emerald-500 transition">
                             </div>
                             <div
-                                class="dot absolute left-1 top-1 bg-white w-4 h-4 rounded-full transition transform peer-checked:translate-x-6">
+                                class="dot absolute left-1 top-1 bg-white w-6 h-6 rounded-full transition transform peer-checked:translate-x-6">
                             </div>
                         </div>
-                        <div class="ml-3 text-sm text-gray-700 font-medium">
-                            Aktifkan Pembayaran QRIS
-                        </div>
+                        <span class="ml-3 text-sm font-medium text-gray-700">Aktifkan Pembayaran QRIS</span>
                     </label>
-                </div>
-
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Qris</label>
-                    <input type="text" name="qris_string" value="{{ old('qris_string') }}" placeholder="000201..."
-                        class="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent">
-                    <p class="text-gray-500 text-xs mt-1">
-                        Masukkan tautan QRIS Anda di sini.
-                    </p>
                 </div>
 
                 <button type="submit"
@@ -150,6 +173,20 @@
                 reader.onload = (e) => {
                     const preview = document.getElementById('logo-preview');
                     const placeholder = document.getElementById('logo-placeholder');
+                    preview.src = e.target.result;
+                    preview.classList.remove('hidden');
+                    if (placeholder) placeholder.classList.add('hidden');
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        function previewQris(input) {
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    const preview = document.getElementById('qris-preview');
+                    const placeholder = document.getElementById('qris-placeholder');
                     preview.src = e.target.result;
                     preview.classList.remove('hidden');
                     if (placeholder) placeholder.classList.add('hidden');

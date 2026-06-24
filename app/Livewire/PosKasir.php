@@ -29,8 +29,7 @@ class PosKasir extends Component
   public bool $showCheckout = false;
 
   public ?int $transaksiId = null;
-  public string $qrisStringData = '';
-  public string $qrisMerchantName = '-';
+  public string $qrisImageUrl = '';
   public bool $showQris = false;
 
   public ?string $errorMessage = null;
@@ -149,12 +148,12 @@ class PosKasir extends Component
       if ($this->paymentMethod == 'qris') {
         $warung = Auth::user()->warung;
 
-        if (!$warung || !$warung->is_qris_active || empty($warung->qris_string)) {
-          $this->errorMessage = 'QRIS belum diaktifkan. Hubungi pemilik warung.';
+        if (!$warung || !$warung->hasQris()) {
+          $this->errorMessage = 'QRIS belum diaktifkan atau gambar QRIS belum diupload. Hubungi pemilik warung.';
           return;
         }
 
-        $this->qrisStringData = $warung->qris_string;
+        $this->qrisImageUrl = $warung->qris_image;
         $this->showQris = true;
         $this->pendingTransactionId = $transaksi->id;
 

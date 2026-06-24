@@ -26,7 +26,7 @@ class WarungSetupController extends Controller
             'telepon' => ['nullable', 'string', 'max:20'],
             'logo' => ['nullable', 'image', 'mimes:jpg,jpeg,png', 'max:2048'],
             'is_qris_active' => ['nullable', 'boolean'],
-            'qris_string' => ['nullable', 'string'],
+            'qris_image' => ['nullable', 'image', 'mimes:jpg,jpeg,png', 'max:2048'],
         ]);
 
         $logoPath = null;
@@ -35,13 +35,18 @@ class WarungSetupController extends Controller
             $logoPath = $request->file('logo')->store('logos', 'public');
         }
 
+        $qrisImagePath = null;
+        if ($request->hasFile('qris_image')) {
+            $qrisImagePath = $request->file('qris_image')->store('qris', 'public');
+        }
+
         $warung = Warung::create([
             'nama_warung' => $request->nama_warung,
             'alamat' => $request->alamat,
             'telepon' => $request->telepon,
             'logo' => $logoPath,
             'is_qris_active' => $request->is_qris_active || false,
-            'qris_string' => $request->qris_string,
+            'qris_image' => $qrisImagePath,
         ]);
 
         Auth::user()->update(['warung_id' => $warung->id]);

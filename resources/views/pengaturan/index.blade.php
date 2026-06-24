@@ -102,10 +102,10 @@
                                         class="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
                                 </div>
 
-                                <div>
-                                    <div class="flex px-4 py-2.5 items-center">
-                                        <label for="is_qris_active"
-                                            class="flex text-sm font-medium text-gray-700 items-center cursor-pointer">
+                                {{-- QRIS Upload Section --}}
+                                <div class="border border-gray-100 rounded-xl p-4 space-y-4">
+                                    <div class="flex items-center gap-3">
+                                        <label for="is_qris_active" class="flex items-center cursor-pointer">
                                             <div class="relative">
                                                 <input type="checkbox" id="is_qris_active" name="is_qris_active"
                                                     value="1" class="sr-only peer"
@@ -117,26 +117,46 @@
                                                     class="dot absolute left-1 top-1 bg-white w-6 h-6 rounded-full transition transform peer-checked:translate-x-6">
                                                 </div>
                                             </div>
-                                            <div class="ml-3 text-gray-700 font-medium">
-                                                Aktifkan Pembayaran QRIS
-                                            </div>
+                                            <span class="ml-3 text-sm font-medium text-gray-700">Aktifkan Pembayaran
+                                                QRIS</span>
                                         </label>
                                     </div>
 
-                                    <div class="my-2.5">
-                                        <label for="qris_string" id="qris-label"
-                                            class="block text-sm font-medium text-gray-700 mb-1">
-                                            Kode/String QRIS Warung
-                                            @if ($warung->is_qris_active)
-                                                <span id="qris-star" class="text-red-500">*</span>
-                                            @endif
+                                    <div>
+                                        <label class="block text-sm font-medium text-gray-700 mb-2">
+                                            Gambar QRIS Warung
                                         </label>
-                                        <textarea id="qris_string" name="qris_string" rows="4"
-                                            class="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
-                                            placeholder="Masukkan string QRIS, contoh: 0002010102122666..." @if ($warung->is_qris_active) required @endif>{{ old('qris_string', $warung->qris_string) }}</textarea>
-                                        <x-input-error :messages="$errors->get('qris_string')" class="mt-2" />
-                                        <p id="qris-hint" class="text-sm text-gray-500 mt-1">
-                                            {{ $warung->is_qris_active === true ? 'Isi Kode QRIS Warung Anda' : 'Kosongkan jika fitur QRIS dinonaktifkan.' }}
+
+                                        {{-- Preview Gambar Existing / Baru --}}
+                                        <div class="w-full max-w-xs aspect-square bg-gray-50 border-2 border-dashed border-gray-200
+                                        rounded-xl flex items-center justify-center mb-3 overflow-hidden cursor-pointer hover:border-emerald-400"
+                                            onclick="document.getElementById('qris-input').click()">
+
+                                            @if ($warung->qris_image)
+                                                <img id="qris-preview" src="{{ Storage::url($warung->qris_image) }}"
+                                                    class="w-full h-full object-contain p-3">
+                                            @else
+                                                <img id="qris-preview" src=""
+                                                    class="hidden w-full h-full object-contain p-3">
+                                                <div id="qris-placeholder"
+                                                    class="flex flex-col items-center justify-center text-center p-4">
+                                                    <x-lucide-qr-code class="w-14 h-14 text-emerald-400 mb-2" />
+                                                    <p class="text-xs font-medium text-gray-500">Klik untuk upload
+                                                        gambar QRIS</p>
+                                                    <p class="text-[10px] text-gray-400 mt-1">PNG, JPG max 2MB</p>
+                                                </div>
+                                            @endif
+                                        </div>
+
+                                        <input type="file" id="qris-input" name="qris_image" accept="image/*"
+                                            class="hidden" onchange="previewQris(this)">
+
+                                        @error('qris_image')
+                                            <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                                        @enderror
+
+                                        <p class="text-xs text-gray-400 mt-1">
+                                            Upload gambar QR Code QRIS dari aplikasi bank/dompet digital Anda.
                                         </p>
                                     </div>
                                 </div>
@@ -174,6 +194,20 @@
                 reader.onload = (e) => {
                     const preview = document.getElementById('logo-preview');
                     const placeholder = document.getElementById('logo-placeholder');
+                    preview.src = e.target.result;
+                    preview.classList.remove('hidden');
+                    if (placeholder) placeholder.classList.add('hidden');
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        function previewQris(input) {
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    const preview = document.getElementById('qris-preview');
+                    const placeholder = document.getElementById('qris-placeholder');
                     preview.src = e.target.result;
                     preview.classList.remove('hidden');
                     if (placeholder) placeholder.classList.add('hidden');

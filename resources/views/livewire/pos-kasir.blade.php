@@ -404,10 +404,13 @@
                                 class="absolute inset-0 bg-gradient-to-br from-blue-50 to-transparent opacity-50 pointer-events-none">
                             </div>
 
-                            {{-- Area QR Code --}}
-                            <div class="relative bg-white p-2 rounded-xl border border-gray-100">
-                                {!! \SimpleSoftwareIO\QrCode\Facades\QrCode::size(220)->margin(1)->style('round')->generate($qrisStringData) !!}
-                            </div>
+                            {{-- Gambar QRIS --}}
+                            @if ($qrisImageUrl)
+                                <div class="flex justify-center mb-4">
+                                    <img src="{{ Storage::url($qrisImageUrl) }}" alt="QRIS Payment"
+                                        class="w-56 h-56 object-contain border border-gray-200 rounded-xl p-2">
+                                </div>
+                            @endif
                         </div>
 
                         <div
