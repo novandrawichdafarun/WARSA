@@ -68,6 +68,43 @@
                             <p class="text-[11px] text-gray-400 text-center leading-relaxed">Pratinjau foto otomatis
                                 muncul sebelum formulir disimpan.</p>
                         </div>
+
+                        {{-- QRIS Upload --}}
+                        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+                            <h3 class="font-bold text-gray-400 tracking-wider mb-4 uppercase">Gambar QRIS Warung</h3>
+
+                            {{-- Preview Gambar Existing / Baru --}}
+                            <div class="w-full max-w-xs aspect-square bg-gray-50 border-2 border-dashed border-gray-200
+                                        rounded-xl flex items-center justify-center mb-3 overflow-hidden cursor-pointer hover:border-emerald-400"
+                                onclick="document.getElementById('qris-input').click()">
+
+                                @if ($warung->qris_image)
+                                    <img id="qris-preview" src="{{ Storage::url($warung->qris_image) }}"
+                                        class="w-full h-full object-contain p-3">
+                                @else
+                                    <img id="qris-preview" src=""
+                                        class="hidden w-full h-full object-contain p-3">
+                                    <div id="qris-placeholder"
+                                        class="flex flex-col items-center justify-center text-center p-4">
+                                        <x-lucide-qr-code class="w-14 h-14 text-emerald-400 mb-2" />
+                                        <p class="text-xs font-medium text-gray-500">Klik untuk upload
+                                            gambar QRIS</p>
+                                        <p class="text-[10px] text-gray-400 mt-1">PNG, JPG max 2MB</p>
+                                    </div>
+                                @endif
+                            </div>
+
+                            <input type="file" id="qris-input" name="qris_image" accept="image/*" class="hidden"
+                                onchange="previewQris(this)">
+
+                            @error('qris_image')
+                                <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
+                            @enderror
+
+                            <p class="text-[11px] text-gray-400 text-center leading-relaxed">
+                                Upload gambar QR Code QRIS dari aplikasi bank/dompet digital Anda.
+                            </p>
+                        </div>
                     </div>
 
                     {{-- Kolom Data Warung --}}
@@ -102,7 +139,6 @@
                                         class="w-full px-4 py-2.5 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
                                 </div>
 
-                                {{-- QRIS Upload Section --}}
                                 <div class="border border-gray-100 rounded-xl p-4 space-y-4">
                                     <div class="flex items-center gap-3">
                                         <label for="is_qris_active" class="flex items-center cursor-pointer">
@@ -120,44 +156,6 @@
                                             <span class="ml-3 text-sm font-medium text-gray-700">Aktifkan Pembayaran
                                                 QRIS</span>
                                         </label>
-                                    </div>
-
-                                    <div>
-                                        <label class="block text-sm font-medium text-gray-700 mb-2">
-                                            Gambar QRIS Warung
-                                        </label>
-
-                                        {{-- Preview Gambar Existing / Baru --}}
-                                        <div class="w-full max-w-xs aspect-square bg-gray-50 border-2 border-dashed border-gray-200
-                                        rounded-xl flex items-center justify-center mb-3 overflow-hidden cursor-pointer hover:border-emerald-400"
-                                            onclick="document.getElementById('qris-input').click()">
-
-                                            @if ($warung->qris_image)
-                                                <img id="qris-preview" src="{{ Storage::url($warung->qris_image) }}"
-                                                    class="w-full h-full object-contain p-3">
-                                            @else
-                                                <img id="qris-preview" src=""
-                                                    class="hidden w-full h-full object-contain p-3">
-                                                <div id="qris-placeholder"
-                                                    class="flex flex-col items-center justify-center text-center p-4">
-                                                    <x-lucide-qr-code class="w-14 h-14 text-emerald-400 mb-2" />
-                                                    <p class="text-xs font-medium text-gray-500">Klik untuk upload
-                                                        gambar QRIS</p>
-                                                    <p class="text-[10px] text-gray-400 mt-1">PNG, JPG max 2MB</p>
-                                                </div>
-                                            @endif
-                                        </div>
-
-                                        <input type="file" id="qris-input" name="qris_image" accept="image/*"
-                                            class="hidden" onchange="previewQris(this)">
-
-                                        @error('qris_image')
-                                            <p class="text-red-500 text-xs mt-1">{{ $message }}</p>
-                                        @enderror
-
-                                        <p class="text-xs text-gray-400 mt-1">
-                                            Upload gambar QR Code QRIS dari aplikasi bank/dompet digital Anda.
-                                        </p>
                                     </div>
                                 </div>
 

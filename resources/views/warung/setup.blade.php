@@ -60,7 +60,7 @@
                             <div id="logo-placeholder" class="text-center p-4">
                                 <div
                                     class="w-16 h-16 bg-emerald-100 rounded-2xl flex items-center justify-center mx-auto mb-2">
-                                    <x-lucide-store class="w-10 h-10 text-emerald-500" />
+                                    <x-lucide-store class="w-12 h-12 text-emerald-500" />
                                 </div>
                                 <p class="text-xs text-gray-400 mt-2">Klik untuk upload logo</p>
                             </div>
@@ -117,12 +117,8 @@
                         <img id="qris-preview" src="" class="hidden w-full h-full object-contain p-2">
                         <div id="qris-placeholder" class="text-center p-4">
                             <div
-                                class="w-12 h-12 bg-emerald-100 rounded-xl flex items-center justify-center mx-auto mb-2">
-                                <svg class="w-7 h-7 text-emerald-500" fill="none" stroke="currentColor"
-                                    viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M12 4v16m8-8H4" />
-                                </svg>
+                                class="w-14 h-14 bg-emerald-100 rounded-xl flex items-center justify-center mx-auto mb-2">
+                                <x-lucide-qr-code class="w-10 h-10 text-emerald-500" />
                             </div>
                             <p class="text-xs text-gray-400">Klik untuk upload gambar QRIS</p>
                             <p class="text-[10px] text-gray-400 mt-1">JPG, PNG — maks 2MB</p>
@@ -143,8 +139,7 @@
                         <div class="relative">
                             <input type="checkbox" id="is_qris_active" name="is_qris_active" value="1"
                                 class="sr-only peer" {{ old('is_qris_active') ? 'checked' : '' }}>
-                            <div
-                                class="block w-14 h-8 bg-gray-300 rounded-full peer-checked:bg-emerald-500 transition">
+                            <div class="block w-14 h-8 bg-gray-300 rounded-full peer-checked:bg-emerald-500 transition">
                             </div>
                             <div
                                 class="dot absolute left-1 top-1 bg-white w-6 h-6 rounded-full transition transform peer-checked:translate-x-6">
