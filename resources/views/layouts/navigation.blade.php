@@ -186,11 +186,13 @@
                     </div>
                 </div>
 
-                {{-- Dashboard semua role --}}
-                <a href="{{ route('dashboard') }}"
-                    class="flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-bold transition-colors {{ request()->routeIs('dashboard') ? 'bg-emerald-100 text-emerald-700' : 'text-gray-600 hover:bg-gray-200' }}">
-                    Dashboard
-                </a>
+                {{-- Dashboard --}}
+                @if (auth()->user()->isOwner() || auth()->user()->isSuperAdmin())
+                    <a href="{{ route('dashboard') }}"
+                        class="flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-bold transition-colors {{ request()->routeIs('dashboard') ? 'bg-emerald-100 text-emerald-700' : 'text-gray-600 hover:bg-gray-200' }}">
+                        Dashboard
+                    </a>
+                @endif
 
                 {{-- Menu Khusus Super Admin --}}
                 @if (auth()->user()->isSuperAdmin())
@@ -211,6 +213,9 @@
                         class="flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-bold transition-colors {{ request()->routeIs('pos.*') ? 'bg-emerald-100 text-emerald-700' : 'text-gray-600 hover:bg-gray-200' }}">
                         Kasir (POS)
                     </a>
+                @endif
+
+                @if (auth()->user()->isKasir() || auth()->user()->isOwner())
                     <a href="{{ route('transaksi.riwayat') }}"
                         class="flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-bold transition-colors {{ request()->routeIs('transaksi.*') ? 'bg-emerald-100 text-emerald-700' : 'text-gray-600 hover:bg-gray-200' }}">
                         Riwayat Transaksi
