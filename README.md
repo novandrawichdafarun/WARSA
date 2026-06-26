@@ -244,7 +244,7 @@ MAIL_FROM_ADDRESS=no-reply@WARSA.test
 
 ## Lisensi
 
-Proyek ini memakai lisensi [MIT license](https://opensource.org/licenses/MIT). — sesuaikan jika perlu.
+© 2026 Novandra Wichda Farun — Licensed under Apache 2.0. See LICENSE and NOTICE.
 
 ---
 
